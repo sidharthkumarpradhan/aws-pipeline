@@ -59,7 +59,7 @@ phases:
     #file-format: JunitXml | CucumberJson
 artifacts:
   files:
-    - appspec.yaml
+    - '**/*'
 #cache:
   #paths:
     # - paths
