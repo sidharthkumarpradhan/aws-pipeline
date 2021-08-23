@@ -1,0 +1,73 @@
+<div class="challenge-modal">
+  <div class="my-challenges modal-box">
+    <div class="title-bar">
+      <p class="title">My Space</p>
+      <button class="btn-close" (click)="closeModal()">
+        <img src="assets/img/close.png" alt=""/>
+      </button>
+    </div>
+    <div class="content-box">
+      <div class="heading">
+        <h3>My Challenges</h3>
+        <div class="info-container">
+          <div>
+            <div>
+              <img src="assets/img/my-space/star.png" alt=""/>
+              <p>Badges</p>
+            </div>
+            <p>{{badges}}</p>
+          </div>
+          <div>
+            <div>
+              <img src="assets/img/my-space/dotcoin-big.png" alt=""/>
+              <p>Dotcoins</p>
+            </div>
+            <p>{{dotcoins}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-container">
+        <app-loader *ngIf="isLoading"></app-loader>
+        <div class="card-design-4" *ngFor="let challenge of myChallenges; let i = index">
+          <div class="tile-wrapper">
+            <img *ngIf="challenge.challenge_image !== null"
+                 src="{{baseImagePath}}{{challenge.challenge_image}}"
+                 alt=""/>
+            <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'"
+                 alt=""/>
+          </div>
+          <div class="info-1">
+            <div>
+              <img alt=""
+                   src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+              <h3>{{challenge.topic_name}}</h3>
+            </div>
+            <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+            <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+          </div>
+          <div class="info-2">
+            <div class="dot-coin">
+              <img alt="" src="assets/img/dotcoin.png"/>
+              <p>{{challenge.topic_dot_coins}}</p>
+            </div>
+            <div class="reaction-container">
+              <div class="reaction-wrapper">
+                <p>10</p>
+                <img alt="" src="assets/img/reaction-1.png"/>
+              </div>
+              <div class="reaction-wrapper">
+                <p>20</p>
+                <img alt="" src="assets/img/reaction-2.png"/>
+              </div>
+              <div class="reaction-wrapper">
+                <p>15</p>
+                <img alt="" src="assets/img/reaction-3.png"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,152 @@
+body{ background: inherit !important }
+
+.nav-normal-view{ width: 100%; position: fixed; top: 0; left: 0; right: 0; z-index: 99; }
+#header.expend .nav-normal-view{ left: -50000px }
+.nav-normal-view .container-fluid{ padding-left: 0px; padding-right: 0px }
+.nav-normal-view .nav-left{ height: 107px; padding-right: 100px;     background: url('../../../../assets/img/nav-bg.png') no-repeat right top; }
+.nav-normal-view .hamburger-menu{ cursor:pointer; width: 36px; height: 24px; margin: 25px 50px 0 55px; float: left; outline: none; border: inherit }
+.nav-normal-view .nav-2{ padding: 10px; margin: 0; display: flex    }
+.nav-normal-view .nav-2 li{ padding: 0 48px 0 0; margin: 0; list-style: none; float: left; position: relative; font-size: 11.5px; color: #07304C; text-align: center }
+.nav-normal-view .nav-2 li img{ height: 45px; display: block }
+.nav-normal-view .nav-2 li .status-red{ width: 14px; height: 14px; background: #DB4744; border-radius: 100%; position: absolute; top: 0; left:35px }
+.nav-normal-view .nav-2 li span.number{ position: absolute; left: 50px; top: 20px; font-size: 16px; color: #42474C; font-weight: 500}
+
+.nav-normal-view .logo-wrapper{ width: 260px; height: 100px; margin-top: 42px; background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 8px; box-shadow:  0 12px 18px rgba(0,0,0,0.17); z-index: 9; }
+.logo-wrapper-inner{ text-align: center }
+.nav-normal-view .logo-wrapper h2{ font-size: 26px; color: #303546; padding: 0; margin: 0 }
+.nav-normal-view .logo-wrapper img{ width: 110px }
+
+.nav-normal-view .admin-menu-wrapper { margin: 17px 0 0 }
+.nav-normal-view .admin-menu-wrapper .btn, .nav-normal-view .admin-menu-wrapper .btn:focus{ box-shadow: inherit !important }
+.nav-normal-view .admin-menu-wrapper .btn .name{ padding-right: 8px; float: left; line-height: 16px; font-weight: 700;
+  font-size: 1.2rem;
+  color: #000;
+  text-transform: capitalize;
+}
+
+.dropdown-toggle::after{
+  color: #000;
+}
+
+.nav-normal-view .admin-menu-wrapper .btn .name span{ display: block; text-align: right; color: #000 }
+.nav-normal-view .admin-menu-wrapper .btn img{ width: 48px; height: 48px }
+
+.nav-expend-view{ width: 100%; height: 84px; position: fixed; top: 0; left: -30000px; right: 0; z-index: 999; display: flex; align-items: center; background: #fff; box-shadow: 0 2px 10px rgb(0 0 0 / 17%) }
+#header.expend .nav-expend-view{ left:0 }
+.nav-expend-view .expend-logo{ height: 84px; align-items: center; display: flex }
+.nav-expend-view .devider{ width: 1px; height: 45px; background: #E0E0E0; display: block; margin-right: 35px; margin-left: 35px }
+.nav-expend-view .hamburger-menu{ cursor: pointer; width: 36px; height: 24px; margin: 0;   outline: none; border: inherit }
+.nav-expend-view nav > ul{ padding: 0; margin: 0 0 0 72px; list-style: none}
+.nav-expend-view nav > ul > li{ padding: 0; margin: 0 30px 0 0; font: 500 16px/46px 'Poppins', sans-serif; float: left; }
+.nav-expend-view nav > ul > li > a{ line-height: 46px; display: block; color: #363636 }
+.nav-expend-view nav > ul > li > a:hover{ color: #DB4744; border-bottom: 4px solid #000 }
+.nav-expend-view nav > ul > li.active > a{ font-weight: 700; color: #DB4744; border-bottom: 4px solid #000 }
+
+.nav-expend-view .nav-2{ padding: 0; margin: 0; display: flex    }
+.nav-expend-view .nav-2 li{ padding: 0 48px 0 0; margin: 0; list-style: none; float: left; position: relative; font-size: 11.5px; color: #07304C; text-align: center }
+.nav-expend-view .nav-2 li img{ height: 35px; display: block }
+.nav-expend-view .nav-2 li .status-red{ width: 10px; height: 10px; background: #DB4744; border-radius: 100%; position: absolute; top: 0; left:30px }
+.nav-expend-view .nav-2 li span.number{ position: absolute; left: 50px; top: 16px; font-size: 16px; color: #42474C; font-weight: 500}
+
+.nav-expend-view .admin-menu-wrapper .btn, .nav-expend-view .admin-menu-wrapper .btn:focus{ box-shadow: inherit !important }
+.nav-expend-view .admin-menu-wrapper .btn .name {
+  padding-right: 8px;
+  float: left;
+  line-height: 24px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #000
+}
+
+.nav-expend-view .admin-menu-wrapper .btn .name span {
+  display: block;
+  text-align: right;
+  color: #000
+}
+
+.admin-menu-wrapper .btn img {
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+}
+
+.nav-normal-view, .nav-expend-view {
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  -ms-transition: all 0.3s ease-in-out 0s;
+  -o-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s
+}
+
+/* Badges menu */
+
+.nav-2 {
+  position: relative;
+}
+
+.nav-2 .dropdown-menu {
+  padding: 15px 20px 15px 0;
+  position: absolute;
+  top: 90px;
+  background-color: rgba(41, 41, 41, 0.8);
+  border-radius: 10px;
+}
+
+.nav-2 .dropdown-menu .option {
+  padding: 10px;
+  width: 300px;
+
+  display: flex;
+  align-items: center;
+
+  color: #fff;
+  text-align: left;
+
+  font-size: 1rem;
+}
+
+.nav-2 .dropdown-menu .option img {
+  margin-right: 10px;
+  height: 90px;
+}
+
+.trigger {
+  cursor: pointer;
+}
+
+/* Admin menu */
+
+.admin-menu-wrapper {
+  position: relative;
+}
+
+.admin-menu-wrapper .dropdown-menu {
+  position: absolute;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 10px 0;
+
+  top: 70px;
+  right: 20px;
+  background-color: #fff;
+}
+
+.admin-menu-wrapper .dropdown-menu .option {
+  width: 200px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 15px 40px;
+}
+
+.admin-menu-wrapper .dropdown-menu .option:hover {
+  background-color: hsl(0, 0%, 90%);
+  /* background-color: #ed9896; */
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.admin-menu-wrapper .dropdown-menu .option img {
+  height: 20px;
+  margin-right: 10px;
+}

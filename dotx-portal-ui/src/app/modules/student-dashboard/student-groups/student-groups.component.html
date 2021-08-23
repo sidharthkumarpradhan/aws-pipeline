@@ -1,0 +1,87 @@
+<!-- <app-student-header [userInfo]="userInfo"></app-student-header> -->
+<section class="admin-container">
+    <div class="bottom-content">
+      <div class="container">
+        <!-- <app-loader *ngIf="isLoading || isLoader2"></app-loader> -->
+        <h2>Group</h2>
+        <p>Groups allow you to organize and share multiple Challenge.</p>
+        <!-- FILTER START -->
+        <div class="user-filter-options-wrapper d-flex justify-content-between">
+        <h5>List of Groups</h5>
+        <div class="d-flex">
+            <app-search [(ngModel)]="searchGroup" name="searchGroup"></app-search>
+            <button (click)="createGroup()"
+            class="btn btn-danger shadow btn-add-user ml-3"
+            type="button" [disabled]="isViewMode == 'view'"
+            >
+            Create a group
+            </button>
+        </div>
+        </div>
+        <!-- FILTER END -->
+        <!-- TABLE START -->
+        <div class="table-responsive border my-3 my-md-4">
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th class="w-25" scope="col">Group names</th>
+                <th class="w-18" scope="col">
+                <img src="assets/img/Responses-icon.png" alt="" /> Challenge name
+                </th>
+                <th class="w-17" scope="col">
+                <img src="assets/img/created-icon.png" alt="" /> Created by
+                </th>
+                <th class="w-20" scope="col">
+                <img src="assets/img/last-update.png" alt="" /> last Update
+                </th>
+                <th class="w-15" scope="col">
+                <img src="assets/img/action-icon.png" alt="" /> Action
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="isGroupsLoading">
+                <td colspan="7" class="text-center">
+                <app-loader *ngIf="isGroupsLoading"></app-loader>
+                </td>
+            </tr>
+            <ng-container *ngIf="groupsList?.length && ( groupsList | tFilter: searchGroup:dateFormatKeys) as result">
+                <tr *ngFor="let group of result | pagination: groupPage;let i = index">
+                <td class="font-weight-medium">
+                    <div class="d-flex align-items-center">
+                    <div class="group-img">                
+                        <img [src]="'assets/img/pic-' + i + '.png'" alt="" />
+                        <img src="assets/img/pic-2.png" alt="" />
+                        <img src="assets/img/pic-3.png" alt="" />
+                        <img src="assets/img/pic-4.png" alt="" />
+                    </div>
+                    <span>{{ group.group_name | titlecase}}</span>
+                    </div>
+                </td>
+                <td>{{ group.topic.topic_name}}</td>
+                <td>{{ group.created_by }}</td>
+                <td>{{ group.lastmodified_date | date: "dd/MM/yyyy" }}</td>
+                <td>
+                    <div class="action-buttons">
+                    <button class="btn btn-link" type="button" (click)="onDiscuss(group)">Discuss</button>
+                    <button class="btn btn-link" type="button" [disabled]="isViewMode == 'view'" (click)=onEdit(group?.group_id)>Edit</button>
+                    <button class="btn btn-link" type="button" [disabled]="isViewMode == 'view'" (click)=onDelte(group?.group_id)>Delete</button>
+                    </div>
+                </td>
+                </tr>
+                <tr *ngIf="groupsList.length === 0" class="text-center">
+                    <td colspan="5"> No Data Found </td>
+                </tr>
+            </ng-container>
+            <tr *ngIf="!groupsList?.length && !isGroupsLoading">
+                <td colspan="5" class="text-center">No Data found</td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+     </div>
+    </div>
+<!-- TABLE END -->
+<ng-container *ngIf="groupsList?.length && ( groupsList | tFilter: searchGroup:dateFormatKeys) as result">
+  <app-pagination *ngIf="result?.length" [totalRecords]="result?.length" [(page)]="groupPage"></app-pagination>
+</ng-container>

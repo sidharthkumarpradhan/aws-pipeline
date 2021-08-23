@@ -1,0 +1,22 @@
+<header class="landing-page">
+  <nav>
+    <div (click)="redirectHome()">
+      <img src="assets/img/main-logo.png" alt=""/>
+    </div>
+    <div *ngIf="!onboard">
+      <a routerLink="/home" routerLinkActive="active" (click)="enableLogin()">Home</a>
+      <a routerLink="/about" routerLinkActive="active">About</a>
+      <a>
+        <button (click)="openLogin()">
+          <img src="" alt="">
+          <p>Login</p>
+        </button>
+      </a>
+      <a>
+        <button (click)="openJoinCode()">Sign up with join code</button>
+      </a>
+    </div>
+    <img class="pos-abs cover" *ngIf="hideCoverImage" src="assets/img/cover-img.png" alt="">
+    <img class="pos-abs" src="assets/img/bck-1.png" alt=""/>
+  </nav>
+</header>

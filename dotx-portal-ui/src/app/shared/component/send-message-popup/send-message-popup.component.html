@@ -1,0 +1,36 @@
+<div class="send-popup send-modal">
+  <div class="popup send-message">
+    <button (click)="close()" class="btn-close">
+      <img alt="" src="../../../../assets/img/close.png"/>
+    </button>
+    <div class="heading">
+      <img alt="" src="assets/img/my-space/message-popup.png"/>
+      <h3>Send Message</h3>
+    </div>
+    <div class="student-wrapper">
+      <img alt="" src="{{filePathLocation}}{{userData?.avatar_image_file}}"/>
+      <div>
+        <p class="name">{{userData?.display_name}}</p>
+        <p class="info">
+          {{userData?.class_details}} Grade <br/>
+          {{userData?.school_name}}
+        </p>
+      </div>
+    </div>
+    <div class="email-num">
+      <div>
+        <input #email_id name="email" type="checkbox"/>
+        <label for="">{{userData?.user_email}}</label>
+      </div>
+      <div>
+        <input #phone_num name="phone_num" type="checkbox"/>
+        <label for="">{{userData?.user_phone_num}}</label>
+      </div>
+    </div>
+    <textarea #textAreaElement placeholder="Write here"></textarea>
+    <button (click)="sendMessage(textAreaElement, email_id, phone_num)" class="btn-send">
+      <p>Send</p>
+      <img alt="" src="assets/img/my-space/send-message.png"/>
+    </button>
+  </div>
+</div>

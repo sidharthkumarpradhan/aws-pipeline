@@ -1,0 +1,24 @@
+.studentDailyQuoteModal .btn, .studentTodayQuestionModal .btn, .dailyPollModal .btn, .gratitudeJournalModal .btn{ font-size: 22px; padding: 0 45px; font-family:'Chalkboard'; font-weight: 400 }
+p.quote-text{ padding: 0; margin: 0; font-size: 51px; line-height: 77px; font-family: 'Chalkboard'; text-align: right }
+p.quote-text span{ color: #4584d7 }
+p.quote-text span + span{ color: #b75f3d }
+p.quote-text span + span + span{ color: #9cd0d0 }
+p.quote-text span + span + span + span{ color: #68a0b4 }
+p.quote-text span + span + span + span + span{ color: #364229 }
+p.quote-text span + span + span + span + span + span{ color: #57b975 }
+p.quote-text span + span + span + span + span + span + span{ color: #903d71 }
+p.quote-text span + span + span + span + span + span + span + span{ color: #dc7a78 }
+p.quote-text span + span + span + span + span + span + span + span + span{ color: #0d2995; font-size: 71px }
+/* .date-text{ font-size: 18px; line-height: 24px; font-family:'Chalkboard'; font-weight: 400; color: #5F6372; padding: 0; margin: 0 0 20px }
+.question-text{ font-size: 26px; line-height: 28px; font-family:'Chalkboard'; color: #303546; padding: 0; margin: 0 0 50px }
+.answer-set p{ font-size: 26px; font-family: 'Chalkboard' }
+.great-text{ color:#159701 }
+.good-text{ color:#EFCE0F }
+.bad-text{ color:#EF8E0F }
+.worst-text{ color:#EF3C0F }
+.btn-answer{ outline: none; text-decoration: none; border: inherit; padding: 0; margin: 0; background: inherit }
+.btn-answer:focus{ outline: none; text-decoration: none; border: inherit; padding: 0; margin: 0; background: inherit }
+.btn-answer:hover{ opacity: 0.9 } */
+
+
+.daily-dot-bottom-content{ width: 100%; padding: 65px 50px   49px; background-color: #e7e7e7 }

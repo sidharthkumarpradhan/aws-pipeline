@@ -1,0 +1,43 @@
+<h2>Overview</h2>
+<p>See your achievement snapshot across learning and engagement activities</p>
+<h5>LEADER BOARD</h5>
+<div class="user-filter-options-wrapper d-flex">
+    <app-search [(ngModel)]="searchLeaderBoards" name="searchLeaderBoards"></app-search>
+</div>
+
+<div class="table-responsive border mt-3 my-md-4">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th class="w-25" scope="col">User names</th>
+        <th class="w-18" scope="col"><img src="assets/img/reward-icon.png" alt=""> Total rewards</th>
+        <th class="w-20" scope="col"><img src="assets/img/group-created-icon.png" alt=""> Total groups
+          created</th>
+        <th class="w-22" scope="col"><img src="assets/img/challeanges-icon.png" alt=""> Total challenges
+          Shared</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="leaderBoards?.length && (leaderBoards | tFilter: searchLeaderBoards) as result">
+      <tr *ngFor="let item of result | pagination: leaderPage; let i = index">
+        <td class="font-weight-medium">
+          <img class="avatar-sm-2" [src]="fileLocation+item.avatar_image_file" (error)="onImgError($event)" alt="" />
+           {{item.display_name}}
+        </td>
+        <td>{{item.reward_points}}</td>
+        <td>{{item.group_count}}</td>
+        <td>{{item.challenges_count}}</td>
+      </tr>
+      <tr *ngIf="result.length === 0" class="text-center">
+        <td colspan="4">No Data Found</td>
+      </tr>
+      </ng-container>
+      <tr *ngIf="!leaderBoards?.length && !isLoading">
+        <td colspan="4" class="text-center">No Data found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-container *ngIf=" leaderBoards?.length && (leaderBoards | tFilter: searchLeaderBoards) as result">
+  <app-pagination *ngIf="result?.length" [totalRecords]="result?.length" [(page)]="leaderPage"></app-pagination>
+</ng-container>

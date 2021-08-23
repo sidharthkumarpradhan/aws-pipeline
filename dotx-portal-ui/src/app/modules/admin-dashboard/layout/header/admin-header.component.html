@@ -1,0 +1,57 @@
+<header id="header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between">
+        <a class="logo" routerLink="/m/home"
+          ><img src="assets/img/logo.png" alt="DotX"
+        /></a>
+        <div class="float-right">
+          <nav>
+            <ul>
+              <li routerLink="/main-route/m/home" routerLinkActive="active"><a >Home</a></li>
+              <li [routerLink]="['/main-route/m/challenge']" routerLinkActive="active"><a >Challenge</a></li>
+              <!-- <li [routerLink]="['/main-route/m/quest']" routerLinkActive="active" ><a>Quest</a></li> -->
+              <li [routerLink]="['/main-route/m/daily-dots']" routerLinkActive="active"><a >Dock</a></li>
+            </ul>
+          </nav>
+
+          <div class="admin-menu-wrapper">
+            <div class="dropdown">
+              <button
+                class="btn btn-link dropdown-toggle"
+                type="button"
+                id="adminMenu"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <div class="name d-none d-md-block">{{displayName}} <span class="small">Admin</span></div>
+                <img src="assets/img/admin-user-icon.png" alt="" />
+              </button>
+              <div class="dropdown-menu" aria-labelledby="adminMenu">
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0)"
+                  (click)="generateJoinCodes()"
+                >Generate JoinCodes</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0)"
+                  (click)="gotoResetPassword()"
+                >Reset Password</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0)"
+                  (click)="logout()"
+                  >Logout</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

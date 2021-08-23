@@ -1,0 +1,94 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="i-am-time-section-outer">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">{{challenge?.topic_name}}</h5>
+    <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+      <!--      <span aria-hidden="true">&times;</span>-->
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="iatc-section" *ngIf="challenge">
+      <!-- Header Top Section Start -->
+      <div class="header-top-section">
+        <div class="header-top-section-inn">
+          <div class="header-top-left">
+            <h5 class="title-name">{{challenge.topic_name}}</h5>
+            <p class="end-time">Last Date-<span>{{challenge.topic_end_date}}</span></p>
+            <a href="" title="Guide" class="guide-button"><img src="assets/img/guide-icon.png"
+                                                               alt=""/>
+              <span>Rules</span></a>
+
+          </div>
+          <div class="header-top-right">
+            <div class="badges-dotcoins-outer">
+              <ul class="nav-2">
+                <li>
+                  <img [src]="challenge.topic_earning_badge | imageRender : 'assets/img/badges-icon.png'" alt=""/> <span
+                  class="status-red"></span>
+                  {{challenge.topic_earning_title ? challenge.topic_earning_title : 'Badges'}}
+                  <!-- <span class="number">12</span> -->
+                </li>
+                <li>
+                  <img src="assets/img/dotcoin-45-45.png" alt=""/> Dotcoins
+                  <span class="number">{{challenge.topic_dot_coins}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="view-button-outer d-flex justify-content-end" *ngIf="challenge.topic_assign_id; else accept">
+              <a (click)="continueChallenge()" title="" class="view-button accept-btn">Continue</a>
+            </div>
+            <ng-template #accept>
+              <a (click)="acceptChallenge()" title="" class="view-button accept-btn">Accept</a>
+            </ng-template>
+            <div class="view-button-outer">
+              <a (click)="viewOtherResponse()" title="" class="view-button">View Other Responses</a>
+              <p>Total Participants 20 | Total Responses 40</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Header Top Section End -->
+      <!-- Slider Start -->
+      <div class="i-am-time-slider-outer">
+        <div class="story-slider">
+          <div class="slider slider-for">
+            <div>
+              <img src="assets/img/slider-big1.jpg" alt="" class="img-fluid">
+            </div>
+            <div>
+              <img src="assets/img/slider-big1.jpg" alt="" class="img-fluid">
+            </div>
+            <div>
+              <img src="assets/img/slider-big1.jpg" alt="" class="img-fluid">
+            </div>
+            <div>
+              <img src="assets/img/slider-big1.jpg" alt="" class="img-fluid">
+            </div>
+          </div>
+          <div class="slider slider-nav">
+            <div>
+              <img src="assets/img/slider-small1.jpg" alt="" class="img-fluid">
+            </div>
+            <div>
+              <img src="assets/img/slider-small1.jpg" alt="" class="img-fluid">
+            </div>
+            <div>
+              <img src="assets/img/slider-small1.jpg" alt="" class="img-fluid">
+            </div>
+            <div>
+              <img src="assets/img/slider-small1.jpg" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Slider End -->
+      <!-- Slider Bottom Content Start -->
+      <div class="slider-bottom-content">
+        <p><span>Challenge Description:</span>
+        </p>
+        <p [innerHTML]="challenge.topic_description"></p>
+      </div>
+      <!-- Slider Bottom Content End -->
+    </div>
+  </div>
+</div>

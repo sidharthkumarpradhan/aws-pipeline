@@ -1,0 +1,25 @@
+<section class="form-section">
+    <div class="form-window">
+        <div class="content-box">
+            <div class="heading-container">
+                <img src="assets/img/q1.png" alt="" />
+                <p>What <span>super power</span> would you like to acquire?</p>
+            </div>
+
+            <div class="options-container">
+              <app-spinner *ngIf="isLoading"></app-spinner>
+                <ng-container *ngFor="let item of options; let i = index">
+                    <div class="option-wrapper" >
+                      <input class="styled-checkbox" type="checkbox"  id="{{item.option}}"
+                      [(ngModel)]="item.selected"/>
+                      <label for="{{item.option}}">{{item.option}}</label>
+                    </div>
+                    <textarea type="text" class="form-control" *ngIf="item.option==='Others' && item.selected"
+              placeholder="Write here how did you hear about us ?"></textarea>
+                  </ng-container>
+            </div>
+
+            <button class="btn-next" (click)="save()">next</button>
+        </div>
+    </div>
+</section>

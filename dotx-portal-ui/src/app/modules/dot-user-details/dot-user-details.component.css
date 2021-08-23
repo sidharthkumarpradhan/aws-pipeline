@@ -1,0 +1,66 @@
+body{background: inherit}
+.admin-header-wrapper{ position: relative; z-index: 9; padding-top: 104px; padding-bottom: 42px; box-shadow: 0 2px 10px rgba(0,0,0,0.17) }
+.admin-header-wrapper .admin-content h3{ font-size: 32px; letter-spacing: -0.27px; font-weight: 700; color: #222 }
+.admin-header-wrapper .admin-content p{ margin-bottom: 0; font-size: 16px; line-height: 26px; letter-spacing: -0.13px; font-weight: 500; color: #222 }
+.admin-header-wrapper .search-wrapper{ width: 100%; position: relative; }
+.admin-header-wrapper .search-wrapper input.form-control{ height: 46px; font-size: 14px; color: #C0C0C0; border: 2px solid #e0e0e0; border-radius: 10px; position: relative; padding-left: 50px }
+.admin-header-wrapper .search-wrapper .search-icon{ position: absolute; top: 0; left: 0 }
+.admin-header-wrapper .search-wrapper .search-icon img{ width: 18px; height: 18px }
+.admin-header-wrapper .search-wrapper input.form-control::-webkit-input-placeholder { /* Edge */
+color: #C0C0C0; }
+.admin-header-wrapper .search-wrapper input.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+color: #C0C0C0; }
+.admin-header-wrapper .search-wrapper input.form-control::placeholder {
+color: #C0C0C0; }
+
+.bottom-content{width: 100%; background:#F9F9F9; padding: 62px 0 }
+.bottom-content h2{ font-size: 24px; line-height: 32px; font-weight: 700; color: #222; padding: 0; margin: 0 0 8px; letter-spacing: -0.2px }
+.bottom-content h5{ font-size: 28px; line-height: 22px; font-weight: 600; color: #222; padding: 0; margin: 0 0 27px; letter-spacing: -0.33px }
+.bottom-content p{ margin-bottom: 25px}
+
+
+.user-filter-options-wrapper .search-wrapper{ width:620px; position: relative; }
+.search-wrapper input.form-control{ height: 46px; font-size: 14px; color: #C0C0C0; border: 2px solid #e0e0e0; border-radius: 10px; position: relative; padding-left: 50px }
+.search-wrapper .search-icon{ position: absolute; top: 0; left: 0 }
+.search-wrapper .search-icon img{ width: 18px; height: 18px }
+.search-wrapper input.form-control::-webkit-input-placeholder { /* Edge */
+color: #C0C0C0; }
+.search-wrapper input.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+color: #C0C0C0; }
+.search-wrapper input.form-control::placeholder {
+color: #C0C0C0; }
+.user-filter-options-wrapper .btn{ height: 36px; line-height: 36px }
+.user-filter-options-wrapper .search-wrapper input.form-control{ height: 38px; line-height: 36px; border-width: 1px; border-radius: 4px }
+.user-filter-options-wrapper .btn-add-user{ letter-spacing: 1.25px }
+
+ul.media-options{ padding: 0; margin: 0 }
+ul.media-options > li{ width: 120px; float: left; padding: 0; margin: 0 0 12px 45px; list-style: none }
+ul.media-options > li button{ width:120px; height: 120px; border:1px solid #e9e9e9; border-radius: 12px  }
+ul.media-options > li button img{ width:80px; height: 80px; margin: 0 auto }
+ul.media-options > li span{ display: block; padding-top: 8px; text-align: center; color: #7e7e7e; font-size: 18px; font-weight: 600 }
+ul.media-options > li:hover span{ color:#DB4744 }
+
+/* sidebar css Start */
+.sidebar{ padding-left: 30px }
+.sidenav ul{ padding: 0; margin: 0 }
+.sidenav ul li{ list-style: none; padding: 0; margin: 0 0 8px }
+.sidenav ul li button{ height: auto; line-height: auto; color: #42474C; font-size: 16px; padding: 0; margin: 0; position: relative; }
+.sidenav ul li button.active:before{ height: 100%; width: 2px; background: #4584D7; position: absolute; top: 0; left: -8px; content: '' }
+.sidenav ul li button.active, .sidenav ul li button:hover{ color: #4584D7 }
+.sidenav ul li button:focus, .sidenav ul li button:hover{ box-shadow: inherit; text-decoration: none }
+
+/* Create Role Css Start */
+.create-role-section{  }
+.role-box{ display: flex; align-items: center; margin:5px 0; }
+.role-img{ width: 83px; height: 73px; border-radius: 8px; border: 1px solid #979797; margin-right: 18px; display: flex; align-items: center; justify-content: center }
+.role-img img{ width: 50px; height:38px; border-radius: 8px }
+.add-role{ color: #9FB4C4; font-size: 18px; font-weight: 700 }
+.add-role:hover{ text-decoration: none }
+.role-box .form-control{ width: 350px }
+.email-block{ border: 1px solid #E0E0E0; border-radius: 12px; background: #fff; padding: 20px }
+
+
+
+
+
+

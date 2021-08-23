@@ -1,0 +1,41 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<section class="form-section">
+  <div class="form-window">
+    <div class="title-bar">
+      Create Profile
+      <button *ngIf="shallowStorage.length>0 || showTypeOfForm=='QUIZ'" (click)="backTo()">
+        <img src="assets/img/back-arrow.png" alt="" />
+      </button>
+      <button (click)="skipTo(showTypeOfForm)">
+        <p>Skip</p>
+      </button>
+    </div>
+    <div class="content-box"  [formGroup]="editForm">
+      <p class="green">{{dotPersonalityQuizs?.quizDescription}}</p>
+
+      <div class="options-container"  *ngIf="isLoaded" class="answer-list mb-md-3">
+        <ul *ngIf="isLoaded" class="answer-list mb-md-3">
+          <li *ngIf="dotPersonalityQuizs?.option1" id="option1" [class.applyCssQuiz]="applyCssQuiz" (click)="setActive(dotPersonalityQuizs?.option1)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option1}"><a>{{dotPersonalityQuizs?.option1}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option2" id="option2" (click)="setActive(dotPersonalityQuizs?.option2)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option2}"><a>{{dotPersonalityQuizs?.option2}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option3" id="option3" (click)="setActive(dotPersonalityQuizs?.option3)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option3}"><a>{{dotPersonalityQuizs?.option3}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option4" id="option4" (click)="setActive(dotPersonalityQuizs?.option4)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option4}"><a>{{dotPersonalityQuizs?.option4}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option5" id="option5" (click)="setActive(dotPersonalityQuizs?.option5)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option5}"><a>{{dotPersonalityQuizs?.option5}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option6" id="option6" (click)="setActive(dotPersonalityQuizs?.option6)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option6}"><a>{{dotPersonalityQuizs?.option6}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option7" id="option7" (click)="setActive(dotPersonalityQuizs?.option7)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option7}"><a>{{dotPersonalityQuizs?.option7}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option8" id="option8" (click)="setActive(dotPersonalityQuizs?.option8)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option8}"><a>{{dotPersonalityQuizs?.option8}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option9" id="option9" (click)="setActive(dotPersonalityQuizs?.option9)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option9}"><a>{{dotPersonalityQuizs?.option9}}</a></li>
+          <li *ngIf="dotPersonalityQuizs?.option10" id="option10" (click)="setActive(dotPersonalityQuizs?.option10)" [ngClass]="{'active':selectedOption === dotPersonalityQuizs?.option10}"><a>{{dotPersonalityQuizs?.option10}}</a></li>
+        </ul> 
+        <ng-container *ngIf="selectedOption==='Others'">
+        <textarea type="text" class="form-control" formControlName="option10"  (change)="speicfyOthers()"
+        placeholder="Write here how did you hear about us ?"></textarea>
+        <app-control-messages [control]="editForm?.controls.option10" labelName="Answer">
+        </app-control-messages>
+        </ng-container>
+
+      </div>
+
+      <button type="button" (click)="save()" class="btn-next">{{showPersonQuiz !== 'personQuiz' ? 'NEXT' : 'SAVE'}}</button>
+    </div>
+  </div>
+</section>

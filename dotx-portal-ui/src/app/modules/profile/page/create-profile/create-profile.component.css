@@ -1,0 +1,5 @@
+/* ===================== 
+CREATE PROFILE COMPLEATED CSS START ====================== */
+.profile-compleated-bg{ background:url('../../../../../assets/img/profile-compleated-bg.jpg') no-repeat center; background-size: 100% }
+.profile-compleated-bg p{ font-family:'Metropolis'; font-weight: bold; font-size:28px; line-height: 45px; letter-spacing: 0.7px;  color: #07304C  }
+.profile-compleated-bg p span{ text-transform: uppercase; display: block; font-size:45px; font-weight: 900  }

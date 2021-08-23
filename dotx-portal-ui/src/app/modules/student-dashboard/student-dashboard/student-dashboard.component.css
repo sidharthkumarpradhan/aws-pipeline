@@ -1,0 +1,315 @@
+/* .student-content{ padding-top: 142px }
+.user-generated-content-section{ height: 623px; position: relative; background: url('../../../../assets/img/User-Generated-Content-bg.jpg') no-repeat center bottom  }
+.user-generated-content-section .text{ max-width:388px; text-align: center; color: #9E9E9E; font-size: 16px; line-height: 26px; background: url('../../../../assets/img/plane-img.jpg') no-repeat center top; padding-top: 103px }
+.user-generated-content-section .generated-content-btn{ width: 422px; height: 167px; background: url('../../../../assets/img/User-Generated-Content-btn.png') no-repeat 0 0; position: absolute; bottom: 53px; right: 0; outline: none; border: inherit; font-size: 36px; line-height: 49px; color: #0880BE; font-weight: 600 }
+.user-generated-content-section .generated-content-btn:hover{ color: rgb(5, 108, 160) }
+.user-generated-content-section div{ height: 100% } */
+
+
+/* 
+.the-daily-dot-section{ height: 785px; position: relative; background: url('../../../../assets/img/The-Daily-Dot-bg.jpg') no-repeat center bottom  }
+.the-daily-dot-section > .container, .the-daily-dot-section > .container > .row,  .the-daily-dot-section > .container > .row > div{ height: 100% }
+.the-daily-dot-section .top-text{ max-width:495px; padding-top: 65px; float: left; text-align: center; color: #9E9E9E; font-size: 16px; line-height: 26px }
+.the-daily-dot-section .bottom-text{ max-width:701px; margin: 0 auto 45px; padding-top: 236px; clear: both; text-align: center; color: #9E9E9E; font-size: 16px; line-height: 26px }
+.the-daily-dot-section .daily-dot-btn{ width: 363px; height: 164px; padding: 0 0 0 72px; text-align: left; background: url('../../../../assets/img/The-Daily-Dot-btn.png') no-repeat 0 0; position: absolute; bottom: 100px; right: 30px; outline: none; border: inherit; font-size: 36px; line-height: 49px; color: #E58220; font-weight: 600 }
+.the-daily-dot-section .daily-dot-btn:hover{ color: rgb(172, 91, 9) }
+
+*/
+
+/* .modal-body{ background: #E7E7E7; padding: 18px 13px }
+.s-dashboard-left{ background: #fff; padding: 20px 32px 32px 64px }
+.student-short-info{ display: flex; align-items: center }
+.student-short-info{ width: 100%; border-bottom: 1px solid #EDEDED; padding: 0 0 15px; margin: 0 0 30px }
+.student-avatar-img{ width: 105px }
+.student-info{ margin-left: 15px }
+.student-info h4{ font-size: 21px; color: #07304C; font-weight: 600 }
+.student-info p{ margin-bottom: 0; font-size: 13px; color: #5F6372 }
+.student-info p strong{ font-weight: 600; font-size: 15.76px }
+.btn-edit{ display: flex }
+.btn-edit img{ float: left; margin-right: 8px }
+
+.dotx-activities-section{ width: 100%; margin-bottom: 35px }
+.dotx-activities-section .title-wrapper{ width: 100%;  display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px }
+.dotx-activities-section h4{ font-size:16px; font-weight: 600; padding: 0; margin: 0; color: #222222  }
+.dotx-activities-section h4 img{ height: 31px; margin-right: 8px }
+.dotx-activities-section label.switch{ margin-bottom: 0px }
+.dotx-activities-box{ width: 100%; box-shadow: 0 5px 10px rgba(0,0,0,0.1); border-radius: 8px }
+.dotx-activities-box-inner{ padding: 15px 0; height: 132px; }
+.dotx-activities-box-inner img{ height: 40px; margin-bottom: 10px }
+.dotx-activities-box-inner p{ font-size: 16px; line-height: 18px; font-weight: 600; color: #9FB4C4; padding: 0 0 6px; margin: 0 }
+.dotx-activities-box-inner p.activities-score{ font-size: 30px; line-height: 30px; font-family: 'Chalkboard'; font-weight: 600; color: #303546; padding: 0; margin: 0 }
+.dotx-activities-box-inner.border-right{ position: relative; border-right: inherit !important }
+.dotx-activities-box-inner.border-right:after{ width: 1px; height: 83px; background: #EFEFEF; position: absolute; top: 15px; right: -15px; content: '' }
+ */
+/* 
+.my-skills-section{ width: 100%; margin-bottom: 50px }
+.my-skills-section .title-wrapper{ width: 100%;  display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px }
+.my-skills-section h4{ font-size:16px; font-weight: 600; padding: 0; margin: 0; color: #222222  }
+.my-skills-section h4 img{ height: 31px; margin-right: 8px }
+.my-skills-section label.switch{ margin-bottom: 0px }
+.skills-box{ width: 100%; height: 58px; padding: 0 5px; border-radius: 5px; position: relative; display: flex; align-items: center; justify-content: center; background: #f2f2f2 }
+.skills-box img{ height: 26px; margin-right: 12px }
+.skills-box p{ font-size: 14px; font-weight: 500; letter-spacing: -0.12px; line-height: 18px; text-transform: uppercase; padding: 0; margin: 0 }
+.skills-box button.skills-close{ border: inherit; padding: 0; margin: 0 }
+.skills-box button.skills-close svg{ width: 12px; position: absolute; top: 0px; right: 5px; }
+.skills-box.guitar{ background: #80E3CA }
+.skills-box.guitar p{ color: #01664D }
+.skills-box.chess{ background: #CAE7A0 }
+.skills-box.chess p{ color: #477900 }
+.skills-box.singing{ background: #F88C73 }
+.skills-box.singing p{ color: #9D2206 }
+.skills-box.rubic{ background: #C6AAD5 }
+.skills-box.rubic p{ color: #5B0C86 }
+.btn-add{ width: 34px; height: 34px; border: inherit; outline: inherit; background-color: inherit; margin-top: 10px }
+.btn-add img{ width: 34px; height: 34px }
+.btn-add:hover{ opacity: 0.7; }
+
+
+.my-talents-section{ width: 100%}
+.my-talents-section .title-wrapper{ width: 100%;  display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px }
+.my-talents-section h4{ font-size:16px; font-weight: 600; padding: 0; margin: 0; color: #222222  }
+.my-talents-section h4 img{ height: 31px; margin-right: 8px }
+.my-talents-section label.switch{ margin-bottom: 0px }
+.talents-box img{ width: 100%; height: 80px; cursor: pointer; }
+
+
+.s-dashboard-right{ width: 100%; height: 100%; padding: 15px; background: #fff; }
+.s-dashboard-right h2{ font-size: 21.89px; line-height: 35px; letter-spacing: -0.23px; font-weight: 600; color: #727281 }
+.search-buddies-dropdown{ margin-bottom: 10px }
+.search-buddies-dropdown button{ border:inherit; background-color: inherit; padding: 0 }
+.search-buddies-dropdown button.dropdown-toggle:after{ width: 22px; height: 22px; opacity: 0.4; background: url('../../../../assets/img/down-arrow.svg') no-repeat right 6px; background-size: 22px; font-size: 0px }
+.search-buddies-dropdown button:focus{ border:inherit; outline: none }
+.search-buddies-dropdown .dropdown-menu{ width: 240px; padding: 0; overflow: hidden; box-shadow: 0 5px 13px rgba(0,0,0,0.17); border: inherit; border-radius: 7px }
+.search-buddies-dropdown .dropdown-menu .dropdown-item{ padding: 7px 25px ; color: #303546}
+.search-buddies-dropdown .dropdown-menu .dropdown-item:focus, .search-buddies-dropdown .dropdown-menu .dropdown-item:hover{ background-color: #9FB4C4; font-weight: 600; color: #07304C }
+.buddies-group button.dropdown-toggle{ color: #9A9BBE }
+ */
+
+/* .buddies-group{ margin-bottom: 20px }
+.friends-box{ min-height: 74px; margin-bottom: 30px }
+.friends-box .friends-img{ width: 74px; height: 74px; float: left; }
+.friends-box .friends-img img{ width: 100%   }
+.friends-box .friends-info{ position: relative; margin-left: 88px; padding-top: 10px }
+.friends-box .friends-info h4{ padding-right: 30px; font-size: 18px; line-height: 20px; color: #555574; padding: 0 30px 4px 0; margin: 0 }
+.friends-box .friends-info p{ font-size: 16px; line-height: 20px; color: #8C8DB5; padding: 0; margin: 0 }
+.friends-box .friends-info p span{ font-size: 10px }
+.friends-box .friends-info .btn-chat{ width: 21px; height: 21px; padding: 0; margin: 0; position: absolute; top: 10px; right: 0; border: inherit; outline: none; background-color:inherit }
+.friends-box .friends-info .btn-chat img{ width: 100% } */
+
+/* 
+.buddied-search-result-wrapper{ padding: 30px 20px; background: #fff }
+.btn-back{ width: 44px; height: 44px; padding: 0; margin: 0 23px 0 0; border: inherit; outline: inherit; background-color: inherit }
+.btn-back img{ width: 100%; border: inherit; outline: inherit }
+.btn-search{ width: 30px; height: 44px; padding: 0; margin: 0 13px 0 0; border: inherit; outline: inherit; background-color: inherit }
+.btn-search img{ width: 100%; border: inherit; outline: inherit }
+.search-text{ color: #222222; font-size: 18px; font-weight: 600; line-height: 44px }
+
+.buddied-search-result-wrapper .title-bar{ padding-bottom: 35px }
+.buddies-results p{ color: #42474C }
+.buddies-result-single{ position: relative; padding: 6px 40px; margin: 0 0 10px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border-radius: 5px }
+.buddies-result-single .left{ padding-right: 100px; }
+.buddies-result-single .right{ position: absolute; right: 12px; top:20px }
+.buddies-result-single .img{ width: 56px; float: left; }
+.buddies-result-single .img img{ width: 100% }
+.buddies-result-single .buddies-search-info{ height: 56px; display: flex; align-items: center; margin-left: 75px }
+.buddies-result-single .buddies-search-info p{ padding: 0 ; margin: 0; color:#8C8DB5; }
+.buddies-result-single .buddies-search-info p strong{ font-size: 15.5px; font-weight: 600; color:#555574; }
+.buddies-result-single .buddies-search-info p span{ font-size: 12px; font-weight: 400; color:#16B400; }
+.buddies-result-single .btn-chat{ width: 26px; height: 26px; margin: 0 30px 0 0; padding: 0; border: inherit; outline: inherit ; background: inherit}
+.buddies-result-single .btn-chat img{ width: 26px }
+.buddies-result-single .btn-arrow{ width: 18px; height: 18px; padding: 0; margin: 0; border: inherit; outline: inherit ; background: inherit}
+.buddies-result-single .btn-arrow svg{ width: 18px; fill: #858585 }
+ */
+
+
+/* ---------------------------------------------------- */
+
+
+
+
+body{ background: inherit !important }
+/* 
+.nav-normal-view{ width: 100%; position: fixed; top: 0; left: 0; right: 0; z-index: 99; }
+#header.expend .nav-normal-view{ left: -50000px }
+.nav-normal-view .container-fluid{ padding-left: 0px; padding-right: 0px }
+.nav-normal-view .nav-left{ height: 107px; padding-right: 100px;     background: url('../../../../assets/img/nav-bg.png') no-repeat right top; }
+.nav-normal-view .hamburger-menu{ width: 36px; height: 24px; margin: 25px 50px 0 55px; float: left; outline: none; border: inherit }
+.nav-normal-view .nav-2{ padding: 0; margin: 0; display: flex    }
+.nav-normal-view .nav-2 li{ padding: 0 48px 0 0; margin: 0; list-style: none; float: left; position: relative; font-size: 11.5px; color: #07304C; text-align: center }
+.nav-normal-view .nav-2 li img{ height: 45px; display: block }
+.nav-normal-view .nav-2 li .status-red{ width: 14px; height: 14px; background: #DB4744; border-radius: 100%; position: absolute; top: 0; left:35px }
+.nav-normal-view .nav-2 li span.number{ position: absolute; left: 50px; top: 20px; font-size: 16px; color: #42474C; font-weight: 500}
+
+.nav-normal-view .logo-wrapper{ width: 260px; height: 100px; margin-top: 42px; background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 8px; box-shadow:  0 12px 18px rgba(0,0,0,0.17); z-index: 9; }
+.logo-wrapper-inner{ text-align: center }
+.nav-normal-view .logo-wrapper h2{ font-size: 26px; color: #303546; padding: 0; margin: 0 }
+.nav-normal-view .logo-wrapper img{ width: 110px }
+
+.nav-normal-view .admin-menu-wrapper { margin: 17px 0 0 }
+.nav-normal-view .admin-menu-wrapper .btn, .nav-normal-view .admin-menu-wrapper .btn:focus{ box-shadow: inherit !important }
+.nav-normal-view .admin-menu-wrapper .btn .name{ padding-right: 8px; float: left; font-size: 21px; line-height: 24px; font-family:'Metropolis'; font-weight: 500; letter-spacing: -0.3px; color: #3E3E3E }
+.nav-normal-view .admin-menu-wrapper .btn .name span{ display: block; text-align: right; font-size: 16px; color: #000 }
+.nav-normal-view .admin-menu-wrapper .btn img{ width: 48px; height: 48px } 
+
+.nav-expend-view{ width: 100%; height: 84px; position: fixed; top: 0; left: -30000px; right: 0; z-index: 999; display: flex; align-items: center; background: #fff; box-shadow: 0 2px 10px rgb(0 0 0 / 17%) }
+#header.expend .nav-expend-view{ left:0 }
+.nav-expend-view .expend-logo{ height: 84px; align-items: center; display: flex } 
+.nav-expend-view .devider{ width: 1px; height: 45px; background: #E0E0E0; display: block; margin-right: 35px; margin-left: 35px } 
+.nav-expend-view .hamburger-menu{ width: 36px; height: 24px; margin: 0;   outline: none; border: inherit }
+.nav-expend-view nav > ul{ padding: 0; margin: 0 0 0 72px; list-style: none}
+.nav-expend-view nav > ul > li{ padding: 0; margin: 0 30px 0 0; font: 500 16px/46px 'Poppins', sans-serif; float: left; }
+.nav-expend-view nav > ul > li > a{ line-height: 46px; display: block; color: #363636 }
+.nav-expend-view nav > ul > li > a:hover{ color: #DB4744; border-bottom: 4px solid #000 }
+.nav-expend-view nav > ul > li.active > a{ font-weight: 700; color: #DB4744; border-bottom: 4px solid #000 }
+
+.nav-expend-view .nav-2{ padding: 0; margin: 0; display: flex    }
+.nav-expend-view .nav-2 li{ padding: 0 48px 0 0; margin: 0; list-style: none; float: left; position: relative; font-size: 11.5px; color: #07304C; text-align: center }
+.nav-expend-view .nav-2 li img{ height: 35px; display: block }
+.nav-expend-view .nav-2 li .status-red{ width: 10px; height: 10px; background: #DB4744; border-radius: 100%; position: absolute; top: 0; left:30px }
+.nav-expend-view .nav-2 li span.number{ position: absolute; left: 50px; top: 16px; font-size: 16px; color: #42474C; font-weight: 500}
+
+.nav-expend-view .admin-menu-wrapper .btn, .nav-expend-view .admin-menu-wrapper .btn:focus{ box-shadow: inherit !important }
+.nav-expend-view .admin-menu-wrapper .btn .name{ padding-right: 8px; float: left; font-size: 21px; line-height: 24px; font-family:'Metropolis'; font-weight: 500; letter-spacing: -0.3px; color: #3E3E3E }
+.nav-expend-view .admin-menu-wrapper .btn .name span{ display: block; text-align: right; font-size: 16px; color: #000 }
+.nav-expend-view .admin-menu-wrapper .btn img{ width: 48px; height: 48px }  */
+
+.my-achivements-section{ width: 100%; min-height: 142px; padding: 15px; border-radius: 7px; 
+    /* background: rgb(139,106,242);
+    background: -moz-linear-gradient(0deg, rgba(139,106,242,1) 0%, rgba(139,106,242,1) 35%, rgba(87,118,233,1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(139,106,242,1) 0%, rgba(139,106,242,1) 35%, rgba(87,118,233,1) 100%);
+    background: linear-gradient(0deg, rgba(139,106,242,1) 0%, rgba(139,106,242,1) 35%, rgba(87,118,233,1) 100%); */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8b6af2",endColorstr="#5776e9",GradientType=1); }
+.my-achivements-section .img{ width: 35%; float: left; }
+.my-achivements-section .img img{ width: 100%; }
+.my-achivements-section .img-right{ margin-left: 115px }
+.my-achivements-section .img-right h4{ font-size: 21px; line-height: 24px; font-family: 'Metropolis'; font-weight: 500; color:#000; padding: 0 0 7px; margin: 0 0 18px; border-bottom: 1px solid rgba(215, 218, 255,0.2) }
+ul.achivement-list{ padding: 0; margin: o; list-style: none; display: flex }
+ul.achivement-list li{  padding: 0; margin: 0 8px 0 0; font-size: 17.5px; color: #FFFFFF }
+ul.achivement-list li img{  height: 28px; margin-right: 5px }
+
+.nav-normal-view, .nav-expend-view{ -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition:all 0.3s ease-in-out 0s}
+
+    .modal {
+        overflow: scroll;
+    }
+   
+    .custom-radio-lg .custom-control-label{
+       font-size: 16px;
+    }
+   
+    .search_buddies {
+       padding: 0px;
+       height: 100%;
+    }
+
+/* Modal Css Start ---  for Stundent Dashboard */
+/* .modal-content{ border:inherit; box-shadow: 0 5px 13px rgba(0,0,0,0.24); border-radius: 8px; overflow: hidden; } */
+
+/* .modal-body{ background: #E7E7E7 } */
+
+iframe {
+    width: 100%;
+    height: 118px !important;
+    border: none;
+}
+
+.imageThumbnail {
+    width: 210px;
+    height: 118px;
+}
+
+.s-dashboard-body .se-right h2 {
+    font-size: 22px;
+    line-height: 35px;
+    letter-spacing: -0.23px;
+    font-weight: 600;
+    color: #727281;
+}
+
+.student-info-achivement-wrap .my-achivements-section-left .student-card-wrap{
+    background-color: inherit;
+    padding: 0;
+    margin-bottom: 0;
+}
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left.achivements-right-border{
+    position: relative;
+}
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left.achivements-right-border:after{
+    width: 1px;
+    height: 90px;
+    background: rgb(239 239 239 / 22%);
+    position: absolute;
+    top: 15px;
+    right: -4px;
+    content: '';
+}
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left .student-card-wrap .img{
+    width: 100px;
+}
+
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left .student-card-wrap .edit-student-info{
+    margin: 16px 0 10px 105px;
+    position: relative;
+}
+
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left .student-card-wrap .edit-student-info h4{ font-size: 19px; line-height: 21px; color: #fff; padding:0 24px 5px 0; margin: 0 }
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left .student-card-wrap .edit-student-info p{ font-size: 16px; line-height: 21px; color: #DDD6FF; padding: 0; margin: 0 }
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left .student-card-wrap .edit-student-info p span{ display: block; font-size: 12px }
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left .student-card-wrap .btn-edit-info{ width: 17px; position: absolute; top: 0;right: 0; outline: none; border: inherit; padding: 0; margin: 0; background-color: inherit }
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-left .student-card-wrap .btn-edit-info img{ width: 17px }
+
+.student-info-achivement-wrap ul.achivement-list li.achivement-list-one{
+    color: #F6FF00;
+}
+.student-info-achivement-wrap ul.achivement-list li.achivement-list-two{
+    color: #BCFF00;
+}
+
+.student-info-achivement-wrap .my-achivements-section .my-achivements-section-right .img{
+    position: relative;
+    width: 100px;
+}
+.student-info-achivement-wrap .my-achivements-section  .my-achivements-section-right .img-sub{
+    position: absolute;
+    left: 0;
+    top: 42px;
+}
+
+.my-talents-section .talents-box-list{
+    position: relative;
+}
+.my-talents-section .talents-box-list figure{
+    margin: 0 0 0 0;
+}
+.my-talents-section .talents-box-list img{
+    width: 100%;
+}
+.my-talents-section .talents-box-list .close-btn-create-profile-ans{
+    width:28px;
+    height: 28px;
+    display: block;
+    position: absolute;
+    right: 12px;
+    top: -5px;
+    /*background: url("../img/close-btn-create-profile-ans.png") no-repeat 0 0;*/
+    background-size: 35px;
+}
+
+.s-dashboard-right .serach-by{
+    position: relative;
+}
+.s-dashboard-right .serach-by .btn{
+    position:   absolute;
+    right: 0;
+    top: 0;
+    height: 41px;
+    padding: 0 13px;
+}
+.s-dashboard-right .serach-by .btn img{
+    width: 15px;
+    height: 15px;
+}

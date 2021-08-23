@@ -1,0 +1,25 @@
+<section class="form-section">
+    <div class="form-window">
+        <div class="title-bar">
+            Create Profile
+            <button (click)="backTo()">
+                <img src="assets/img/back-arrow.png" alt="" />
+            </button>
+            <button (click)="skipTo()">
+                <p>Skip</p>
+            </button>
+        </div>
+        <div class="content-box">
+            <div class="heading-container">
+                <img src="assets/img/q6.png" alt="" />
+                <p>Write about yourself in 50 words</p>
+            </div>
+
+            <div class="options-container">
+                <textarea placeholder="Write here..." style="height: 180px" [(ngModel)]="aboutMe"></textarea>
+            </div>
+
+            <button class="btn-next" (click)="save()">NEXT</button>
+        </div>
+    </div>
+</section>

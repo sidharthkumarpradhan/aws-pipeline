@@ -1,0 +1,173 @@
+<h2>Group</h2>
+<p>Groups allow you to organize and share multiple Challenge.</p>
+<form [formGroup]="creategroupForm" (ngSubmit)="saveGroup()">
+  <!-- Invite Buddies Start -->
+  <section class="invite-buddies mb-3 mb-md-4">
+    <app-loader *ngIf="isLoading || isLoader2"></app-loader>
+    <h2>{{ groupType }} Group</h2>
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group">
+          <label>Group Name <span class="text-danger" *ngIf="!isViewMode">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            maxlength="100"
+            formControlName="group_name"
+            [readonly]="isViewMode"
+            [ngClass]="{
+              'error-field': _uhs.isValidField(
+                creategroupForm?.controls.group_name
+              )
+            }"
+          />
+          <app-control-messages
+            [control]="creategroupForm?.controls.group_name"
+            labelName="Group name"
+          >
+          </app-control-messages>
+        </div>
+        <div class="form-group">
+          <label>Select Challenge <span class="text-danger" *ngIf="!isViewMode">*</span></label>
+          <ng-container *ngIf="isViewMode">
+            <input class="form-control" formControlName="topic_id" />
+          </ng-container>
+
+          <ng-container *ngIf="!isViewMode">
+            <ng-multiselect-dropdown [placeholder]="'Select'" [data]="challenges" formControlName="topic_id"
+            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+          </ng-multiselect-dropdown>
+            <app-control-messages
+              [control]="creategroupForm?.controls.topic_id"
+              labelName="Challenge"
+            >
+            </app-control-messages>
+          </ng-container>
+        </div>
+
+        <!-- Create Role Start -->
+        <section class="create-role-section mb-3 mb-md-4">
+          <h2>Create Role</h2>
+          <div class="card">
+            <div class="card-body" formArrayName="roles">
+              <div
+                class="role-box"
+                *ngFor="let item of roleFields.controls; let roleIndex = index"
+                [formGroupName]="roleIndex"
+              >
+                <div class="role-img">
+                  <img src="assets/img/role-img.png" alt="" />
+                </div>
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    maxlength="50"
+                    formControlName="role_name"
+                    [readonly]="isViewMode"
+                    [ngClass]="{
+                      'error-field': _uhs.isValidField(
+                        creategroupForm?.controls.role_name
+                      )
+                    }"
+                    placeholder="Type Role name here"
+                  />
+                  <app-control-messages
+                    [control]="creategroupForm?.controls.role_name"
+                    labelName="Role"
+                  >
+                  </app-control-messages>
+                </div>
+                <button *ngIf="roleIndex && !isViewMode" type="button" class="ml-2 btn btn-link"  ngbTooltip="Delete" (click)="deleteRole(roleIndex)">
+                  <img src="assets/img/icon-delete-dark.svg" alt="" />
+                </button>
+              </div>
+              <div>
+                <button
+                  class="btn btn-link add-role"
+                  type="button"
+                  (click)="addRoleField()"
+                  *ngIf="!isViewMode && roleFields.controls.length < 4"
+                >
+                  + Add more role
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Create Role End -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Invite Buddies Start -->
+  <section class="invite-buddies mb-3 mb-md-4">
+    <h2>Invite Buddies <span class="text-danger" *ngIf="!isViewMode">*</span></h2>
+    <div class="card">
+      <div class="card-body">
+        <!-- Tab Start -->
+        <div class="tab-content" id="pills-tabContent">
+          <!-- Private TAB START -->
+          <div
+            class="tab-pane fade show active"
+            id="pills-private"
+            role="tabpanel"
+            aria-labelledby="pills-private-tab"
+          >
+            <div class="email-block clearfix mb-4">
+              <div class="email-text float-left">
+                <h4>Buddies Email</h4>
+                <p>Buddies join using their email.</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <tag-input
+                [disable]="isViewMode"
+                [formControlName]="'assignments'"
+                onTextChangeDebounce="100"
+                [placeholder]="'Invite by email address...'"
+                [secondaryPlaceholder]="'Invite by email address...'"
+                [maxItems]='4'
+                [errorMessages]="errorMessages"
+                [validators]="validators"
+                [editable]='true'
+                [separatorKeyCodes]="[32,188,186,13,9, 'TAB']"
+                [clearOnBlur]="true" 
+                [addOnPaste]="true"
+                [addOnBlur]="true"                
+              >
+                <tag-input-dropdown
+                [focusFirstElement]="false"
+                  [keepOpen]="!isViewMode"
+                  [displayBy]="'user_email'"
+                  [identifyBy]="'user_email'"
+                  [minimumTextLength]="1"
+                  [autocompleteItems]="buddiesList"
+                >
+                </tag-input-dropdown>
+              </tag-input>
+              <div class="text-right small">**Allowed maximum 4  emails only</div>
+
+            </div>
+          </div>
+          <!-- Private TAB END -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Invite Buddies End -->
+  <div class="d-flex justify-content-end">
+    <img src="assets/img/inline_spinner.svg" *ngIf="isFormSubmitted" alt="" />
+    <button
+      class="btn btn-outline-danger"
+      type="button"
+      [disabled]="isFormSubmitted"
+      [routerLink]="['/main-route/m/challenge']"
+    >
+      Back
+    </button>
+    <button class="btn btn-danger ml-3" type="submit" [disabled]="isFormSubmitted || isLoading" *ngIf="!isViewMode">
+      {{ groupType === 'Edit' ? 'Update' : 'Save' }} Group
+    </button>
+  </div>
+</form>

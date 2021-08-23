@@ -1,0 +1,21 @@
+<div class="modal-confirm">
+  <div class="modal-content h-auto">
+    <div class="modal-header flex-column">
+      <h4 class="modal-title w-100">Are you sure?</h4>
+      <button type="button" class="close" (click)="close()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Do you really want to delete this record? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer justify-content-center">
+      <button type="button" class="btn btn-secondary" (click)="close()">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-danger" (click)="removeRecord()">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>

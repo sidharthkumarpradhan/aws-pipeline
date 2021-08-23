@@ -1,0 +1,22 @@
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Join Codes</h5>
+    <button type="button" class="close top-close-button" aria-label="Close" (click)="closeModal()">
+      Close <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="tab-pane bg-white p-4" id="v-pills-pReset" role="tabpanel"
+       aria-labelledby="v-pills--pReset-tab">
+    <div class="s-dashboard-body">
+        <div class="form-group">
+            <label>How Many Codes?</label>
+            <select class="form-control" #generatecount>
+              <option *ngFor="let count of size" [value]="count">{{count}}</option>
+            </select>
+        </div>
+        <div >
+        <button type="button" class="btn btn-dark btn-block" (click)="generateJoinCodes(generatecount.value)">Generate</button>
+            </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,42 @@
+
+/* ===================== 
+CREATE PROFILE QUIZ CSS START ====================== */
+h5.quiz-question{ font-size: 18px; font-weight: 500; letter-spacing: -0.34px; margin-bottom: 25px }
+h5.quiz-question strong{ font-weight: bold }
+h5.quiz-question img{ height: 50px; margin-right: 10px }
+ul.answer-list{ padding: 0; margin: 0 }
+ul.answer-list li.active a, ul.answer-list li:hover a{ color: #fff; border: 1px solid #DB4744; background-color: #DB4744 }
+
+ul.answer-list > li{ list-style: none; padding: 8px 0; margin: 0; font-size: 21px; line-height: 29px; font-family:'Metropolis'; font-weight: 700  }
+ul.answer-list > li >a, ul.answer-list > li > span{ position: relative; padding: 10px 15px 10px 20px; margin: 0; color: #9FB4C4; background-color: #fff; border: 1px solid #9FB4C4; border-radius: 5px; display: block }
+ul.answer-list > li >a:hover, ul.answer-list > li > span:hover{  box-shadow: 0 4px 3px rgba(25,25,25,0.13) } 
+ul.answer-list > li >a.bg-success{ color: #fff   } 
+ul.answer-list > li >a.bg-warning{ color: #fff   } 
+ul.answer-list > li >a.bg-danger{ color: #fff   } 
+ul.answer-list > li > a > img{ margin-right: 10px}
+ul.answer-list > li img{ margin-right: 10px}
+ul.answer-list .custom-checkbox{ position: absolute; left: 30px; top: 14px }
+ul.answer-list .btn-link{ position: absolute; right: 21px; border: none; outline: none; background:inherit }
+ul.answer-list .btn-link:hover{ opacity: 0.8; }
+ul.answer-list .custom-control-input:checked~.custom-control-label:before{ background-color:#ED9896; border-color: #ED9896 }
+
+/* // li label {
+//     border: 1px solid #9FB4C4; 
+//     color: #9FB4C4;
+//     background-color: #ffffff;
+//     height: auto;
+//     padding: 10px 15px 10px 20px;
+//     margin: 0;
+//     border-radius: 5px; 
+//     display: block;
+//     cursor: pointer;
+//   }
+//   input[type='radio'] {
+//     opacity: 0;
+//     display: none
+//     ;
+//   }
+//   input[type='radio']:checked + label{
+//   color: #fff; border: 1px solid #DB4744; background-color: #DB4744;
+//   }
+//  .quiz-form .custom-control-label::before{ display: none;} */

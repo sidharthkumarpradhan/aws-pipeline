@@ -1,0 +1,392 @@
+<div class="bottom-content">
+  <div class="container">
+    <app-loader *ngIf="isLoading"></app-loader>
+    <div class="row">
+      <!-- Left pannel Start -->
+      <div class="col-9 col-md-9">
+        <form [formGroup]="createProfileForm">
+
+        <!-- Challenge Essentials Start -->
+        <section class="challenge-essentials-section mb-3 mb-md-4">
+          <h2>Challenge Essentials</h2>
+
+
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group">
+                <label>Challenge Name<span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <input type="text" class="form-control" maxlength="50" formControlName="topic_name"
+                [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_name)}" [readonly]="isViewMode">
+                <app-control-messages [control]="createProfileForm?.controls.topic_name" labelName="Challenge name">
+                </app-control-messages>
+              </div>
+              <div class="form-group">
+                <label>Prompt<span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <ckeditor formControlName="topic_description" [readOnly]="isViewMode"></ckeditor>
+                <!-- <textarea class="form-control" formControlName="topic_description" cols="5" rows="5"
+                [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_description)}" [readonly]="isViewMode"></textarea> -->
+                <app-control-messages [control]="createProfileForm?.controls.topic_description" labelName="Prompt">
+                </app-control-messages>
+              </div>
+              <div class="form-group">
+                <div>
+                  <input type="checkbox" style="padding-left: 0px;"
+                         formControlName="is_spotlight"
+                         [disabled]="isViewMode" [checked]="challengeData?.is_spotlight == 1">
+                  <label style="padding-left: 10px;">Is Spotlight Challenge?</label>
+                  <input type="checkbox" style="margin-left: 20px;"
+                         formControlName="is_influencer_challenge"
+                         [disabled]="isViewMode" [checked]="challengeData?.is_influencer_challenge == 1" (ngModelChange)="onChangeEvent()">
+                  <label style="padding-left: 10px;">Is Influencer Challenge?</label>
+                </div>
+                <app-control-messages [control]="createProfileForm?.controls.is_spotlight" labelName="Is Spotlight Challenge?">
+                </app-control-messages>
+                <app-control-messages [control]="createProfileForm?.controls.is_influencer_challenge" labelName="Is Influencer Challenge?">
+                </app-control-messages>
+              </div>
+              <div class="form-group" *ngIf="createProfileForm?.get('is_influencer_challenge').value">
+                <label>Influencer Name</label>
+                <input type="text" class="form-control" maxlength="50" formControlName="influencer_name"
+                       [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.influencer_name)}" [readonly]="isViewMode">
+                <app-control-messages [control]="createProfileForm?.controls.influencer_name" labelName="Influencer name">
+                </app-control-messages>
+              </div>
+              <div class="form-group">
+                <label>Start Date<span class="text-danger">*</span></label>
+                <input type="text" onkeydown="return false" class="form-control datepicker" formControlName="topic_start_date"
+                (click)="s.toggle()" [disabled]="isdiableMode || isViewMode"  (ngModelChange)="SetEnddate($event)" [minDate]="spotlightStartMin"  placeholder="DD/MM/YYYY"  ngbDatepicker #s="ngbDatepicker" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_start_date)}">
+                <app-control-messages [control]="createProfileForm?.controls.topic_start_date" labelName="Spotlight Start Date">
+                </app-control-messages>
+              </div>
+              <div class="form-group">
+                <label>End Date<span class="text-danger">*</span></label>
+                <input type="text" onkeydown="return false" class="form-control datepicker" formControlName="topic_end_date"
+                (click)="e.toggle()" [disabled]="isViewMode" [minDate]="spotlightEndMin"  placeholder="DD/MM/YYYY"  ngbDatepicker #e="ngbDatepicker" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_end_date)}">
+                <app-control-messages [control]="createProfileForm?.controls.topic_end_date" labelName="Spotlight End Date">
+                </app-control-messages>
+                <span class="small">**End date must be greater than Start date</span>
+              </div>
+              <div class="form-group">
+                <label>Publish Date</label>
+                <input type="text" onkeydown="return false" class="form-control datepicker"
+                       formControlName="published_date"
+                       (click)="p.toggle()" [disabled]="isViewMode" [minDate]="spotlightStartMin"
+                       [maxDate]="setPublishMaxDate" placeholder="DD/MM/YYYY"  ngbDatepicker #p="ngbDatepicker"
+                       [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.published_date)}">
+                <app-control-messages [control]="createProfileForm?.controls.published_date" labelName="Publish Date">
+                </app-control-messages>
+                <span class="small">**Publish date must be less than or equal to Start date</span>
+              </div>
+              <div class="form-group">
+                <label>Level of Complexity<span *ngIf="!isViewMode" class="text-danger">*</span></label>
+                <select [attr.disabled]="isViewMode? '' : null"
+                        [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_level)}"
+                        class="form-control" formControlName="topic_level">
+                  <option>Simple</option>
+                  <option>Medium</option>
+                  <option>Complex</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Challenge Group Size<span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <!--<input type="text" maxlength="4" minlength="1" class="form-control" formControlName="topic_group_size"
+                [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_group_size)}" [readonly]="isViewMode">
+                <div class="d-flex justify-content-between">
+                <app-control-messages [control]="createProfileForm?.controls.topic_group_size" labelName="Group Size">
+                </app-control-messages>
+                <span class="small">**Accept number only from 1-4</span>
+
+				</div>-->
+			  <select class="form-control" [attr.disabled]="isViewMode? '' : null" formControlName="topic_group_size" (change)="onChangeSize()" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_group_size)}">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+         </select>
+
+              </div>
+
+              <div class="form-group">
+                  <h4 class="font-weight-bold">Media</h4>
+                  <p>Upload a media resource to engage your buddies.</p>
+                  <ul class="media-options d-flex">
+                    <li>
+                      <div  [ngClass]="{'disabledTab':isViewMode}" (click)="uploadDocument('video', 'Video', 'challenge_video')">
+                        <button class="btn btn-link" type="button">
+                          <img src="assets/img/video-icon.png" alt="">
+                        </button>
+                        <span>Video</span>
+                      </div>
+                      <a *ngIf="VideoLink" (click)="openDocument(content, VideoLink, 'video')" class="position-relative">
+                        Video Link
+						<div class="close delete_mediafile" (click)="deleteFile($event,'challenge_video')" *ngIf="!isViewMode">
+                          <span aria-hidden="true">&times;</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div [ngClass]="{'disabledTab':isViewMode}"  (click)="uploadDocument('audio', 'Audio', 'challenge_audio')">
+                        <button class="btn btn-link" type="button">
+                          <img src="assets/img/audio-icon.png" alt="">
+                        </button>
+                        <span>Audio </span>
+                      </div>
+                      <a *ngIf="AudioLink" (click)="openDocument(content, AudioLink, 'audio')" class="position-relative">
+                        Audio Link
+                        <div class="close delete_mediafile" (click)="deleteFile($event,'challenge_audio')" *ngIf="!isViewMode">
+                          <span aria-hidden="true">&times;</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div [ngClass]="{'disabledTab':isViewMode}"  (click)="uploadDocument('image', 'Image', 'challenge_image')">
+                        <button class="btn btn-link" type="button">
+                          <img src="assets/img/image-icon.png" alt="">
+                        </button>
+                        <span>Image</span>
+                      </div>
+                      <a *ngIf="ImageLink" (click)="openDocument(content, ImageLink, 'image')" class="position-relative">
+                        Image Link
+                        <div class="close delete_mediafile" (click)="deleteFile($event,'challenge_image')" *ngIf="!isViewMode">
+                          <span aria-hidden="true">&times;</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div [ngClass]="{'disabledTab':isViewMode}"  (click)="uploadDocument('doc', 'Document', 'challenge_document')">
+                        <button class="btn btn-link" type="button">
+                          <img src="assets/img/document-icon.png" alt="">
+                        </button>
+                        <span>Document</span>
+                      </div>
+                      <a *ngIf="documentLink" (click)="openDocument(content, documentLink, 'document')" class="position-relative">
+                        Document Link
+                        <div class="close delete_mediafile" (click)="deleteFile($event,'challenge_document')" *ngIf="!isViewMode">
+                          <span aria-hidden="true">&times;</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                <input type ="hidden" formControlName="topic_image" />
+                <input type ="hidden" formControlName="topic_video" />
+                <input type ="hidden" formControlName="topic_audio" />
+                <input type ="hidden" formControlName="topic_document" />
+                <input type ="hidden" formControlName="topic_broadcast" />
+
+              </div>
+
+              <div class="form-group d-flex" style="align-items: center;">
+                <div class="mr-5"><label>Badge</label></div>
+                <input type="hidden" formControlName="topic_earning_badge" />
+                <div class="upload-pic-wrapper">
+                    <div class="avatar-lg position-relative">
+                      <figure class="upload-avatar-img">
+                      <img class="img-fluid w-100 h-100" [src]="challengeBadge" alt="">
+                    </figure>
+                    <a class="img-edit-btn" (click)="uploadDocument('image', 'Badge', 'challenge_badge')" *ngIf="!isViewMode"></a>
+                    </div>
+              </div>
+              </div>
+
+              <div class="form-group">
+                <label>Earning Title<span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <input type="text" class="form-control" maxlength="50" formControlName="topic_earning_title"
+                [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_earning_title)}" [readonly]="isViewMode">
+                <app-control-messages [control]="createProfileForm?.controls.topic_earning_title" labelName="Earning title">
+                </app-control-messages>
+              </div>
+
+              <div class="form-group">
+                <label>Dot Coins for Participation<span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <input type="text" maxlength="7" class="form-control" formControlName="participation_dot_coins"
+                [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.participation_dot_coins)}" [readonly]="isViewMode">
+                <div class="d-flex justify-content-between">
+                <app-control-messages [control]="createProfileForm?.controls.participation_dot_coins" labelName="Dot Coins for Participation">
+                </app-control-messages>
+                <span class="small">**Accept number only</span>
+              </div>
+              </div>
+
+              <div class="form-group">
+                <label>Winning Dot Coins<span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <input type="text" maxlength="7" class="form-control" formControlName="topic_dot_coins"
+                       [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_dot_coins)}"
+                       [readonly]="isViewMode">
+                <div class="d-flex justify-content-between">
+                  <app-control-messages [control]="createProfileForm?.controls.topic_dot_coins"
+                                        labelName="Winning Dot Coins">
+                  </app-control-messages>
+                  <span class="small">**Accept number only</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select [attr.disabled]="isViewMode? '' : null"
+                        [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.topic_status)}"
+                        class="form-control" formControlName="topic_status">
+                  <option>Draft</option>
+                  <option>Open</option>
+                  <option>Paused</option>
+                  <option>Closed</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Challenge Essentials End -->
+
+            <!-- Create Role Start -->
+            <section class="create-role-section mb-3 mb-md-4" *ngIf="enableRoles && isShow">
+              <h2>Create Role</h2>
+              <div class="card">
+                  <div class="card-body" formArrayName="roles">
+                  <div
+                      class="role-box"
+                      *ngFor="let item of roleFields.controls; let roleIndex = index"
+                      [formGroupName]="roleIndex"
+                  >
+
+                      <div class="role-img" (click)="openAvatarModal(roleIndex)">
+                        <!-- <img [src]="role_img" (error)="onImgError($event)" alt="" /> -->
+                      <img *ngIf="roleIndex == 0" [src]="roleImage_" (error)="onImgError($event)" alt="" />
+                      <img *ngIf="roleIndex == 1" [src]="roleImage_one" (error)="onImgError($event)" alt="" />
+                      <img *ngIf="roleIndex == 2" [src]="roleImage_two" (error)="onImgError($event)" alt="" />
+                      <img *ngIf="roleIndex == 3" [src]="roleImage_three" (error)="onImgError($event)" alt="" />
+                      <input type="hidden" formControlName="role_img" />
+                      </div>
+                      <div class="form-group mb-0">
+
+                      <input
+                          type="text"
+                          class="form-control"
+                          maxlength="50"
+                          formControlName="role_name"
+                          [readonly]="isViewMode"
+                          [ngClass]="{
+                          'error-field': _uhs.isValidField(
+                            createProfileForm?.controls.role_name
+                          )
+                          }"
+                          placeholder="Type Role name here"
+                      />
+
+                      <app-control-messages
+                          [control]="createProfileForm?.controls.role_name"
+                          labelName="Role"
+                      >
+                      </app-control-messages>
+                      </div>
+                      <!-- <div class="custom-control custom-radio  custom-control-inline mr-3 ml-5">
+                        <input type="radio" id="{{'role' + roleIndex}}"
+                        value="" (change)="onChangeRole(roleIndex)" [readonly] ="isRoleMode" [checked]="roleIndex == checkedIndex" name="role_assigned_to" class="custom-control-input" formControlName="role_assigned_to" >
+                        <label class="custom-control-label" for="{{'role' + roleIndex}}"></label>
+                      </div> -->
+                      <!-- <div class="form-group mb-0">
+                        <input
+                            type="text"
+                            class="form-control"
+                            hidden
+                            formControlName="group_role_id"
+                        />
+                        </div> -->
+                      <button *ngIf="roleIndex" type="button" class="ml-2 btn btn-link"  ngbTooltip="Delete" (click)="deleteRole(roleIndex)">
+                      <img src="assets/img/icon-delete-dark.svg" alt="" />
+                      </button>
+                  </div>
+                  <div>
+                      <button
+                      class="btn btn-link add-role"
+                      type="button"
+                      (click)="addRoleField()"
+                      *ngIf="roleFields.controls.length < rolesSize"
+                      >
+                      + Add more role
+                      </button>
+                  </div>
+                  </div>
+              </div>
+              </section>
+              <!-- Create Role End -->
+
+           <!-- Create hashtag Start -->
+           <section class="create-role-section mb-3 mb-md-4">
+            <h2>Add tags</h2>  (up to 5) so readers know what your story is about
+            <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Add a Tag..."
+                        #searchInput  (keyup.enter)="addTag()" formControlName="tags">
+                      </div>
+                   </div>
+                   <ul class="mt-3 member-list">
+                    <li  *ngFor="let tag of tagsList">
+                       # {{tag.tag}}
+                      <button type="button" class="btn-close" (click)="removeTag(tag)"></button>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+
+
+            </section>
+            <!-- Create hashtag End -->
+
+
+        <!-- Invite Buddies End -->
+        <div class="row">
+          <div class="col-12 d-flex justify-content-end">
+            <img src="assets/img/inline_spinner.svg" *ngIf="formSubmitted" alt="" />
+            <button class="btn btn-outline-danger" type="button" [routerLink]="['/main-route/m/challenge']" [disabled]="formSubmitted">Back</button>
+            <button class="btn btn-danger ml-3" type="button" (click)="saveChallenge($event)" *ngIf="!isViewMode" [disabled]="formSubmitted"> {{ (challengeId) ? 'Update' : 'Create'}} Challenge</button>
+          </div>
+        </div>
+        </form>
+      </div>
+      <!-- Left pannel Start -->
+
+      <!-- Sidebar Start -->
+      <div class="col-3 col-md-3">
+        <aside class="sidebar">
+          <nav class="sidenav">
+            <ul>
+              <li><button class="btn btn-link active" type="button">Challenge Essentials</button></li>
+              <!-- <li><button class="btn btn-link" type="button" (click)="scroll('.invite-buddies')">Invite Buddies</button></li> -->
+            </ul>
+          </nav>
+        </aside>
+      </div>
+      <!-- Sidebar End -->
+    </div>
+  </div>
+</div>
+
+
+<ng-template #content let-modal>
+  <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button> -->
+  <div class="modal-body d-flex justify-content-center">
+    <ng-container *ngIf="fileType==='video'">
+      <video width="100%" height="100%" controls>
+        <source [src]="fileUrl" [type]="mediaType">
+        Your browser does not support the video tag.
+      </video>
+    </ng-container>
+    <ng-container *ngIf="fileType==='audio'">
+      <audio controls>
+        <source [src]="fileUrl" [type]="mediaType">
+        Your browser does not support the audio tag.
+      </audio>
+    </ng-container>
+    <ng-container *ngIf="fileType==='image'">
+      <img [src]="fileUrl" class="mw-300p" alt="image not found" />
+    </ng-container>
+    <ng-container *ngIf="fileType==='document'">
+      <app-spinner *ngIf="isUrlLoading"></app-spinner>
+      <iframe (load)="isUrlLoading=false" [src]="fileUrl | safe" width="100%" height="500px" style="border:none;" title="Document">
+      </iframe>
+    </ng-container>
+  </div>
+</ng-template>

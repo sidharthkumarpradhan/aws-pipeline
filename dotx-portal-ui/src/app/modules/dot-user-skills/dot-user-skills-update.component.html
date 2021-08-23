@@ -1,0 +1,158 @@
+ <!-- ANSWER QUIZ - TIME START -->
+ <!-- <div class="login-section">
+    <div class="container">
+      <app-loader *ngIf="isLoading"></app-loader>
+      <div class="login-wrapper">
+        <h2 class="text-center" *ngIf="skillsInfoDashboard !== 'Skills'">Answer the quiz or skip</h2>
+        <div class="login-box">
+          <div class="login-header" *ngIf="skillsInfoDashboard !== 'Skills'">
+            <div class="row">
+              <div class="col-12">
+                <h3>
+                  <img class="mr-5 backTo" src="assets/img/prev-arrow.png" alt="" (click)="backToQuiz()">
+                    <img src="assets/img/create-profile-icon.png" alt=""> Create Profile <button type="button"
+                    class="btn btn-link btn-skip ml-0 ml-md-2" (click)="skipTo()">Skip</button></h3>
+              </div>
+            </div>
+          </div>
+          <div class="login-bottom">
+            <form [formGroup]="editForm" (ngSubmit)="save()">
+              <div class="row mb-4">
+                <div class="col-12 text-center gender-select">
+                  <div class="custom-control custom-radio custom-radio custom-control-inline mr-3" 
+                  [ngClass]="{'mediumRadio':skillsInfoDashboard == 'Skills'}" [class.custom-radio-lg]="!applyCssSkills" [class.mr-md-4]="!applyCssSkills">
+                    <input type="radio" id="{{radioctrlName1}}" value="talent"  [checked]="isCheck" (change)="onSkillChange()" formControlName="skillIdId" name="skillIdId" class="custom-control-input">
+                    <label class="custom-control-label" for="{{radioctrlName1}}">Talents</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-radio custom-control-inline" [class.custom-radio-lg]="!applyCssSkills">
+                    <input type="radio" id="{{radioctrlName2}}" value="basic" formControlName="skillIdId" (change)="onSkillChange()"  name="skillIdId" class="custom-control-input">
+                    <label class="custom-control-label" for="{{radioctrlName2}}">Basic Attributes</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row errorGender">
+                <app-control-messages [control]="editForm?.controls.skillIdId" labelName="Skill">
+                </app-control-messages>
+              </div>
+              <ul class="answer-list mb-3" *ngIf="TalentsShow">
+                <li *ngFor="let skill of dotskilldetails; let i = index">
+                  <span class="text-violet d-flex">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="{{skill.skillId}}"
+                       [checked]="skill.selected" (change)="checkSkill(skill, i, $event, '')">
+                      <label class="custom-control-label" for="{{skill.skillId}}" ></label>
+                    </div>
+                     {{skill.skillName}}
+                     <span *ngIf="!skill.skill_files" class="skil_file_upload" [ngbTooltip]="defaultTooltip">
+                       <img src="assets/img/download-icon.png" alt=""  (click)="onUpload( skill,$event, i)" />
+                     </span>
+                     <div class="skil_file_upload ml-auto" *ngIf="skill.skill_files">
+                      <img src="assets/img/video_icon.png" alt="" [ngbPopover]="popContent" triggers="manual" #p1="ngbPopover" (click)="toggleWithViewUpload(p1, [skill, i])" />
+                    </div> 
+                  </span>
+                </li>
+              </ul>
+              <div class="login-bottom"  *ngIf="!TalentsShow">
+                   <div class="form-group">
+                    <label>Attributes</label>
+                    <textarea type="text" rows="4" class="form-control" formControlName="skillAchievements"
+                     placeholder="Enter Attributes"></textarea>
+                  </div>
+                 
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-dark btn-block">{{ skillsInfoDashboard !== 'Skills' ? 'Done' : 'SAVE'}}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+<!-- ANSWER QUIZ - TIME END -->
+
+<!-- view / upload popover -->
+<!-- <ng-template #popContent let-data="data">
+  <ng-container>
+    <div class="">
+      <div class="dropdown-item" (click)="openDocument(content, data[0].skill_files)">view</div>
+      <div class="dropdown-item" (click)="onUpload(data[0], $event, data[1])">upload file</div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-body d-flex justify-content-center">
+    <ng-container *ngIf="fileType==='video'">
+      <video width="100%" height="100%" controls>
+        <source [src]="fileUrl" [type]="mediaType">
+        Your browser does not support the video tag.
+      </video>
+    </ng-container>
+    <ng-container *ngIf="fileType==='image'">
+      <img [src]="fileUrl" class="mw-300p" alt="image not found" />      
+    </ng-container> 
+  </div>
+</ng-template> -->
+
+<app-loader *ngIf="isLoading"></app-loader>
+<section class="form-section">
+  <div class="form-window">
+    <div class="title-bar">
+      Create Profile
+      <button (click)="backToQuiz()">
+        <img src="assets/img/back-arrow.png" alt="" />
+      </button>
+      <button (click)="skipTo()">
+        <p>Skip</p>
+      </button>
+    </div>
+
+    <div class="content-box">
+      <div class="heading-container sub-wrapper">
+        <ng-container *ngIf="currentPage === 'Talents'; else favourite">
+          <div>
+            <img src="assets/img/q4.png" alt="" />
+            <p>Show off your talents</p>
+          </div>
+          <p class="sub-title">Do not forgot to upload an Image or a Video</p>
+        </ng-container>
+        <ng-template #favourite>
+          <div>
+            <img src="assets/img/q4.png" alt="" />
+            <p>Show off your talents</p>
+          </div>
+          <p class="sub-title">Do not forgot to upload an Image or a Video</p>
+        </ng-template>
+      </div>
+      <div class="options-container" [formGroup]="editForm">
+        <ng-container *ngFor="let skill of dotskilldetails; let i = index">
+          <div class="option-wrapper" *ngIf="i%2 === 0; else uploadcontent">
+            <input class="styled-checkbox" type="checkbox" id="{{skill.skillId}}"
+            [checked]="skill.selected" (change)="checkSkill(skill, i, $event, '')"/>
+            <label for="{{skill.skillId}}">{{skill.skillName}}</label>
+          </div>
+          <ng-template #uploadcontent>
+            <div class="option-wrapper upload-option">
+              <div>
+                <input class="styled-checkbox" type="checkbox" id="{{skill.skillId}}"
+                [checked]="skill.selected" (change)="checkSkill(skill, i, $event, '')"/>
+                <label for="{{skill.skillId}}">{{skill.skillName}}</label>
+              </div>
+              <button class="btn-upload">
+                <img src="assets/img/Upload.png" alt="" />
+              </button>
+            </div>
+            <textarea *ngIf="dotskilldetails.length === i+1" placeholder="write about your talent..." formControlName="skillAchievements"></textarea>
+          </ng-template>
+        </ng-container>
+      </div>
+      <button type="button" (click)="save()" class="btn-next">NEXT</button>
+    </div>
+  </div>
+</section>
+
+
+

@@ -1,0 +1,154 @@
+// VARIABLES
+
+$light-text: #5f6372;
+$green: #16b400;
+$gold: #dea611;
+$main-font: GothamRounded, sans-serif;
+
+// MIXINS
+
+@mixin btn-primary {
+  background-color: #db4744;
+  color: #fff;
+  padding: 10px;
+
+  // font-weight: 600;
+  font-size: 1.1rem;
+  font-family: GothamRounded, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  outline: none;
+  border: none;
+  border-radius: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #ad2c2a;
+  }
+
+  img {
+    margin: 0 7px;
+    height: 20px;
+  }
+}
+
+@mixin input-primary {
+  margin-top: 10px;
+  padding: 0 15px;
+  background-color: #fff;
+  box-shadow: inset 2px 2px 7px 0 rgba(0, 0, 0, 0.16);
+
+  color: rgb(94, 94, 94);
+  font-size: 1rem;
+  font-family: GothamRounded, sans-serif !important;
+
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  border: 2px solid #9fb4c4;
+}
+
+.send-modal {
+  background-color: lightblue;
+  font-family: GothamRounded, sans-serif;
+
+  position: relative;
+  border-radius: 12px;
+
+  button {
+    padding: 0;
+    outline: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .popup {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    padding: 50px;
+    background-color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-shadow: 0 11px 29px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+
+    .btn-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      img {
+        height: 15px;
+      }
+    }
+  }
+}
+
+.send-popup {
+  .popup {
+    &.send-message {
+      width: 600px;
+
+      .heading {
+        display: flex;
+        align-items: center;
+
+        img {
+          margin-right: 20px;
+        }
+      }
+
+      .student-wrapper {
+        margin: 30px 0;
+        display: flex;
+
+        img {
+          max-width: 60px;
+          margin-right: 10px;
+        }
+
+        .info {
+          color: $light-text;
+          font-size: 0.8rem;
+        }
+      }
+
+      .email-num {
+        margin-bottom: 15px;
+        display: flex;
+
+        div:first-child {
+          margin-right: 15px;
+        }
+      }
+
+      textarea {
+        height: 150px;
+        width: 80%;
+        @include input-primary();
+        padding-top: 10px;
+      }
+
+      .btn-send {
+        width: 300px;
+        margin-top: 20px;
+        @include btn-primary();
+      }
+    }
+  }
+}

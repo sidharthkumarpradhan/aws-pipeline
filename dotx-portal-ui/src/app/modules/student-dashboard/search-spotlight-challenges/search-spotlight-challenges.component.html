@@ -1,0 +1,84 @@
+<div class="search-result-page padding-top-bottom-179">
+  <div class="container">
+    <div class="search-bar-outer">
+      <a href="#" title="" class="back-arrow-search" [routerLink]="'/main-route/student/spotlight'"
+         [routerLinkActive]="'active'"></a>
+      <div class="search-bar">
+        <div class="search-container">
+          <div class="filter-2">
+            <div class="trigger">
+              <select [(ngModel)]="searchType" class="select">
+                <option ngValue="topic_name">Topic</option>
+                <option ngValue="group">Group</option>
+                <option ngValue="buddy_name">Buddy Name</option>
+              </select>
+              <!--              <img src="assets/img/arrow-down.png" alt=""/>-->
+            </div>
+            <!-- <div class="dropdown">
+            <div class="option">All</div>
+            <div class="option">Recently Added</div>
+            <div class="option">Group</div>
+            <div class="option">Topic</div>
+            <div class="option">Buddies Name</div>
+          </div> -->
+          </div>
+          <input (keyup.enter)="doSearch()" [(ngModel)]="searchKeyword"
+                 placeholder="Search here"
+                 type="text">
+          <button (click)="doSearch()">
+            <img src="assets/img/search-icon.png" alt=""/>
+          </button>
+        </div>
+
+      </div>
+      <p class="total-search-text">Total search result for <span class="color-painting">{{keyword}}</span> <span
+        class="search-result-num"></span> {{searchResult?.length}} <span class="clear-search-color"
+                                                                         (click)="clearFilters()"><span
+        class="clear-search-divider">x</span> Clear Search</span></p>
+    </div>
+    <div class="card-section">
+      <div class="clearfix card-design-list">
+        <div class="card-design-4" *ngFor="let challenge of searchResult" (click)="gotoChallenge(challenge)">
+          <div class="tile-wrapper">
+            <img *ngIf="challenge.attachment_file_path === null" [src]="'assets/img/trending-' + 1 + '.png'" alt=""/>
+            <img *ngIf="challenge.attachment_file_path !== null" [src]="baseImagePath + challenge.attachment_file_path"
+                 [alt]="challenge.attachment_title">
+          </div>
+          <div class="info-1">
+            <div>
+              <img alt="" src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+              <h3>{{challenge.topic_name}}</h3>
+            </div>
+            <p class="level">Level: <span>Easy</span></p>
+            <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+          </div>
+          <div class="info-2">
+            <div class="dot-coin">
+              <img src="assets/img/dotcoin.png" alt=""/>
+              <p>150</p>
+            </div>
+            <div class="reaction-container">
+              <div class="reaction-wrapper">
+                <p>10</p>
+                <img src="assets/img/reaction-1.png" alt=""/>
+              </div>
+              <div class="reaction-wrapper">
+                <p>20</p>
+                <img src="assets/img/reaction-2.png" alt=""/>
+              </div>
+              <div class="reaction-wrapper">
+                <p>15</p>
+                <img src="assets/img/reaction-3.png" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-section" *ngIf="searchResult?.length === 0">
+      <div class="clearfix card-design-list">
+        <p><span>No challenges found</span></p>
+      </div>
+    </div>
+  </div>
+</div>

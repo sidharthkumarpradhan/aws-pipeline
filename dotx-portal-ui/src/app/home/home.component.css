@@ -1,0 +1,173 @@
+.body-wrapper{ width: 100%; overflow-x: hidden; background:url('../../assets/img/body-line-bg.svg') no-repeat center 650px #fcfcfc }
+
+
+/* BANNER CSS START */
+.banner-section{ width: 100%; padding: 50px 0 0; background:url('../../assets/img/header-bg.png') no-repeat center bottom #fff; }
+.bannet-left h2{ font:600 49px/61px 'Poppins', sans-serif; color: #3C4852; padding: 0 0 42px; margin: 0 }
+.bannet-left p{ font:normal 21px/30px 'Metropolis', sans-serif; color: #5F6372; padding: 0 0 12px; margin: 0 }
+.bannet-left p strong{ font-weight: bold; color: #3C4852 }
+.bannet-left .btn{ padding-left: 60px; padding-right: 60px }
+.banner-section .login-bottom{ padding: 28px }
+.banner-section .login-bottom:before{ display: none }
+.login-right{position: relative;}
+.login-right:before{ width: 410px; height: 314px; background:url('../../assets/img/login-book-img.png') no-repeat 0 0; position: absolute; bottom: 0; left: 0px; top: 0; z-index: 1; content: '' }
+
+
+/* LEARNING JOURNEY SECTION CSS START */
+.learning-journey-section{ width: 100%; display: block; padding: 258px 0; background: url('../../assets/img/learning-journey-bg.png') no-repeat center bottom }
+.learning-journey-content{ padding: 48px 32px 68px 144px;}
+.learning-journey-content-wrapper{ max-width: 644px;  margin: 0 auto; border-radius: 8px; position: relative; background:url('../../assets/img/learning-journey-content-bg.svg') no-repeat left bottom #fff; box-shadow: 0 0 13px rgba(0,0,0,0.24)  }
+.learning-journey-content-wrapper:before{ width: 263px; height: 229px; background: url('../../assets/img/learning-journey-img.png') no-repeat 0 0; position: absolute; bottom: 0; left: -100px; z-index: 9; content: '' }
+.learning-journey-content:after{ width: 129px; height: 145px; background: url('../../assets/img/learning-journey-right-bg.png') no-repeat 0 0; position: absolute; bottom: 0; right:-129px; z-index: 9; content: '' }
+.learning-journey-content:before{ width: 117px; height: 51px; background: url('../../assets/img/learning-journey-left-bg.png') no-repeat 0 0; position: absolute; bottom: 0; left:-217px; z-index: 9; content: '' }
+.learning-journey-content h2{ text-align: right; font-weight: 500; font-size: 28px; line-height: 30px; padding: 0; margin: 0 0 30px; color: #3C4852 }
+.learning-journey-content p{ text-align: right; font:500  20px/29px 'Metropolis', sans-serif; padding: 0; margin: 0 0 30px; color: #3C4852 }
+
+
+/* LIST OPTION SECTION CSS START */
+.list-option-section{ width: 100% }
+.list-box{ width: calc(33.33% - 20px); margin: 10px; border-radius: 13px; box-shadow: 0 0 16px rgba(0,0,0,0.07); background-color: #fff; float: left; outline: none !important }
+.list-box:hover{ box-shadow: 0 0 16px rgba(0,0,0,0.1) }
+.list-box .icon{ width: 180px; height: 180px; position: relative; margin:-90px auto 0; display: block }
+.list-box .s-logo{ width: 72px; height: 18px; display: block; margin:27px auto }
+.list-box h3{ text-align: center; min-height: 92px; color: #58585B; font-size: 30px; line-height: 36px; font-weight: 500; padding: 0 15px 20px; margin: 0 }
+.list-box p{ text-align: center; letter-spacing: -0.08px; color: #454545; font-size: 20px; line-height: 27px; font-weight: 400; padding: 0 15px; margin: 0 }
+.list-box .btn{ height: 56px; font-size: 20px; border-radius:0 0 13px 13px; margin-top: 58px }
+.list-option-section .slick-list{ padding-top: 100px }
+.list-option-section .slick-next{ width: 49px; height: 356px; margin-top: 24px; right: -49px; box-shadow: 0 0 8px rgba(0,0,0,0.07); background: url('../../assets/img/next-arrow.png') no-repeat center #fff; background-size: 28px; text-indent: -200000px; border-radius: 8px }
+.list-option-section .slick-prev{ width: 49px; height: 356px; margin-top: 24px; left: -49px; box-shadow: 0 0 8px rgba(0,0,0,0.07); background: url('../../assets/img/prev-arrow.png') no-repeat center #fff; background-size: 28px; text-indent: -200000px; border-radius: 8px }
+.list-option-section .slick-prev:hover, .list-option-section .slick-prev:focus{ background: url('../../assets/img/prev-arrow-hover.png') no-repeat center  #DB4744 }
+.list-option-section .slick-next:hover, .list-option-section .slick-next:focus{ background: url('../../assets/img/next-arrow-hover.png') no-repeat center  #DB4744 }
+
+/* IMAGE SECTION CSS START */
+.img-section{ padding:126px 0 45px }
+
+/* BOOK SECTION CSS START */
+.book-section{ padding-bottom: 80px }
+.book-section h3{ font-weight: 700; font-size: 31px }
+
+
+/* TESTIMONIALS SECTION CSS START */
+.testimonial-section{ padding-bottom: 75px }
+.testimonial-section .t-slides{ padding: 0 100px; position: relative; padding-top: 65px }
+.testimonial-section .t-slides:before{ width: 55px; height: 43px; position: absolute; top: 0; left: 50%; margin-left: -27px; content: ''; opacity: 0.6; background: url('../../assets/img/quotes-icon.svg') no-repeat center top; padding-top: 50px; background-size: 55px }
+.testimonial-section .t-slides h5{ font-size: 20px; line-height: 30px }
+.testimonial-section .t-slides p strong{ display: block }
+.slick-next{ width: 41px; height: 70px; background:url('../../assets/img/next-arrow-red.png') no-repeat 0 0; text-indent: -200000px; background-size: 26px  }
+.slick-next:hover, .slick-next:focus{ background:url('../../assets/img/next-arrow-red.png') no-repeat 0 0; opacity: 0.7; background-size: 26px  }
+.slick-prev{ width: 41px; height: 70px; background:url('../../assets/img/prev-arrow-red.png') no-repeat 0 0; text-indent: -200000px; background-size: 26px  }
+.slick-prev:hover, .slick-prev:focus{ background:url('../../assets/img/prev-arrow-red.png') no-repeat 0 0; opacity: 0.7; background-size: 26px  }
+
+
+
+body {
+    padding-top: 20px;
+}
+
+.carousel {
+  width: 100%;
+}
+
+.slide-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel-control-prev{
+    width: 5%; 
+    left:-6%; 
+    bottom: 18%;
+    box-shadow: 0 0 20px 20px rgb(0 0 0 / 7%);
+    background: url(../../assets/img/prev-arrow.png) no-repeat center #fff;
+}
+
+.prevClass:hover{
+    /* background-color: #DB4744;   */
+    background: url(../../assets/img/prev-arrow-hover.png) no-repeat center #DB4744;
+}
+
+.nextClass:hover{
+    background: url(../../assets/img/next-arrow-hover.png) no-repeat center #DB4744;
+}
+
+
+.icon_img{
+    width: 29px;
+    height: 40px;
+    top: 19%;
+    right: 17%;
+}
+
+.testimonals-left{
+    width: 5%  !important; 
+    left:-6%  !important;
+    bottom: 18%  !important;
+    box-shadow: none  !important;
+    opacity: inherit;
+    background: url(../../assets/img/prev-arrow-red.png) no-repeat center;
+}
+.testimonals-left:hover{
+    box-shadow: none !important;
+}
+
+.testimonals-right:hover{
+    box-shadow: none !important;
+}
+.testimonals-right{
+    width: 5%  !important;; 
+    right: -6%  !important;;
+    bottom: 18%  !important;;
+    box-shadow: none !important;
+    opacity: inherit !important;
+    background: url(../../assets/img/next-arrow-red.png) no-repeat center !important;
+}
+.carousel-control-next{
+    width: 5%; 
+    right: -6%;
+    bottom: 18%;
+    box-shadow: 0 0 20px 20px rgb(0 0 0 / 7%);
+    background: url(../../assets/img/next-arrow.png) no-repeat center #fff;
+}
+
+.sign_up_btn{
+  color: #fff;
+}
+
+.sign_up{
+  background-color: rgb(228, 79, 79);
+  font-family: 'Metropolis';
+  color: #fff;
+
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .slide-box img {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .slide-box img {
+    -ms-flex: 0 0 33.3333%;
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+
+@media (min-width: 992px)
+{
+  .slide-box img {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: .5rem;
+}
+

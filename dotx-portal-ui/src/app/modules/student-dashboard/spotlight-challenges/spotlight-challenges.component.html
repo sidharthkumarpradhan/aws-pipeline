@@ -1,0 +1,2477 @@
+<!-- <app-student-header [userInfo]="userInfo"></app-student-header> -->
+<app-loader *ngIf="isLoading"></app-loader>
+<div style="overflow-x: hidden; position: relative;">
+  <div class="spotlight-slider-arrow-gradient"></div>
+  <!-- New Image slider start -->
+  <div class="image-slider daily-dot-slider">
+    <div *ngFor="let item of spotLightChallenges; let i = index" class="image-slide">
+      <div class="content-wrapper">
+        <div class="community-wrapper">
+          <p class="community-titl">I am Time</p>
+          <button class="btn-community-change">
+            <img alt="" src="assets/img/community-change.png"/>
+          </button>
+        </div>
+        <div class="challenge-type">
+          <img alt="" src="assets/img/{{item.topic_group_size === 1 ? 'solo-icon.png' : 'group-icon.png'}}"/>
+          <p>{{item.topic_group_size === 1 ? 'Solo Challenge' : 'Group Challenge'}}</p>
+        </div>
+        <p class="title">{{item.topic_name}}</p>
+        <p class="text" [innerHTML]="getDescToBind(item.topic_description)">
+          <span *ngIf="item.topic_description.length > 200" class="dots" placement="left"
+          >...</span>
+        </p>
+        <p class="challenge">Last Date - {{item.topic_end_date | date:'dd MMM yyyy'}}</p>
+        <button (click)="openChallenge(item, 'join')" *ngIf="item.topic_assign_id == null"
+                class="btn-join" type="button">Join
+        </button>
+        <button (click)="openChallenge(item, 'continue')" *ngIf="item.topic_assign_id !== null"
+                class="btn-join" type="button">Continue
+        </button>
+      </div>
+      <ng-container *ngIf="item.filtered_attachments.length > 0">
+        <ng-container *ngFor="let attachment of item.filtered_attachments">
+          <div class="video-wrapper">
+            <ng-container *ngIf="attachment.type === 'video'">
+              <video controls>
+                <source [src]="sanitizer.bypassSecurityTrustResourceUrl(baseImagePath+attachment.file)"
+                        type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </ng-container>
+          </div>
+          <div class="img-wrapper">
+            <ng-container *ngIf="attachment.type === 'image'">
+              <img [src]="baseImagePath+attachment.file" alt="image not found"/>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="item.filtered_attachments.length === 0">
+        <div class="img-wrapper">
+          <img alt="" src="../../../../assets/img/spotlight-challenges-img.jpg"/>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <!-- New Image slider end -->
+
+  <!-- Search Bar and Leaderboard Starts -->
+  <div class="search-bar">
+    <div class="filter-1">
+      <select (change)="onDateRangeChanged($event.target.value)" class="select">
+        <option>Last Week</option>
+        <option>Last Month</option>
+        <option>Last 3 Months</option>
+        <option>Last 6 Months</option>
+      </select>
+      <!--        <img src="assets/img/arrow-down.png" alt="">-->
+    </div>
+
+    <div class="search-container">
+      <div class="filter-2">
+        <select [(ngModel)]="searchType" class="select">
+          <option ngValue="topic_name">Topic</option>
+          <option ngValue="group">Group</option>
+          <option ngValue="buddy_name">Buddy Name</option>
+        </select>
+        <!--          <img src="assets/img/arrow-down.png" alt="">-->
+      </div>
+      <input (keyup.enter)="searchSpotlightChallenges()" [(ngModel)]="searchKeyword"
+             placeholder="Search here"
+             type="text">
+      <button (click)="searchSpotlightChallenges()" name="search-btn">
+        <img alt="" src="assets/img/search-white.png">
+      </button>
+    </div>
+
+    <div *ngIf="!toggleLeaderBoard" class="leaderboards-small">
+      <h4 class="title">Leaderboard</h4>
+      <div (pointerover)="openOrCloseLeaderBoardPopup()">
+        <img alt="" src="assets/img/leaderboard-cup.png">
+      </div>
+    </div>
+
+    <div (pointerleave)="openOrCloseLeaderBoardPopup()" *ngIf="toggleLeaderBoard" class="leaderboards-large">
+      <div class="title-container">
+        <div>
+          <img alt="" src="assets/img/leaderboard-cup.png"/>
+          <h4 class="title">Leaderboards</h4>
+        </div>
+        <button (click)="openOrCloseLeaderBoardPopup()">
+          <img alt="" src="assets/img/close.png"/>
+        </button>
+      </div>
+
+      <div class="labels">
+        <div class="label">
+          <img alt="" src="assets/img/rank.png"/>
+          <p>Rank</p>
+        </div>
+        <div class="label">
+          <img alt="" src="assets/img/name.png"/>
+          <p>Names</p>
+        </div>
+        <div class="label">
+          <img alt="" src="assets/img/dotcoin.png"/>
+          <p>Dot Coins</p>
+        </div>
+        <div class="label">
+          <img alt="" src="assets/img/my-space/star.png"/>
+          <p>Badges</p>
+        </div>
+        <div class="label">
+          <img alt="" src="assets/img/solo.png"/>
+          <p>Solo</p>
+        </div>
+        <div class="label">
+          <img alt="" src="assets/img/group.png"/>
+          <p>Group</p>
+        </div>
+      </div>
+
+      <div class="board-container">
+        <div *ngFor="let user of leaderboardUserList" class="student-wrapper">
+          <div class="info-tag">
+            <p class="marker-title">{{user.rank.replace('.0', '')}}</p>
+          </div>
+          <div class="student-info">
+            <img [src]="baseImagePath + user.avatar_image_file" alt="">
+            <div>
+              <p class="name">{{user.display_name}}</p>
+            </div>
+          </div>
+          <div class="info-tag">
+            <p class="marker-title">{{user.dot_coins}}</p>
+          </div>
+          <div class="info-tag">
+            <p class="marker-title">{{user.badges}}</p>
+          </div>
+          <div class="info-tag">
+            <p class="marker-title">{{user.solo_count}}</p>
+          </div>
+          <div class="info-tag">
+            <p class="marker-title">{{user.group_count}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Search Bar and Leaderboard Ends -->
+
+  <!-- Daily Dot Bottom Content Start -->
+  <div class="daily-dot-bottom-content bg-light">
+
+    <!-- Continue Challenges Section Start -->
+    <div class="continue-challenges-section" *ngIf="continueChall?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>Continue Challenges</h2>
+          </div>
+        </div>
+        <div class="continue-slider">
+          <div (click)="openChallenge(challenge, 'view');" *ngFor="let challenge of continueChall; let i = index"
+               class="card-design-4">
+            <div class="tile-wrapper">
+              <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                   alt=""/>
+              <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+            </div>
+            <div class="info-1">
+              <div>
+                <img alt="" src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                <h3>{{challenge.topic_name}}</h3>
+              </div>
+              <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+              <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+            </div>
+            <div class="info-2">
+              <div class="dot-coin">
+                <img alt="" src="assets/img/dotcoin.png"/>
+                <p>{{challenge.topic_dot_coins}}</p>
+              </div>
+              <div class="reaction-container">
+                <div class="reaction-wrapper">
+                  <p>10</p>
+                  <img alt="" src="assets/img/reaction-1.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>20</p>
+                  <img alt="" src="assets/img/reaction-2.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>15</p>
+                  <img alt="" src="assets/img/reaction-3.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Continue Challenges Section End -->
+
+    <!-- Recently Added Challenges Section Start -->
+    <div class="recent-challenges-section" *ngIf="recentChall?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>Recently Added Challenges</h2>
+          </div>
+        </div>
+        <div class="recent-challenge-slider">
+          <div (click)="openChallenge(challenge, 'view');" *ngFor="let challenge of recentChall; let i = index"
+               class="card-design-4">
+            <div class="tile-wrapper">
+              <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                   alt=""/>
+              <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+            </div>
+            <div class="info-1">
+              <div>
+                <img alt="" src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                <h3>{{challenge.topic_name}}</h3>
+              </div>
+              <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+              <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+            </div>
+            <div class="info-2">
+              <div class="dot-coin">
+                <img alt="" src="assets/img/dotcoin.png"/>
+                <p>{{challenge.topic_dot_coins}}</p>
+              </div>
+              <div class="reaction-container">
+                <div class="reaction-wrapper">
+                  <p>10</p>
+                  <img alt="" src="assets/img/reaction-1.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>20</p>
+                  <img alt="" src="assets/img/reaction-2.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>15</p>
+                  <img alt="" src="assets/img/reaction-3.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Recently Added Challenges Section End -->
+
+    <!-- Influencer Challenges Section Start -->
+    <div class="continue-challenges-section" *ngIf="influencerChallenges?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>Influencer Challenges</h2>
+          </div>
+        </div>
+        <div class="continue-slider">
+          <div (click)="openChallenge(challenge, 'view');" *ngFor="let challenge of influencerChallenges; let i = index"
+               class="card-design-4 stacked-card">
+            <div class="card-content">
+              <div class="tile-wrapper">
+                <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                     alt=""/>
+                <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+              </div>
+              <div class="info-1">
+                <div>
+                  <img alt=""
+                       src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                  <h3>{{challenge.topic_name}}</h3>
+                </div>
+                <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+                <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+              </div>
+              <div class="info-2">
+                <div class="dot-coin">
+                  <img alt="" src="assets/img/dotcoin.png"/>
+                  <p>{{challenge.topic_dot_coins}}</p>
+                </div>
+                <div class="reaction-container">
+                  <div class="reaction-wrapper">
+                    <p>10</p>
+                    <img alt="" src="assets/img/reaction-1.png"/>
+                  </div>
+                  <div class="reaction-wrapper">
+                    <p>20</p>
+                    <img alt="" src="assets/img/reaction-2.png"/>
+                  </div>
+                  <div class="reaction-wrapper">
+                    <p>15</p>
+                    <img alt="" src="assets/img/reaction-3.png"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Influencer Challenges Section End -->
+
+    <!-- Trending Now Section Start -->
+    <div class="trending-now-section" *ngIf="trending?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>Trending Now</h2>
+          </div>
+        </div>
+        <div class="trending-now-slider">
+          <div (click)="openChallenge(challenge, 'view');" *ngFor="let challenge of trending; let i = index"
+               class="card-design-4">
+            <div class="tile-wrapper">
+              <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                   alt=""/>
+              <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+            </div>
+            <div class="info-1">
+              <div>
+                <img alt="" src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                <h3>{{challenge.topic_name}}</h3>
+              </div>
+              <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+              <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+            </div>
+            <div class="info-2">
+              <div class="dot-coin">
+                <img alt="" src="assets/img/dotcoin.png"/>
+                <p>{{challenge.topic_dot_coins}}</p>
+              </div>
+              <div class="reaction-container">
+                <div class="reaction-wrapper">
+                  <p>10</p>
+                  <img alt="" src="assets/img/reaction-1.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>20</p>
+                  <img alt="" src="assets/img/reaction-2.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>15</p>
+                  <img alt="" src="assets/img/reaction-3.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Trending Now Section End -->
+
+    <!-- Top 10 Challenges Section Start -->
+    <div class="top-10-challenges-section" *ngIf="top10Challenges?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>Top 10 Challenges</h2>
+          </div>
+        </div>
+        <div class="top-challenges-slider">
+          <div (click)="openChallenge(challenge, 'view');" *ngFor="let challenge of top10Challenges; let i = index"
+               class="card-design-4">
+            <div class="tile-wrapper">
+              <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                   alt=""/>
+              <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+            </div>
+            <div class="info-1">
+              <div>
+                <img alt="" src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                <h3>{{challenge.topic_name}}</h3>
+              </div>
+              <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+              <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+            </div>
+            <div class="info-2">
+              <div class="dot-coin">
+                <img alt="" src="assets/img/dotcoin.png"/>
+                <p>{{challenge.topic_dot_coins}}</p>
+              </div>
+              <div class="reaction-container">
+                <div class="reaction-wrapper">
+                  <p>10</p>
+                  <img alt="" src="assets/img/reaction-1.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>20</p>
+                  <img alt="" src="assets/img/reaction-2.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>15</p>
+                  <img alt="" src="assets/img/reaction-3.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Top 10 Challenges Section End -->
+
+    <!-- Top 10 Responses Section Start -->
+    <div class="top-responses-section" *ngIf="submissionsChall?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>Top 10 Responses</h2>
+          </div>
+        </div>
+        <div class="top-responses-slider">
+          <div (click)="openChallenge(challenge, 'view');" *ngFor="let challenge of submissionsChall; let i = index"
+               class="card-design-4 stacked-card">
+            <div class="card-content">
+              <div class="tile-wrapper">
+                <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                     alt=""/>
+                <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+              </div>
+              <div class="info-1">
+                <div>
+                  <img alt=""
+                       src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                  <h3>{{challenge.topic_name}}</h3>
+                </div>
+                <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+                <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+              </div>
+              <div class="info-2">
+                <div class="dot-coin">
+                  <img alt="" src="assets/img/dotcoin.png"/>
+                  <p>{{challenge.topic_dot_coins}}</p>
+                </div>
+                <div class="reaction-container">
+                  <div class="reaction-wrapper">
+                    <p>10</p>
+                    <img alt="" src="assets/img/reaction-1.png"/>
+                  </div>
+                  <div class="reaction-wrapper">
+                    <p>20</p>
+                    <img alt="" src="assets/img/reaction-2.png"/>
+                  </div>
+                  <div class="reaction-wrapper">
+                    <p>15</p>
+                    <img alt="" src="assets/img/reaction-3.png"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Top 10 Responses Section End -->
+
+    <!-- top submissions Challenges Section Start -->
+    <!--    <div class="top-responses-section" *ngIf="submissionsChall?.length > 0">-->
+    <!--      <div class="container-fluid">-->
+    <!--        <div class="row mb-4">-->
+    <!--          <div class="col-6 d-flex justify-content-between">-->
+    <!--            <h2>Top 10 Responses</h2>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--        <div class="top-responses-slider">-->
+    <!--          <div class="wa-slides color-1" *ngFor="let challenge of submissionsChall; let i = index"-->
+    <!--               (click)="openChallenge(challenge, 'view');">-->
+    <!--            <p class="view-text" style="text-align: left;">-->
+    <!--              <span class="challenge-response"><b>{{challenge.rating}}</b> Rating-->
+    <!--              </span>-->
+    <!--            </p>-->
+    <!--            <p class="view-text">-->
+    <!--               <span-->
+    <!--                 class="challenge-response"><b>{{challenge.truth}}</b> Truth <b>{{challenge.fun}}</b> Fun <b>{{challenge.creative}}</b> Creative-->
+    <!--               </span>-->
+    <!--            </p>-->
+    <!--            <figure *ngIf="challenge.attachments.length<1">-->
+    <!--              <img [src]="'assets/img/trending-' + i + '.png'" alt=""/>-->
+    <!--            </figure>-->
+    <!--            <span *ngIf="challenge.attachments.length>0">-->
+    <!--                <figure *ngFor="let attachment of challenge.attachments"-->
+    <!--                        style="margin-top: 10%;justify-content: center;">-->
+    <!--                  <span *ngIf="attachment.type === 'image'">-->
+    <!--                   <img [src]="baseImagePath+attachment.file" alt="" style="height: 175px;width: 80%;"/>-->
+    <!--                  </span>-->
+    <!--                </figure>-->
+    <!--              </span>-->
+    <!--            &lt;!&ndash; <p style="color: Red; font-weight: bold;">{{challenge.topic_group_size === 1 ? 'Solo Challenge' : 'Group Challenge'}}</p> &ndash;&gt;-->
+    <!--            <h6>{{challenge.topic_name}}</h6>-->
+    <!--            <p>{{getsubmissionDescToBind(challenge.response_description)}}-->
+    <!--              <span *ngIf="challenge.response_description.length > 50" class="dots" placement="left"-->
+    <!--              >...</span>-->
+    <!--            </p>-->
+    <!--            <div class="bottom-text">-->
+    <!--              <div class="row">-->
+    <!--                <div class="col-md-5" *ngIf="challenge.topic_group_size === 1">-->
+    <!--                  <img [src]="baseImagePath+challenge.avatar_image_file" style="width: 100%;height: 35px;" alt=""/>-->
+
+    <!--                </div>-->
+    <!--                <div class="col-md-5" *ngIf="challenge.topic_group_size !== 1">-->
+    <!--                  <img [src]="'assets/img/modal-chat-heading-icon.png'" style="width: 100%;height: 35px;" alt=""/>-->
+
+    <!--                </div>-->
+    <!--                <div class="col-md-7" style="align-self: center;padding-left: 0px;">-->
+    <!--                  <p *ngIf="challenge.topic_group_size === 1"-->
+    <!--                     style="font-size: 16px;color: black;font-family: 'Chalkboard';align-self: center;">-->
+    <!--                    {{challenge.display_name}}</p>-->
+    <!--                  <p *ngIf="challenge.topic_group_size !== 1"-->
+    <!--                     style="font-size: 16px;color: black;font-family: 'Chalkboard';align-self: center;">-->
+    <!--                    {{challenge.group_name}}</p>-->
+
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--              &lt;!&ndash; <div class="row">-->
+    <!--                <p style="font-size: 16px;color: black;font-family: 'Chalkboard';align-self: center;-->
+    <!--                  margin-top: 5%;">-->
+    <!--                    {{challenge.date_of_response | date: 'mediumDate' }}</p>-->
+    <!--              </div> &ndash;&gt;-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!-- top submissions Challenges Section End -->
+
+    <!-- Upcoming Challenges Section Start -->
+    <div class="my-challenges-section" *ngIf="upcomingChallenge?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>Upcoming Challenges</h2>
+          </div>
+        </div>
+        <div class="my-challenges-slider">
+          <div class="card-design-4" (click)="openChallenge(challenge, 'view');"
+               *ngFor="let challenge of upcomingChallenge; let i = index">
+            <div class="tile-wrapper">
+              <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                   alt=""/>
+              <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+            </div>
+            <div class="info-1">
+              <div>
+                <img alt="" src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                <h3>{{challenge.topic_name}}</h3>
+              </div>
+              <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+              <p class="date">Start Date: {{challenge.topic_start_date | date: 'dd, MMM y'}}</p>
+            </div>
+            <div class="info-2">
+              <div class="dot-coin">
+                <img alt="" src="assets/img/dotcoin.png"/>
+                <p>{{challenge.topic_dot_coins}}</p>
+              </div>
+              <div class="reaction-container">
+                <div class="reaction-wrapper">
+                  <p>10</p>
+                  <img alt="" src="assets/img/reaction-1.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>20</p>
+                  <img alt="" src="assets/img/reaction-2.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>15</p>
+                  <img alt="" src="assets/img/reaction-3.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Upcoming Challenges Section End -->
+
+    <!-- My Challenges Section Start -->
+    <div class="my-challenges-section" *ngIf="myChall?.length > 0">
+      <div class="container-fluid">
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between">
+            <h2>My Challenges</h2>
+          </div>
+        </div>
+        <div class="my-challenges-slider">
+          <div class="card-design-4" (click)="openChallenge(challenge, 'view');"
+               *ngFor="let challenge of myChall; let i = index">
+            <div class="tile-wrapper">
+              <img *ngIf="challenge.challenge_image !== null" src="{{baseImagePath}}{{challenge.challenge_image}}"
+                   alt=""/>
+              <img *ngIf="challenge.challenge_image === null" [src]="'assets/img/trending-' + 0 + '.png'" alt=""/>
+            </div>
+            <div class="info-1">
+              <div>
+                <img alt="" src="assets/img/{{challenge.topic_group_size === 1 ? 'card-solo.png' : 'card-group.png'}}"/>
+                <h3>{{challenge.topic_name}}</h3>
+              </div>
+              <p class="level">Level: <span>{{challenge.topic_level}}</span></p>
+              <p class="date">Last Date: {{challenge.topic_end_date | date: 'dd, MMM y'}}</p>
+            </div>
+            <div class="info-2">
+              <div class="dot-coin">
+                <img alt="" src="assets/img/dotcoin.png"/>
+                <p>{{challenge.topic_dot_coins}}</p>
+              </div>
+              <div class="reaction-container">
+                <div class="reaction-wrapper">
+                  <p>10</p>
+                  <img alt="" src="assets/img/reaction-1.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>20</p>
+                  <img alt="" src="assets/img/reaction-2.png"/>
+                </div>
+                <div class="reaction-wrapper">
+                  <p>15</p>
+                  <img alt="" src="assets/img/reaction-3.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- My Challenges Section End -->
+  </div>
+  <!-- Daily Dot Bottom Content End -->
+
+
+  <!--modalStoryTelling Modal -->
+<div class="modal fade modalStoryTelling" id="challengeGroup"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-xl">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Challenge - <span>{{challengeName}}</span> </h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          Close  <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="text-center title-box">
+        <h3>You are 2 steps away from doing the challenge with your buddies</h3>
+        <h4>Choose from an existing group or create new one</h4>
+      </div>
+      <h2>Groups</h2>
+      <p>Groups allow you to organize and share multiple challenges.</p>
+
+      <!-- FILTER START -->
+      <div class="user-filter-options-wrapper d-flex justify-content-between">
+          <h5>List of Groups</h5>
+          <div class="d-flex">
+            <div class="search-wrapper mr-3">
+              <app-search [(ngModel)]="searchGroup" name="searchGroup"></app-search>
+              <!-- <input type="text" class="form-control" placeholder="Search Groups">
+              <button class="btn btn-link search-icon" type="button"><img src="assets/img/search-icon.png"
+                  alt="">
+              </button> -->
+            </div>
+            <button class="btn btn-danger shadow btn-add-user" type="button" (click)="createGroup()">Create a group</button>
+          </div>
+        </div>
+        <!-- FILTER END -->
+        <!-- TABLE START -->
+        <div class="table-responsive border mt-3 mt-md-3">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <!-- <th width="5%" scope="col">
+                   <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1"></label>
+                  </div>
+                </th> -->
+                <th width="25%" scope="col">Group names</th>
+                <!-- <th width="18%" scope="col"><img src="assets/img/Responses-icon.png" alt=""> Responses</th> -->
+                <th width="17%" scope="col"><img src="assets/img/created-icon.png" alt=""> Created by</th>
+                <th width="20%" scope="col"><img src="assets/img/last-update.png" alt=""> last Update</th>
+                <th width="15%" scope="col"><img src="assets/img/email-icon.png" alt=""> Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="isGroupsLoading">
+                <td colspan="7" class="text-center">
+                <app-loader *ngIf="isGroupsLoading"></app-loader>
+                </td>
+            </tr>
+              <ng-container *ngIf="groupsList?.length && ( groupsList | tFilter: searchGroup:dateFormatKeys) as result">
+                <tr *ngFor="let group of result;let i = index">
+                <td class="font-weight-medium">
+                    <div class="d-flex align-items-center">
+                    <div class="group-img">
+                        <img [src]="'assets/img/pic-' + i + '.png'" alt="" />
+                        <img src="assets/img/pic-2.png" alt="" />
+                        <img src="assets/img/pic-3.png" alt="" />
+                        <img src="assets/img/pic-4.png" alt="" />
+                    </div>
+                    <span>{{ group.group_name | titlecase}}</span>
+                    </div>
+                </td>
+                <!-- <td>{{ group.topic.topic_name}}</td> -->
+                <td>{{ group.created_by }}</td>
+                <td>{{ group.lastmodified_date | date: "dd/MM/yyyy" }}</td>
+                <td>
+                    <div class="action-buttons">
+                    <button class="btn btn-link" type="button" (click)="participate(group)">Participate</button>
+                    <button class="btn btn-link" type="button">Edit</button>
+                    <button class="btn btn-link" type="button">Delete</button>
+                    </div>
+                </td>
+                </tr>
+                <tr *ngIf="groupsList.length === 0" class="text-center">
+                    <td colspan="5"> No Data Found </td>
+                </tr>
+            </ng-container>
+            <tr *ngIf="!groupsList?.length && !isGroupsLoading">
+                <td colspan="5" class="text-center">No Data found</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- TABLE END -->
+    </div>
+  </div>
+</div>
+</div>
+
+ <!--groupName Modal -->
+ <div class="modal fade modalStoryTelling" id="groupName"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-xl">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">Challenge - <span>{{challengeName}}</span> </h5>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         Close <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <h2>Create Groups</h2>
+       <p>Groups allow you to organize and share multiple Challenges.</p>
+
+       <div class="group-box">
+         <figure class="text-center">
+           <img src="assets/img/group-img.jpg" alt="" class="img-fluid">
+         </figure>
+         <h2 class="text-center"> GIVE A GROUP NAME</h2>
+         <form [formGroup]="groupNameForm">
+          <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+              <input type="text" class="form-control form-control-lg" formControlName="groupName"
+              [ngClass]="{'error-field': _uhs.isValidField(groupNameForm?.controls.groupName)}" placeholder="Group name">
+              <app-control-messages [control]="groupNameForm?.controls.groupName" labelName="Group name">
+              </app-control-messages>
+            </div>
+          </div>
+        </form>
+
+       </div>
+       <div class="d-flex justify-content-center bottom-btn">
+         <button type="button" class="btn btn-outline-danger mr-4" (click)="cancelFromGroupName()">Cancel</button>
+         <button type="button" class="btn btn-danger" (click)="groupNext()">Next</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+ <!--assignRole Modal -->
+ <div class="modal fade modalStoryTelling" id="assignRole"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-xl">
+   <div class="modal-content">
+     <div class="modal-header">
+      <button type="button" class="close top-close-button" aria-label="Close" (click)="cancelFromAssignRole()">
+        <span aria-hidden="true">&#9666;</span>Back
+      </button>
+       <h5 class="modal-title" id="exampleModalLabel">Challenge - <span>{{challengeName}}</span> </h5>
+       <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close">
+        Close <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <h2>Groups</h2>
+       <p>Groups allow you to organize and share multiple challenges.</p>
+
+       <div class="group-box">
+         <figure class="text-center">
+           <img src="assets/img/assigned-role-img.jpg" alt="" class="img-fluid">
+         </figure>
+         <h2 class="text-center">ASSIGN ROLE</h2>
+         <form [formGroup]="assignRoleForm">
+          <div class="row">
+           <div class="col-12 col-md-10 offset-md-1">
+             <div class="row">
+               <!-- <div class="col-12 col-md-3 text-center">
+                 <div class="role-list">
+                   <figure>
+                     <img src="assets/img/chota-bheem-pic.png" alt="">
+                   </figure>
+                   <p>CHOTA BHEEM</p>
+                   <div class="custom-control custom-radio">
+                     <input type="radio" id="customRadio1" value="CHOTA BHEEM" name="role" formControlName="role"
+                      class="custom-control-input">
+                     <label class="custom-control-label" for="customRadio1"></label>
+                   </div>
+                 </div>
+               </div> -->
+               <div class="col-12 col-md-3 text-center" *ngFor="let role of rolesData">
+                 <div class="role-list">
+                   <figure>
+                     <img src="{{baseImagePath}}{{role.role_img}}" alt="">
+                   </figure>
+                   <p>{{role.role_name}}</p>
+                   <span class="display-name" *ngIf="role.display_name">
+                     <img src="{{baseImagePath}}{{role.avatar_image_file}}" alt=""> {{role.display_name}}
+                   </span>
+                   <div class="custom-control custom-radio" *ngIf="role.group_role_id === null">
+                     <input type="radio" id="{{role.role_id}}" value="{{role.role_name}}"
+                      (change)="onChangeRole(role)" name="role" formControlName="role"
+                      class="custom-control-input">
+                     <label class="custom-control-label" for="{{role.role_id}}"></label>
+                   </div>
+                 </div>
+               </div>
+
+             </div>
+           </div>
+         </div>
+        </form>
+       </div>
+       <div class="d-flex justify-content-center bottom-btn" *ngIf="!enableContinue">
+        <button type="button" class="btn btn-outline-danger mr-4" (click)="cancelFromAssignRole()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="assignNext()">Next</button>
+      </div>
+       <div class="d-flex justify-content-center bottom-btn" *ngIf="enableContinue">
+         <button type="button" class="btn btn-primary" (click)="assignRoleContinue()">Continue</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+  <!--Invite-Buddies Modal -->
+  <div class="modal fade modalStoryTelling" id="Invite-Buddies"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Challenge - <span>{{challengeName}}</span> </h5>
+          <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close">
+            Close <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h2>Create Groups</h2>
+          <p>Groups allow you to organize and share multiple Challenges.</p>
+
+          <div class="group-box">
+            <figure class="text-center">
+              <img src="assets/img/Invite-Buddies-img.jpg" alt="" class="img-fluid">
+            </figure>
+            <h2 class="text-center pb-3"> INVITE BUDDIES</h2>
+            <p class="text-center p1">Buddies join using their email.address…</p>
+            <div class="radio-section text-center">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1Old" name="customRadioInline" [checked]="isCheckInvite" (change)="onChangeInvite('invite')" value="invite" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline1Old">Invite buddies</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2Old" name="customRadioInline" value="auto" (change)="onChangeInvite('auto')" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline2Old">Auto assign</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-10 offset-md-1">
+                <div class="dropdown search-dropdown">
+                  <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Search by {{searchValue}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" (click)="searchBy('School')">by School </a>
+                    <a class="dropdown-item" (click)="searchBy('Skill')">by Skill</a>
+                    <a class="dropdown-item" (click)="searchBy('Age')">by Age</a>
+                    <a class="dropdown-item" (click)="searchBy('Name')">by Name</a>
+                    <a class="dropdown-item" (click)="searchBy('Class')">by Class</a>
+                  </div>
+                </div>
+
+                <form [formGroup]="inviteBuddiesForm">
+                  <!-- Tab Start -->
+
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control form-control invite-email-id" formControlName="assignments"
+                    (keyup.enter)="searchByCatagory()" (change)="onChangeValue($event.target.value)" placeholder="Invite by search..." aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <span class="input-group-text" (click)="searchByCatagory()" id="basic-addon2">
+                        <!-- <i class="fa fa-search" style="width: 30px; color: #1395f6;"></i> -->
+                        <img src="assets/img/search-icon2.png"  style="width: 23px;" />
+                      </span>
+                    </div>
+                  </div>
+                   <div class="text-right small">**Allowed maximum 4 members only</div>
+
+                    <ul class="member-list mt-3">
+                      <li  *ngFor="let user of UserEmailStore">
+                        <img src="{{baseImagePath}}{{user.avatar_image_file}}" alt=""> {{user.display_name}}
+                        <button type="button" class="btn-close" (click)="deleteBuddie(user)"></button>
+                      </li>
+                    </ul>
+                 </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center bottom-btn">
+            <button type="button" class="btn btn-outline-danger mr-4" (click)="cancelFromInvites()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="invitesNext()">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!--submitDateModal Modal -->
+   <div class="modal fade modalStoryTelling" id="submitDateModal"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-xl">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Challenge - <span>{{challengeName}}</span> </h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           Close <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <h2>Create Groups</h2>
+         <p>Groups allow you to organize and share multiple Challenges.</p>
+
+         <div class="group-box">
+           <figure class="text-center">
+             <img src="assets/img/challange-date-img.jpg" alt="" class="img-fluid">
+           </figure>
+           <h2 class="text-center pb-3"> CHALLENGE SUBMISIONLAST DATE</h2>
+           <p class="last-date">10 Oct 2021 <img src="assets/img/last-date-icon.png" alt=""> </p>
+         </div>
+         <div class="d-flex justify-content-center bottom-btn">
+           <button type="button" class="btn btn-outline-danger mr-4" (click)="cancelFromSubmissionDate()">Back</button>
+           <button type="button" class="btn btn-danger" (click)="submitDateNext()">Next</button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+   <!--confirmGroup Modal -->
+   <div class="modal fade modalStoryTelling" id="confirmGroup"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-xl">
+     <div class="modal-content">
+       <div class="modal-header">
+        <button type="button" class="close top-close-button" aria-label="Close" (click)="cancelFromConfirmGroup()">
+          <span aria-hidden="true">&#9666;</span>Back
+        </button>
+         <h5 class="modal-title" id="exampleModalLabel">Challenge - <span>{{challengeName}}</span> </h5>
+         <button type="button" class="close top-close-button" aria-label="Close" data-dismiss="modal">
+          Close <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <div class="text-center title-box">
+           <h3 class="h3">CONFIRM YOUR GROUP</h3>
+         </div>
+         <div class="confirm-group-info">
+           <h4>Group name</h4>
+           <form [formGroup]="groupNameForm">
+             <div class="row">
+               <div class="col-12 col-md-8">
+                 <input type="text" class="form-control form-control-lg" formControlName="groupName"
+                 placeholder="Group name">
+               </div>
+             </div>
+           </form>
+           <h6 *ngIf="isExist">This name already existing, Please go back and use another name</h6>
+           <h4 class="mt-2">Role Details</h4>
+           <form [formGroup]="confirmGroupForm">
+           <div class="row">
+            <div class="col-12 col-md-2 text-center" *ngFor="let role of rolesData; let i = index">
+              <div class="role-list">
+                <figure>
+                  <img src="{{baseImagePath}}{{role.role_img}}" alt="">
+                </figure>
+                <p>{{role.role_name}}</p>
+                <span class="display-name" *ngIf="role.display_name">
+                  <img src="{{baseImagePath}}{{role.avatar_image_file}}" alt=""> {{role.display_name}}
+                </span>
+                <div class="custom-control custom-radio" *ngIf="role.group_role_id == null">
+                  <input type="radio" id="ctrl3 +{{i}}" value="{{role.role_name}}" (change)="onChangeRole(role)" name="role" formControlName="role"
+                   class="custom-control-input" required>
+                  <label class="custom-control-label" for="ctrl3 +{{i}}"></label>
+                </div>
+              </div>
+            </div>
+
+           </div>
+           </form>
+           <h4 class="mt-5">Group Members</h4>
+           <div class="radio-section">
+             <div class="custom-control custom-radio custom-control-inline">
+               <input type="radio" id="customRadioInline1" name="customRadioInline" [checked]="isCheckInvite" (change)="onChangeInvite('invite')" [value]="assignFlag" class="custom-control-input">
+               <label class="custom-control-label" for="customRadioInline1">Invite buddies</label>
+             </div>
+             <div class="custom-control custom-radio custom-control-inline" *ngIf="!topicDetails?.group_id">
+               <input type="radio" id="customRadioInline2" name="customRadioInline" [value]="assignFlag" (change)="onChangeInvite('auto')" class="custom-control-input">
+               <label class="custom-control-label" for="customRadioInline2">Auto assign</label>
+             </div>
+           </div>
+           <div class="row">
+             <div class="col-12 col-md-10">
+               <form [formGroup]="inviteBuddiesForm" *ngIf="this.assignFlag === 'invite'">
+                 <div class="dropdown search-dropdown">
+                   <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                     Search by {{searchValue}}
+                   </button>
+                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                     <a class="dropdown-item" (click)="searchBy('School')">by School </a>
+                     <a class="dropdown-item" (click)="searchBy('Skill')">by Skill</a>
+                     <a class="dropdown-item" (click)="searchBy('Age')">by Age</a>
+                     <a class="dropdown-item" (click)="searchBy('Name')">by Name</a>
+                     <a class="dropdown-item" (click)="searchBy('Class')">by Class</a>
+                   </div>
+                 </div>
+                 <div class="form-group">
+                   <div class="input-group mb-3">
+                     <input type="email" class="form-control form-control invite-email-id" formControlName="assignments"
+                     (keyup.enter)="addBuddie()" (change)="onChangeValue($event.target.value)" placeholder="Invite by email..."
+                      aria-describedby="basic-addon2" [ngClass]="{'error-field': _uhs.isValidField(inviteBuddiesForm?.controls.assignments)}">
+                     <div class="input-group-append">
+                       <span class="input-group-text" (click)="addBuddie()" id="basic-addon2">
+                         <!-- <i class="fa fa-plus" style="width: 30px; color: #1395f6;"></i> -->
+                         <img src="assets/img/add-btn.png" style="width: 23px">
+                        </span>
+                     </div>
+                   </div>
+                   <app-control-messages [control]="inviteBuddiesForm?.controls.assignments" labelName="Email">
+                  </app-control-messages>
+                   <div class="text-right small">**Allowed maximum {{topicDetails && topicDetails.topic_group_size}} members only</div>
+                 </div>
+               </form>
+               <div class="pb-2">
+                 <ul class="member-list mt-3">
+                   <li  *ngFor="let user of UserEmailStore">
+                     <span>
+                      <img src="{{baseImagePath}}{{user.avatar_image_file ? user.avatar_image_file : 'avatar-boy-11.png'}}" alt=""> {{user.display_name ? user.display_name : user?.user_email}}
+                      <button *ngIf="user?.role_id == null || user?.role_id == ''" type="button" class="btn-close" (click)="deleteBuddie(user)"></button>
+                    </span>
+                   </li>
+                 </ul>
+               </div>
+             </div>
+           </div>
+           <p class="submit-last-date" style="padding: revert;"><span>Challenge Submission Last Date :</span> {{topicDetails && topicDetails.topic_end_date | date:'d MMM, y'}} <img
+               src="assets/img/last-date-icon.png" alt=""> </p>
+           <div class="d-flex justify-content-center bottom-btn mt-5">
+             <button type="button" class="btn btn-outline-danger mr-4" (click)="cancelFromConfirmGroup()">Cancel</button>
+             <button type="button" class="btn btn-danger mr-2" [ngClass]="{'disabledTab': isFormSubmitted}" [disabled]="isFormSubmitted"
+               (click)="confirmGroup()">Confirm</button>
+             <img src="assets/img/inline_spinner.svg" *ngIf="isFormSubmitted" alt="" />
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+   <!-- Congratulations Modal -->
+   <div class="modal fade congratulationsModal" id="congratulationsModal"  data-backdrop="static" data-keyboard="false" tabindex="-1"
+   aria-labelledby="congratulationsModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-body text-center">
+         <!-- <p class="text-center p2">Confirm your group</p> -->
+         <figure class="text-center">
+           <img src="assets/img/Congratulations-img-1.png" class="img-fluid" alt="">
+         </figure>
+         <p class="p3" style="text-decoration: auto;"> <strong>All set,</strong> Group has been created successfully</p>
+         <p (click)="participateChallenge()"><a>Now you can participate in the challenge</a></p>
+         <p class="or-text">or</p>
+         <p class="go-back-link" (click)="goHome()"><a>Go back <img src="assets/img/home-icon-color.png" alt=""> </a></p>
+       </div>
+     </div>
+   </div>
+ </div>
+
+  <!--Partcipate challenge Modal -->
+  <div class="modal fade modalChallengeStoryTelling" id="participateModal"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close top-close-button" aria-label="Close" (click)="closeWorkArea()">
+            <span aria-hidden="true">&#9666;</span>Back
+          </button>
+          <h5 class="modal-title" id="exampleModalLabel">Challenge - {{challengeName}} </h5>
+          <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close">
+            Close <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col modal-left">
+              <div class="row d-flex align-items-stretch h-100">
+                <div class="col modal-group-solo-outer">
+                  <div class="modal-group-solo-inn" *ngIf="topicDetails && topicDetails.topic_group_size > 1">
+                    <a title="" class="group-link active">
+                      <span class="group-icon"></span>
+                      Group</a>
+                  </div>
+                  <div class="modal-group-solo-inn" *ngIf="topicDetails && topicDetails.topic_group_size === 1">
+                    <a title="" class="solo-link active">
+                      <span class="solo-icon"></span>
+                      Solo</a>
+                  </div>
+                </div>
+                <div class="col-10 modal-inprogress-outer setHeight">
+                  <div class="inprogress-challenges-outer">
+                    <!-- <h4>Inprogress Challenges</h4> -->
+                    <div class="inprogress-challenges-list-details">
+                      <h5 class="inprogress-list-details-title">
+                       <a title=""> {{challengeName}} </a>
+                        <span class="list-details-title-date">{{topicDetails?.topic_start_date | date: 'd MMM, y'}}</span>
+                      </h5>
+                      <div class="inprogress-list-details-comments">{{this.submittedComments.length | i18nPlural: pluralMapping.response}}</div>
+                      <figure class="inprogress-list-details-pic">
+                        <img src="assets/img/inprogress-list-details-pic.png" alt="" />
+                      </figure>
+                     <p>{{topic_description}}</p>
+                      <div class="inprogress-list-details-thumbs-outer d-flex justify-content-between">
+                        <figure class="inprogress-list-details-thumbs">
+                          <img src="assets/img/inprogress-list-details-thumbs1.jpg" alt="" class="img-fluid" />
+                        </figure>
+                        <figure class="inprogress-list-details-thumbs" >
+                          <img src="assets/img/inprogress-list-details-thumbs2.jpg" alt=""   class="img-fluid" />
+                        </figure>
+                      </div>
+
+
+
+                      <div class="inprogress-list-details-document-outer">
+                        <ul>
+                          <li *ngIf="VideoLink">
+                              <!-- <iframe [src]="VideoLink" allow="encrypted-media; gyroscope; picture-in-picture" allowfullscreen title=""></iframe> -->
+                              <video width="220" height="111" (click)="openModal(content, VideoLink)">
+                                <source [src]="VideoLink" type="video/mp4">
+                                Your browser does not support the video tag.
+                              </video>
+
+                          </li>
+                          <li *ngIf="AudioLink">
+                              <!-- <iframe [src]="AudioLink" allow="encrypted-media; gyroscope; picture-in-picture;" allowfullscreen title=""></iframe> -->
+                              <video width="220" height="111" controls>
+                                <source [src]="AudioLink">
+                                Your browser does not support the video tag.
+                              </video>
+                              <!-- <audio (click)="openModal(content, AudioLink)">
+                                <source [src]="AudioLink" type="audio/mp3">
+                                Your browser does not support the audio tag.
+                              </audio>   -->
+                          </li>
+
+                          <li *ngIf="ImageLink">
+                              <img [src]="ImageLink" class="imageLink" alt="image not found" (click)="openModal(content, ImageLink)"/>
+                              <!-- <iframe [src]="ImageLink" allow="encrypted-media; gyroscope; picture-in-picture" allowfullscreen title=""></iframe> -->
+                          </li>
+
+                          <li *ngIf="documentLink">
+                              <!-- <a *ngIf="documentLink" (click)="openDocument($event, documentLink)">
+                                Document Link
+                              </a> -->
+                              <div class="flex-container">
+                                <div class="flex-item" (click)="openDocument($event, documentLink)">
+                                  <div class="row">
+                                  <div class="col-sm-3 wordIcon">
+                                    <span><i class="far fa-file-word" ></i></span>
+                                  </div>
+                                  <div class="col-sm-9 fileName">
+                                    <div>
+                                      <p>{{ filePathName.length > 10 ? (filePathName | slice:0:10) + '...' : filePathName }}</p>
+                                      <small>5 MB</small>
+                                    </div>
+                                  </div>
+                                </div>
+                                </div>
+                              </div>
+                              <!-- <iframe [src]="documentLink" allow="encrypted-media; gyroscope; picture-in-picture" allowfullscreen title=""></iframe> -->
+
+                          </li>
+
+                          <!-- <li>
+                            <span class="list-details-document-icon">
+                              <img src="assets/img/document-doc-icon.jpg" alt="" class="img-fluid" />
+                            </span>
+                            <span class="list-details-document-details">
+                              Dot dot …
+                              <span>169 KB</span>
+                            </span>
+                          </li> -->
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- <button type="button" class="btn btn-secondary">Load More</button> -->
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="modal-right-welcome-section">
+                <div class="row">
+                  <div class="col-5">
+                    <h4 class="welcome-title">Welcome to <strong># {{challengeName}}</strong></h4>
+                  </div>
+                  <div class="col-5 pl-0">
+                    <div class="welcome-hours-section" *ngIf="daysLeftForSubmission >= 0">
+                     <span class="green-color">{{daysLeftForSubmission + 1 | i18nPlural: pluralMapping.day}} left.</span> <strong> Hurry..</strong> submit your response
+                    </div>
+                    <div class="welcome-hours-section" *ngIf="daysLeftForSubmission < 0">
+                      <span class="challenge-ended">Challenge ended</span>
+                    </div>
+                  </div>
+                  <div class="col-2 px-0" *ngIf="this.topic_group_size !== 1 && loggedInUserId == groupOwnerId">
+                    <div class="welcome-view-group">
+                      <span style="cursor: pointer;" (click)="viewGroup()">View group</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row d-flex align-items-stretch">
+                <div class="col-9 modal-middle-outer">
+                  <div class="modal-middle-inner setHeight">
+                    <div class="submit-upload-imgs d-flex justify-content-center mb-2" style="overflow-x: scroll;" *ngIf="commentVideoFiles.length>0 || commentImageFiles.length>0 || commentFiles.length>0">
+
+                      <div class="submit-upload-imgs-list" *ngFor="let img of commentImageFiles">
+                        <div class="submit-upload-img-container">
+                          <a title="" class="submit-upload-close-btn" (click)="commnetdeleteFiles($event,img ,'image')">x</a>
+                          <img src="{{baseImagePath}}{{img.file}}" class="imageLink" alt="image not found" (click)="openModalSpot(content, baseImagePath+img.file, 'image')"/>
+                        </div>
+                        <!-- <p>{{img.file}} </p> -->
+                      </div>
+
+                      <div class="submit-upload-imgs-list" *ngFor="let video of commentVideoFiles">
+                        <div class="submit-upload-img-container">
+                          <a  title="" class="submit-upload-close-btn" (click)="commnetdeleteFiles($event,video , 'video')">x</a>
+                          <video width="220" height="111" (click)="openModalSpot(content, baseImagePath+video.file, 'video')">
+                            <source src="{{baseImagePath}}{{video.file}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                          </video>
+                          <!-- <figure><img src="assets/img/submit-upload-img2.png" alt="" class="img-fluid" /></figure> -->
+                        </div>
+                        <!-- <p>{{video.file}}</p> -->
+                      </div>
+
+                      <div class="submit-upload-imgs-list" *ngFor="let file of commentFiles">
+                        <div class="submit-upload-img-container">
+                          <a title="" class="submit-upload-close-btn" (click)="commnetdeleteFiles($event,file, 'doc')">x</a>
+                          <div class="flex-container">
+                            <div class="flex-item" (click)="openDocument($event, baseImagePath+file.file)">
+                              <div class="row">
+                              <div class="col-sm-3 wordIcon">
+                                <span><i class="far fa-file-word" ></i></span>
+                              </div>
+                              <div class="col-sm-9 fileName">
+                                <div>
+                                  <p>{{ file.file.length > 10 ? (file.file | slice:0:10) + '...' : file.file }}</p>
+                                  <small>5 MB</small>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <p>{{file.file}}</p> -->
+                      </div>
+
+                    </div>
+                    <form [formGroup]="commentForm">
+                    <div class="write-response-section  write-response-section d-flex">
+
+                        <span class="write-text"> </span>
+                        <span>
+                            <input type="text" class="form-control" formControlName="response_description" style="background: bottom;border: none;outline: none;"
+                            (keyup.enter)="saveComment()" placeholder="Write your response…">
+                        </span>
+
+                      <div class="write-response-right d-flex justify-content-between ml-2">
+                        <!-- <i class="fas fa-arrow-circle-right" style="width: 30px; color: #1395f6;"></i> -->
+                        <!-- <div class="write-public">
+                          <a>
+                            Public
+                          </a>
+                        </div> -->
+                        <ul class="write-public-social-icons justify-content-between">
+                          <li><a title=""> <img src="../../../../assets/img/response-btn.gif" alt="" (click)="saveComment()"> </a></li>
+                          <!-- <li><a title=""><i class="fas fa-arrow-circle-right fa-2x" (click)="saveComment()"></i> </a></li> -->
+                          <li><a title=""><img src="assets/img/smile-write-icon.png" alt="" /> </a></li>
+                          <li (click)="onUploadComment($event, 'challenge_comment', 'video')"><a title=""><img src="assets/img/video-write-icon..png" alt="" /> </a></li>
+                          <li (click)="onUploadComment($event, 'challenge_comment', 'doc')"><a title=""><img src="assets/img/file-write-icon..png" alt="" /> </a></li>
+                          <li (click)="onUploadComment($event, 'challenge_comment', 'image')"><a title=""><img src="assets/img/image-write-icon..png" alt="" /> </a></li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="no-comments-img" *ngIf="commentsRetrieved?.length<1 && finalComment?.length<1"><img src="assets/img/no-comments-img.png" alt="" /></div>
+
+                  </form>
+                    <div class="modal-middle-comments-section">
+                      <div id="accordion">
+                        <div class="card">
+                          <!-- <div class="react-rate-section">
+                            <ul class="d-flex">
+                              <li class="react-button"><a title="" class="show-react-option-btn">React</a></li>
+                              <li class="rate-section">
+                                <label>Rate</label>
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                              </li>
+                            </ul>
+
+                            <div class="react-option-outer">
+                              <div class="react-option-container">
+                                <ul class="d-flex justify-content-between">
+                                  <li class="truth-icon">
+                                   <a title="">Truth</a>
+                                  </li>
+
+                                  <li class="fun-icon">
+                                    <a title="">Fun</a>
+                                  </li>
+
+                                  <li class="creative-icon">
+                                    <a title="">Creative</a>
+                                  </li>
+
+                                </ul>
+                              </div>
+                            </div>
+
+                          </div> -->
+                          <div class="card-body-outer mb-3" *ngFor="let comment of finalComment; let i = index;">
+                            <div class="card-body " *ngIf="finalComment?.length>0">
+                              <div class="card-body-inner d-flex " style="overflow-x: scroll;">
+                                <figure class="mcomments-section-public"><img src="{{baseImagePath}}{{comment.role_avatar ? comment.role_avatar : comment.avatar_image_file}}" style="height: 35px;" alt=""></figure>
+                                <div class="card-body-inner-content">
+                                  <h6 class="final-submit-text">Final challenge submited <span class="inal-submit-date">{{comment.created_date | date: 'mediumDate'}}</span></h6>
+                                  <h5 class="comments-section-name">
+                                    {{comment.role_name}}
+                                    <!-- <span class="people-reacted-section">
+                                      people reacted:  3 Truth, 2 Fun, 1 Creative
+                                    </span> -->
+                                  </h5>
+                                  <p style="font-weight: bold;">{{comment.response_description}}</p>
+                                  <!-- <p>Please click on below images to view details</p> -->
+                                  <div class="card-body-inner-content-imgs d-flex">
+                                    <a title="" class=" mcomments-subject-pic" *ngFor="let item of comment.attachments"><img *ngIf="item.type == 'image'" src="{{baseImagePath}}{{item.file}}" class="imageLink" alt="image not found" (click)="openModalSpot(content, baseImagePath+item.file, 'image')"/></a>
+                                    <a title="" class=" mcomments-subject-pic" *ngFor="let item of comment.attachments"> <video *ngIf="item.type == 'video'" width="220" height="111" (click)="openModalSpot(content, baseImagePath+item.file, 'video')">
+                                      <source src="{{baseImagePath}}{{item.file}}" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video></a>
+                                    <a title="" class=" mcomments-subject-pic" *ngFor="let item of comment.attachments">
+                                      <div class="submit-upload-img-container" *ngIf="item.type == 'doc'">
+                                        <a title="" class="submit-upload-close-btn" (click)="commnetdeleteFiles($event,item, 'doc')">x</a>
+                                        <div class="flex-container">
+                                          <div class="flex-item" (click)="openDocument($event, baseImagePath+item.file)">
+                                            <div class="row">
+                                            <div class="col-sm-3 wordIcon">
+                                              <span><i class="far fa-file-word" ></i></span>
+                                            </div>
+                                            <div class="col-sm-9 fileName">
+                                              <div>
+                                                <p>{{ item.file.length > 10 ? (item.file | slice:0:10) + '...' : item.file }}</p>
+                                                <small>5 MB</small>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                    <!-- <span class="public-private-option">Public</span> -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="card-header" id="headingOne" *ngFor="let post of commentsRetrieved; let i = index;">
+                            <div class="mcomments-section-date d-flex justify-content-center">
+                              <span>{{post.created_date | date: 'medium'}}</span>
+                            </div>
+                            <div class="mcomments-section-details d-flex">
+                              <figure class="mcomments-section-public"><img src="{{baseImagePath}}{{post.role_avatar ? post.role_avatar : post.avatar_image_file}}" style="height: 35px;" alt=""></figure>
+                              <div class="comments-section-content">
+                                <h5 class="comments-section-name" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  {{post.role_name}}
+                                  <!-- <span class="people-reacted-section">
+                                    people reacted:  3 Truth, 2 Fun, 1 Creative
+                                  </span> -->
+                                </h5>
+                                <!-- <h6 class="comments-section-sub-title">Hi, Everyone</h6> -->
+                                <div class="comments-section-text-outer">
+                                  <p style="font-weight: bold;">{{post.response_description}}
+                                    <!-- <span class="public-private-option">Public</span> -->
+                                  </p>
+                                </div>
+                                <p *ngIf="post.attachments.length>0">Please click on below images to view details</p>
+                                <div class="card-body-inner-content-imgs d-flex mb-2">
+                                  <a title="" class=" mcomments-subject-pic" *ngFor="let item of post.attachments"><img *ngIf="item.type == 'image'" src="{{baseImagePath}}{{item.file}}" class="imageLink" alt="image not found" (click)="openModalSpot(content, baseImagePath+item.file, 'image')"/></a>
+                                  <a title="" class=" mcomments-subject-pic" *ngFor="let item of post.attachments"> <video *ngIf="item.type == 'video'" width="220" height="111" (click)="openModalSpot(content, baseImagePath+item.file, 'video')">
+                                    <source src="{{baseImagePath}}{{item.file}}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                  </video></a>
+                                  <a title="" class=" mcomments-subject-pic" *ngFor="let item of post.attachments">
+                                    <div class="submit-upload-img-container" *ngIf="item.type == 'doc'">
+                                      <a title="" class="submit-upload-close-btn" (click)="commnetdeleteFiles($event,item, 'doc')">x</a>
+                                      <div class="flex-container">
+                                        <div class="flex-item" (click)="openDocument($event, baseImagePath+item.file)">
+                                          <div class="row">
+                                          <div class="col-sm-3 wordIcon">
+                                            <span><i class="far fa-file-word" ></i></span>
+                                          </div>
+                                          <div class="col-sm-9 fileName">
+                                            <div>
+                                              <p>{{ item.file.length > 10 ? (item.file | slice:0:10) + '...' : item.file }}</p>
+                                              <small>5 MB</small>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </a>
+                                  <!-- <span class="public-private-option">Public</span> -->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col modal-wolverine-outer setHeight">
+                  <div class="modal-wolverine-inn">
+                    <!--<h4 class="modal-chat-title"> {{challGroupName}}</h4>-->
+                    <h4 class="modal-chat-title" *ngIf="topicDetails && topicDetails.topic_group_size > 1"> {{challGroupName}}</h4>
+                    <div class="modal-chat-outer">
+                      <!-- <h5 class="onlone-text">
+                        Online -1 <span>4 Menbers</span>
+                      </h5> -->
+                      <div class="modal-chat-inner">
+                        <ul *ngIf="this.topic_group_size !== 1 && groupMembersList">
+                          <li *ngFor="let member of groupMembersList">
+                            <figure style="width: 25%;"><img src="{{baseImagePath}}{{member.role_avatar ? member.role_avatar : member.avatar_image_file }}" style="width: 100%;" alt="" /> </figure>
+                            <div class="modal-chat-details">
+                              <h5> {{ member.display_name}}<span class="you-only"></span></h5>
+                              <h6 class="final-submitter" style="margin-bottom: 0;">{{ member.role_name }} <span style="color: #16B400;" *ngIf="member.is_group_owner && member.user_id != loggedInUserId">> Final Submitter</span></h6>
+                              {{member.class_details}} Grade, <span class="modal-chat-small-tex"> {{member.school_name}}</span>
+                              <span
+                                *ngIf="daysLeftForSubmission >= 0 && !topicDetails?.final_submitted && member.is_group_owner && member.user_id == loggedInUserId"
+                                class="final-submitter"
+                                style="cursor: pointer;"
+                                (click)="submitChallenge()">
+                                <b>Click here for final submission</b>
+                              </span>
+                            </div>
+                          </li>
+                        </ul>
+                        <ul *ngIf="this.topic_group_size == 1">
+                          <li>
+                            <figure style="width: 25%;"><img src="{{this.loggedInUserDetails?.profilePicUrl}}" style="width: 100%;" alt="" /> </figure>
+                            <div class="modal-chat-details">
+                              <h5> {{this.loggedInUserDetails?.display_name}} <span class="you-only"></span></h5>
+                                  {{this.loggedInUserDetails?.class_details}} Grade, <span class="modal-chat-small-tex"> {{this.loggedInUserDetails?.school_name}}</span>
+                               <span
+                                 class="final-submitter"
+                                 style="cursor: pointer;"
+                                 (click)="submitChallenge()"
+                                 *ngIf="daysLeftForSubmission >= 0 && !topicDetails?.final_submitted">
+                                 <b>Click here for final submission</b>
+                               </span>
+                            </div>
+                          </li>
+                        </ul>
+
+                      </div>
+
+                      <div class="modal-chat-discussing-section">
+                        <p><strong>Guidelines</strong>  </p>
+
+                      </div>
+
+                      <!-- <div class="modal-chat-discussing-section" *ngIf="groupOwner && final_submitted !== 1">
+                        <p><strong>Hi {{groupOwnerRole}},</strong>  After you finish discussing the solution, please submit the
+                          final challenge</p>
+                          <button type="button" class="btn btn-primary"
+                          (click)="submitChallenge()">Submit</button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!--Challenge Modal Start-->
+    <div class="modal fade challengeModal" id="challengeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="challengeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="challengeModalLabel">Challenge - <span>{{challengeName}}</span></h5>
+          <button type="button" class="close top-close-button" (click)="closeModal()" aria-label="Close"> Close
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bg-white">
+         <div class="final-challnge-submit-content continue-challnge-telling-content">
+            <div class="challenge-top">
+              <div class="row">
+                <div class="col-6 d-flex">
+                  <!-- <h3>Trending Challenges</h3> -->
+                </div>
+                  <!-- <div class="col-6 d-flex">
+                      <h4>{{challengeName}}</h4>
+                  </div> -->
+
+                  <div class="col-6 d-flex justify-content-end" *ngIf="this.group_id !== null && this.group_role_id === null">
+                    <img src="assets/img/inline_spinner.svg" alt="" *ngIf="isGroupsLoading" />
+                    <button class="btn btn-outline-danger" type="button" (click)="rejectChallenge()">Reject</button>
+                    <button class="btn btn-success ml-3" type="button" (click)="continueChallenge()"> Accept </button>
+                  </div>
+                  <div class="col-6 d-flex justify-content-end"  *ngIf="topic_group_size == 1 && topic_assign_id == null" >
+                    <button class="continue-button ml-6"  type="button"  (click)="joinChallenge(currentChallenge)">Accept</button>
+                  </div>
+                  <div class="col-6 d-flex justify-content-end"  *ngIf="topic_group_size == 1 && topic_assign_id !== null" >
+                    <button class="continue-button ml-3"  type="button" (click)="joinChallenge(currentChallenge)">Continue</button>
+                  </div>
+
+                  <div class="col-6 d-flex justify-content-end" *ngIf="this.group_id === null && this.group_role_id === null">
+                    <div class="join-user-button-wrap d-flex align-items-center" *ngIf = "topic_group_size !== 1">
+                      <figure>
+                        <img src="assets/img/join-user-pic.png" alt="" class="img-fluid">
+                      </figure>
+                      <button class="continue-button join-user-button" type="button" *ngIf="topic_assign_id == null" (click)="joinChallenge(currentChallenge)" style="width: revert; padding-top: 10px;"> <span>+</span> JOIN </button>
+                    </div>
+                  </div>
+
+                  <div class="col-6 d-flex justify-content-end" *ngIf="this.group_id !== null && this.group_role_id !== null">
+                   <button class="continue-button ml-3"  type="button" *ngIf="topic_assign_id !== null" (click)="joinChallenge(currentChallenge)">Continue</button>
+                  </div>
+
+              </div>
+              <h5>Hi {{st_details.display_name}}</h5>
+              <!-- <p>{{topic_description}} </p> -->
+                  <!-- <img class="icon-20"
+                  src="assets/img/Challenge-info.png" alt="">  -->
+
+              <div class="challenge-info" style="width: 90%;">
+                <h5>{{challengeName}}</h5>
+                <p class="challenge-date">{{createdDateChallenge | date : 'mediumDate'}}</p>
+                <!-- <p><strong>Top Trending Challenges</strong> </p> -->
+                <p class="challenge-response">{{this.submittedComments.length | i18nPlural: pluralMapping.response}}</p>
+                <p [innerHTML]="topic_description"> </p>
+                <!-- <p class="hi-text">Hi</p>
+
+                <p class="challenge-name"> <span>{{ChallengeHolder}}</span></p> -->
+
+                <!-- <p class="info-text">{{challengeName}} -->
+                  <!-- <button class="btn" (click)="openShareModal()" type="button"  *ngIf="topic_status == 'In Progress'">Share</button>  -->
+                  <!-- <button class="btn btn-primary btn-lg" type="button" data-dismiss="modal"
+                  (click)="onClickGroup()"  *ngIf="topic_status == 'In Progress'">Groups</button> -->
+
+
+
+                <div class="form-row">
+                  <div class="fluild contianer admin-container">
+
+                    <div class="d-flex" style="flex-direction: row;">
+                      <div class="mr-2" *ngIf="VideoLink">
+                        <!-- <div class="playpauseflex"></div> -->
+                        <!-- <iframe [src]="VideoLink" allow="encrypted-media; gyroscope; picture-in-picture" allowfullscreen title=""></iframe> -->
+                        <video width="220" height="111" controls (click)="openModal(content, VideoLink)">
+                          <source [src]="VideoLink" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                      <div class="mr-2" *ngIf="AudioLink">
+                        <!-- <iframe [src]="AudioLink" allow="encrypted-media; gyroscope; picture-in-picture" allowfullscreen title=""></iframe> -->
+                        <video width="220" height="111" controls>
+                          <source [src]="AudioLink">
+                          Your browser does not support the video tag.
+                        </video>
+                        <!-- <audio (click)="openModal(content, AudioLink)">
+                          <source [src]="AudioLink" type="audio/mp3">
+                          Your browser does not support the audio tag.
+                        </audio>   -->
+                      </div>
+                      <div class="mr-2" *ngIf="ImageLink">
+                        <img [src]="ImageLink" class="imageLink" alt="image not found" (click)="openModal(content, ImageLink)"/>
+                        <!-- <iframe [src]="ImageLink" allow="encrypted-media; gyroscope; picture-in-picture" allowfullscreen title=""></iframe> -->
+                      </div>
+                      <div class="mr-2" *ngIf="documentLink">
+                        <!-- <a *ngIf="documentLink" (click)="openDocument($event, documentLink)">
+                          Document Link
+                        </a> -->
+                        <div class="flex-container">
+                          <div class="flex-item" style="width: 67px;" (click)="openDocument($event, documentLink)">
+                            <div class="row">
+                            <div class="wordIcon">
+                              <span><i class="fas fa-file-word" ></i></span>
+                            </div>
+                            <div class="col-sm-9 fileName">
+                              <div>
+                                <p>{{ filePathName.length > 10 ? (filePathName | slice:0:10) + '...' : filePathName }}</p>
+                                <small>5 MB</small>
+                              </div>
+                            </div>
+                          </div>
+                          </div>
+                        </div>
+                        <!-- <iframe [src]="documentLink" allow="encrypted-media; gyroscope; picture-in-picture" allowfullscreen title=""></iframe> -->
+                      </div>
+                    </div>
+
+                      <!-- <ul class="media-options d-flex">
+                        <li *ngIf="VideoLink">
+                          <button class="btn btn-link" type="button">
+                            <img src="assets/img/video-icon.png" alt="">
+                          </button>
+                          <span>Video</span>
+                          <a *ngIf="VideoLink" (click)="openDocument($event, VideoLink)" class="position-relative">
+                            Video Link
+                          </a>
+                        </li>
+                        <li *ngIf="AudioLink">
+                          <button class="btn btn-link" type="button">
+                            <img src="assets/img/audio-icon.png" alt="">
+                          </button>
+                          <span>Audio </span>
+                          <a *ngIf="AudioLink" (click)="openDocument($event, AudioLink)" class="position-relative">
+                            Audio Link
+                          </a>
+                        </li>
+                        <li *ngIf="ImageLink">
+                          <button class="btn btn-link" type="button">
+                            <img src="assets/img/image-icon.png" alt="">
+                          </button>
+                          <span>Image</span>
+                          <a *ngIf="ImageLink" (click)="openDocument($event, ImageLink)" class="position-relative">
+                            Image Link
+                          </a>
+                        </li>
+                        <li *ngIf="documentLink">
+                          <button class="btn btn-link" type="button">
+                            <img src="assets/img/document-icon.png" alt="">
+                          </button>
+                          <span>Document</span>
+                          <a *ngIf="documentLink" (click)="openDocument($event, documentLink)" class="position-relative">
+                            Document Link
+                          </a>
+                        </li>
+                      </ul> -->
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="continue-story-bottom-list-outer">
+              <div class="continue-story-list-search" *ngIf="submittedComments.length>0">
+                <form action="">
+                  <div class="input-group">
+                    <input type="text" class="form-control col-md-6 col-12" placeholder="Search" name="search">
+                  </div>
+                </form>
+              </div>
+
+              <div class="continue-story-list-container" *ngFor="let item of submittedComments; let submissionIndex=index;">
+                <div id="accordion" class="accordion">
+                  <div class="card pr-5">
+                    <div class="card-header" id="headingOne">
+
+                      <div class="story-user-outer d-flex align-items-center">
+                        <span data-toggle="collapse" [attr.data-target]="'#accordion_' + submissionIndex" [attr.href]="'#collapseOne_' + submissionIndex" aria-expanded="false"
+                           class="collapse-arrow current collapsed" (click)="openCollapse(item,submissionIndex)"></span>
+                        <div *ngIf="topicDetails?.topic_group_size > 1">
+                          <figure class="s-user">
+                            <img src="assets/img/modal-chat-heading-icon.png" alt="">
+                          </figure>
+                          <h3>{{item.group_name}}</h3>
+                        </div>
+                        <div *ngIf="topicDetails?.topic_group_size === 1" class="d-flex student-details-solo">
+                          <figure style="width: 25%;">
+                            <img src="{{baseImagePath}}{{item.avatar_image_file}}" alt="" width="40px" class="img-fluid">
+                          </figure>
+                          <div class="content" style="width: 75%;">
+                            <h6>{{item.display_name}}</h6>
+                            <p class="text-sm-left">{{item.class_details}} Grade, <span class="school-name">{{item.school_name}}</span></p>
+                          </div>
+                        </div>
+                        <span class="s-user-date">{{item.created_date | date: 'mediumDate'}}</span>
+                        <div class="s-user-reacted-outer d-flex">
+                          <span class="s-user-reacted-text">people reacted: </span>
+
+                          <div class="s-user-reacted-option-container">
+                            <ul class="d-flex justify-content-between">
+                              <li class="truth-icon d-flex align-items-center">
+                                <span>{{item.truth}}</span>
+                                <a title="">Truth</a>
+                              </li>
+
+                              <li class="fun-icon d-flex align-items-center">
+                                <span>{{item.fun}}</span>
+                                <a title="">Fun</a>
+                              </li>
+
+                              <li class="creative-icon d-flex align-items-center">
+                                <span>{{item.creative}}</span>
+                                <a title="">Creative</a>
+                              </li>
+                            </ul>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="story-user-content-outer">
+                      <h5>{{item.response_description}}
+                        <!-- <a class="public-img" href="#"><img src="assets/img/public-small-icon-chat2.png" alt="">
+                          Public</a> -->
+                      </h5>
+
+                      <div class="story-user-content-img-outer">
+
+                        <ul class="d-flex story-user-content-img-list align-items-center">
+                          <li class="d-flex" *ngFor="let item of item.attachments">
+                            <img *ngIf="item.type == 'image'" src="{{baseImagePath}}{{item.file}}" class="imageLink" alt="image not found" (click)="openModalSpot(content, baseImagePath+item.file, 'image')"/>
+                          </li>
+                          <li class="d-flex" *ngFor="let item of item.attachments">
+                            <video *ngIf="item.type == 'video'" width="220" height="111" (click)="openModalSpot(content, baseImagePath+item.file, 'video')">
+                              <source src="{{baseImagePath}}{{item.file}}" type="video/mp4">
+                              Your browser does not support the video tag.
+                            </video>
+                          </li>
+                          <li class="d-flex" *ngFor="let item of item.attachments">
+                            <div class="submit-upload-img-container" *ngIf="item.type == 'doc'">
+                              <div class="flex-container">
+                                <div class="flex-item" (click)="openDocument($event, baseImagePath+item.file)">
+                                  <div class="row">
+                                  <div class="col-sm-3 wordIcon">
+                                    <span><i class="far fa-file-word" ></i></span>
+                                  </div>
+                                  <div class="col-sm-9 fileName">
+                                    <div>
+                                      <p>{{ item.file.length > 10 ? (item.file | slice:0:10) + '...' : item.file }}</p>
+                                      <small>5 MB</small>
+                                    </div>
+                                  </div>
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div [attr.id]="'accordion_' + submissionIndex"  class="collapse" data-parent="#accordion">
+                      <div class="card-body">
+                        <div class="card-body-inn">
+                          <div class="story-group-member" *ngIf="topicDetails?.topic_group_size > 1">
+                            <h2>Group Members</h2>
+                            <div class="form-row g-member">
+                              <div class="col-12 col-md-3" *ngFor="let member of item.group_members">
+                                <figure>
+                                  <img src="{{baseImagePath}}{{member.role_avatar ? member.role_avatar : member.avatar_image_file}}" alt="" class="img-fluid">
+                                </figure>
+                                <div class="content">
+                                  <h6> {{member.role_name}} <span class="final-submitter-text" *ngIf="member.is_group_owner">Final Submitter</span></h6>
+                                  <h5>{{member.display_name}}</h5>
+                                  <p>{{member.class_details}} Grade, <span>{{member.school_name}}</span></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        <form [formGroup]="reactForm">
+                          <div class="react-rate-write-response-outer">
+                            <div class="react-rate-section">
+                              <ul class="d-flex justify-content-end">
+                                <li class="react-button" (click)="toggleReactOptions(submissionIndex)">
+                                  <span class="show-react-option-btn" *ngIf="!item.rating_reaction">
+                                    <img
+                                      src="../../../../assets/img/smile-icon-react.jpg"
+                                      alt=""
+                                      class="img-fluid reactPic">
+                                    React
+                                  </span>
+                                  <span
+                                    class="show-react-option-btn" *ngIf="item.rating_reaction === 'Truth'">
+                                    <img
+                                      src="../../../../assets/img/truth-icon.jpg"
+                                      alt=""
+                                      class="img-fluid reactPic">
+                                    Truth
+                                  </span>
+                                  <span class="show-react-option-btn" *ngIf="item.rating_reaction === 'Fun'">
+                                    <img
+                                      src="../../../../assets/img/fun-icon.jpg"
+                                      alt=""
+                                      class="img-fluid reactPic">
+                                    Fun
+                                  </span>
+                                  <span class="show-react-option-btn" *ngIf="item.rating_reaction === 'Creative'">
+                                    <img
+                                      src="../../../../assets/img/creative-icon.jpg"
+                                      alt=""
+                                      class="img-fluid reactPic">
+                                    Creative
+                                  </span>
+                                </li>
+                                <li class="rate-section d-flex align-items-center">
+                                  <label>Rate</label>
+                                  <select
+                                    class="form-control"
+                                    id="exampleFormControlSelect1"
+                                    formControlName="rating_value"
+                                    [value]="item.rating_value"
+                                    (change)="rateSubmission(item, submissionIndex, $event)">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                  </select>
+                                </li>
+                              </ul>
+                              <div class="react-option-outer" *ngIf="showReactOptionsArray[submissionIndex]">
+                                <div class="react-option-container">
+                                  <ul class="d-flex justify-content-between">
+                                    <li class="react-icon truth-icon" (click)="reactOnSubmission(item, submissionIndex, 'Truth')">
+                                     <a title="">Truth</a>
+                                    </li>
+
+                                    <li class="react-icon fun-icon" (click)="reactOnSubmission(item, submissionIndex, 'Fun')">
+                                      <a title="">Fun</a>
+                                    </li>
+
+                                    <li class="react-icon creative-icon" (click)="reactOnSubmission(item, submissionIndex, 'Creative')">
+                                      <a title="">Creative</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="write-response">
+                              <input type="text" class="form-control" placeholder="Write your response…" formControlName="rating_comments">
+                              <button type="button" class="btn"><img src="assets/img/add-btn.png" alt=""> </button>
+                              <button type="button" class="btn response-btn" (click)="submitResponse(item)">
+                                <img src="../../../../assets/img/response-btn.gif" alt="">
+                              </button>
+                            </div>
+                          </div>
+
+                          <div class="view-previous-responses-outer">
+                            <h5>View previous responses</h5>
+                            <div class="form-row view-previous-list" *ngFor="let resp of viewRespList; let i = index">
+                              <div class="col-12 col-md-1">
+                                <figure>
+                                  <img src="assets/img/modal-chat-public1.png" alt="" class="img-fluid">
+                                </figure>
+                              </div>
+                              <div class="col-12 col-md-10">
+                                <div class="view-previous-content">
+                                  <div class="d-flex justify-content-between view-previous-heading">
+                                    <h6>{{resp.user.display_name}}</h6>
+                                    <span class="view-previous-min">{{resp.created_date | date : 'mediumDate' }}</span>
+                                  </div>
+                                  <p>{{resp.comment_notes}}</p>
+
+                                  <div class="input-group mb-3" style="bottom: 21px;" *ngIf="showEditTextBox && i == currentIndex">
+                                   <input type="text" class="form-control" placeholder="Edit your comment..."
+                                    formControlName="comment_response" (keyup.enter)="submitEditComment(resp)" autofocus>
+                                    <div class="input-group-append" (click)="submitEditComment(resp)">
+                                      <span class="input-group-text"><img src="../../../../assets/img/response-btn.gif" style="height: 20px;" alt=""></span>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                              <div class="col-12 col-md-1 d-flex align-items-center" *ngIf="resp.user_id == st_details.user_id"
+                              [ngbPopover]="popContent" triggers="manual" #p1="ngbPopover" (click)="toggleActions(p1,[resp,i])">
+                                <div class="view-previous-dot">
+                                  <ul class="d-flex">
+                                    <li class=""><a href="javascript:void(0)" title=""></a></li>
+                                    <li class=""><a href="javascript:void(0)"></a></li>
+                                    <li class=""><a href="javascript:void(0)" class="view-previous-dot-show"></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pagination-outer pr-5 d-flex justify-content-between" *ngIf="submittedComments.length>0">
+              <div class="pagination-left">
+                <ul class="d-flex" *ngIf="paginationList.length > 1">
+                  <li class="active d-flex align-items-center">{{currentPage + 1}}</li>
+                  <li class="d-flex align-items-center">of {{paginationList.length}}</li>
+                  <li class="pre-next-outer d-flex align-items-center">
+                    <a title="" class="pre-btn" [ngClass]="{'disabled' : currentPage === 0}" (click)="onPrevClick()">Pre</a>
+                    <a title="" class="next-btn" [ngClass]="{'disabled' : currentPage === paginationList.length-1}" (click)="onNextClick()">Next</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="pagination-right d-flex align-items-center">
+                <span>Items Display</span>
+                <form action="">
+                  <div class="form-group">
+                    <select class="form-control" id="exampleFormControlSelect1" (change)="changeCount($event)">
+                      <option *ngFor="let count of itemCounts" >{{count}}</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Challenge Modal End-->
+
+  <!--Video Modal Start-->
+  <div class="modal fade videoModal" id="videoModal" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close"> <span
+              aria-hidden="true">&times;</span> </button>
+          <iframe width="100%" height="460" src="https://www.youtube.com/embed/xcJtL7QggTI" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Video Modal End -->
+
+   <!--Comments Modal Start-->
+   <div class="modal fade commentModal" id="commentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="commentModalLabel"
+         aria-hidden="true">
+       <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="commentModalLabel">Comments</h5>
+             <button type="button" class="close top-close-button" (click)="closeCommentModal()" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body bg-white" style="overflow: auto;">
+             <div class="row mt-3 mt-md-5">
+              <div class="col-12">
+                <!-- <h4 class="mb-4">{{ st_details.display_name }} </h4> -->
+                <div class="comments" *ngIf="commentsRetrieved!==undefined">
+                  <h6 *ngIf="commentsRetrieved?.length<1">No Comments found</h6>
+                  <ul *ngIf="commentsRetrieved?.length>0" style="list-style-type: none;">
+                     <li *ngFor="let post of commentsRetrieved; let i = index;">
+                       <div class="row">
+                        <div class="col-10 comment-container">
+                          <div class="bottom-text">
+                            <div class="avatar">
+                              <!-- <img [src]="'assets/img/pic-' + i + '.png'" alt=""> -->
+                               <!-- <img src="{{userProfileUrl}}{{post.topic_assign.user.avatar_image_file ? post.topic_assign.user.avatar_image_file : 'assets/img/pic-' + i + '.png'}}" alt="user"  (error)="onImgError($event)"/> -->
+
+                              <!-- <img [src]="assets/img/friend-1.png" alt=""> -->
+                            </div>
+                            <!-- <div class="anecdote-info">
+                              <p class="mb-2"><b>{{post.topic_assign.user.display_name | uppercase}}</b></p>
+                              <p class="mb-2 comment_text">{{post.response_description}}</p>
+                              <p class="date-view-text">{{post.date_of_response | date: 'medium'}}</p>
+                            </div> -->
+                          </div>
+
+                        </div>
+                        <!-- <div class="col-2 comment-attachment" *ngIf="(post.attachment_file_path !== null && post.attachment_file_path !== '')">
+                          <a (click)="openDocument('content', post.attachment_file_path)">Attachment</a>
+                         </div> -->
+                      </div>
+                      <hr class="hr_ref" />
+                     </li>
+                  </ul>
+               </div>
+
+              </div>
+
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+  <!-- Comments Modal End -->
+
+
+  <!-- Share Modal Start -->
+  <div class="modal fade shareModal" id="shareModal" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close"> <span
+              aria-hidden="true">&times;</span> </button>
+          <div class="group-share-box">
+            <div class="group-share-top">
+              <figure>
+                <img src="assets/img/profile-avatar-img.jpg" alt="">
+              </figure>
+              <div class="share-group-info">
+                <h3>Share this Challenge</h3>
+                <p>Share <strong>team 1</strong> with your learning community</p>
+              </div>
+            </div>
+            <div class="join-link">
+
+              <!-- Invite Buddies Start -->
+            <section class="invite-buddies mb-3 mb-md-4">
+                   <!-- Right Start -->
+
+          <!-- Right End -->
+                <app-loader *ngIf="isLoading || isLoader2"></app-loader>
+                <h2>Invite Buddies <span class="text-danger">*</span></h2>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="col-12 text-center gender-select" [class.disabled]="isViewMode" *ngIf="autoassign_flag == 1">
+                            <div class="custom-control custom-radio custom-control-inline mr-3" >
+                            <input type="radio" id="radioctrlName11" value="invite" [readonly]="isViewMode" [checked]="isCheckInvite" name="skillIdId" class="custom-control-input">
+                            <label class="custom-control-label" for="radioctrlName11">Invite buddies</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="radioctrlName44" value="all" [readonly]="isViewMode" name="skillIdId" class="custom-control-input">
+                            <label class="custom-control-label" for="radioctrlName44">Auto assign</label>
+                            </div>
+                        </div>
+
+                        <div class="se-right" *ngIf="inviteShow">
+                            <div class="dropdown search-buddies-dropdown" [class.disabled]="isViewMode">
+                             <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                             aria-haspopup="true" aria-expanded="false">
+                             Search by {{searchValue}}
+                           </button>
+                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                             <a class="dropdown-item" (click)="searchBy('School')">by School </a>
+                             <a class="dropdown-item" (click)="searchBy('Skill')">by Skill</a>
+                             <a class="dropdown-item" (click)="searchBy('Age')">by Age</a>
+                             <a class="dropdown-item" (click)="searchBy('Name')">by Name</a>
+                             <a class="dropdown-item" (click)="searchBy('Class')">by Class</a>
+                           </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="input-group mb-3">
+                                 <input type="text" class="form-control" [readonly]="isViewMode" [(ngModel)]="searchName" (change)="onChangeValue($event.target.value)">
+                                 <div class="input-group-append">
+                                   <button class="btn btn-outline-secondary search_buddies" style="width: 70%;" type="button"
+                                    (click)="searchByCatagory()" [disabled]="isViewMode">
+                                    <img src="assets/img/search-icon2.png"  style="width: 60%;height: auto;" />
+                                     </button>
+                                 </div>
+                               </div>
+                          </div>
+
+                         </div>
+
+                    <form [formGroup]="creategroupForm" class="mt-3"  *ngIf="inviteShow">
+                        <!-- Tab Start -->
+                        <div class="tab-content" id="pills-tabContent">
+                        <!-- Private TAB START -->
+                        <div
+                        class="tab-pane fade show active"
+                        id="pills-private"
+                        role="tabpanel"
+                        aria-labelledby="pills-private-tab"
+                    >
+                        <div class="email-block clearfix mb-4">
+                        <div class="email-text float-left">
+                            <h4>Buddies Email</h4>
+                            <p>Buddies join using their email.</p>
+                        </div>
+                        </div>
+                      <div class="form-group">
+                        <tag-input
+                            [formControlName]="'assignments'"
+                            onTextChangeDebounce="100"
+                            [placeholder]="'Invite by email address...'"
+                            [secondaryPlaceholder]="'Invite by email address...'"
+                            [editable]='true'
+                            [disable]="isViewMode"
+                            [separatorKeyCodes]="[32,188,186,13,9, 'TAB']"
+                            [clearOnBlur]="true"
+                            [addOnPaste]="true"
+                            [addOnBlur]="true"
+                            [maxItems]='4'
+                            (onAdd)="onAdded($event)"
+                            (onRemove)="onItemRemoved($event)"
+                        >
+                            <tag-input-dropdown
+                            [focusFirstElement]="false"
+                            [keepOpen]="!isViewMode"
+                            [displayBy]="'user_email'"
+                            [identifyBy]="'user_email'"
+                            [minimumTextLength]="1"
+                            [autocompleteItems]="buddiesList"
+                            zIndex="10000"
+                            >
+                            </tag-input-dropdown>
+                        </tag-input>
+                <!-- <div class="text-right small">**Allowed maximum 4  emails only</div> -->
+
+                     </div>
+                   </div>
+                   <!-- Private TAB END -->
+               </div>
+               <div class="col-10">
+                <div class="buddies-results">
+                  <div class="buddies-results-list" *ngFor="let user of presentUsers; let i = index;">
+                   <div class="buddies-result-single">
+                      <div class="left">
+                        <div class="img">
+                          <img src="{{filePathLocation}}{{user?.avatar_image_file ? user?.avatar_image_file : 'assets/img/friend-' + i + '.png'}}" alt=""  (error)="onImgError($event)"/>
+                        </div>
+                        <div class="buddies-search-info">
+                          <p><strong>{{user?.display_name ? user?.display_name : user?.user_email}}</strong><span *ngIf="user?.class_details"> {{user?.class_details}} Grade, </span><span class="text-success" *ngIf="user?.school_name">
+                              {{user?.school_name}}</span></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                    </form>
+
+                    <div class="login-bottom"  *ngIf="!inviteShow">
+                        <div class="form-group">
+                          <!-- <h3>Invite all</h3> -->
+                        </div>
+                    </div>
+              </div>
+            </div>
+           </section>
+         <!-- Invite Buddies End -->
+         <div class="row justify-content-end">
+            <button class="btn btn-outline-primary btn-lg" [disabled]="isViewMode" (click)="shareInvite()" type="button">Invite</button>
+          </div>
+
+            </div>
+            <!-- <div class="share-icons d-flex justify-content-center">
+              <a href="javascripot:void(0)"><img src="assets/img/facebook.png" alt=""></a>
+              <a href="javascripot:void(0)"><img src="assets/img/twitter.png" alt=""></a>
+              <a href="javascripot:void(0)"><img src="assets/img/instagram.png" alt=""></a>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Share Modal End -->
+
+
+   <!-- Modal -->
+ <div class="modal fade" id="buddiesSearchModal3" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="buddiesSearchModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-xl">
+   <div class="modal-content">
+     <div class="modal-header">
+      <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&#9666;</span>Back
+       </button>
+       <h5 class="modal-title" id="buddiesSearchModalLabel">Buddies</h5>
+       <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close">
+        Close <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <div class="buddied-search-result-wrapper">
+         <div class="form-row title-bar">
+           <div class="col-12">
+             <button class="btn-search" type="button"><img src="assets/img/search-icon2.png" alt=""></button>
+             <span class="search-text">Search results</span>
+           </div>
+         </div>
+
+         <div class="row">
+           <div class="col-4 border-right">
+
+            <div class="form-group">
+              <div class="input-group mb-3">
+                  <input type="text" class="form-control"  [(ngModel)]="searchName" (keyup.enter)="searchByCatagory()" (change)="onChangeValue($event.target.value)">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary search_buddies" style="width: 70%;" type="button"
+                      (click)="searchByCatagory()">
+                        <!-- <img src="../../../../assets/img/search-icon.png" /> -->
+                        <img src="assets/img/search-icon2.png"   style="width: 60%;height: auto;" />
+                        <!-- <i class="fa fa-search" style="width: 30px; color: #1395f6;"></i> -->
+                      </button>
+                  </div>
+                </div>
+           </div>
+
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck === 'School'" (click)="searchBy('School')" name="customRadioInline" id="schoolCheck">
+               <label class="custom-control-label" for="schoolCheck">By School </label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck === 'Skill'" (click)="searchBy('Skill')" name="customRadioInline" id="skillCheck">
+               <label class="custom-control-label" for="skillCheck">By Skill</label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck === 'Class'" (click)="searchBy('Class')" name="customRadioInline" id="classCheck">
+               <label class="custom-control-label" for="classCheck">By Class</label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck === 'Age'" (click)="searchBy('Age')" name="customRadioInline" id="ageCheck">
+               <label class="custom-control-label" for="ageCheck">By Age</label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck === 'Name'" (click)="searchBy('Name')" name="customRadioInline" id="nameCheck">
+               <label class="custom-control-label" for="nameCheck">By Name</label>
+             </div>
+
+             <div>
+                <button class="btn btn-outline-primary btn-lg mt-3" type="button" (click)="saveEmails()">Invite</button>
+               </div>
+           </div>
+
+
+
+           <div class="col-8">
+             <div class="buddies-results">
+               <p>{{searchRes?.length}} Results found with {{searchValue}} name</p>
+                <div
+                  class="buddies-results-list"
+                  *ngFor="let user of searchRes; let i = index;"
+                  [title]="user.topic_assign_id ? 'Already assigned' : ''">
+                <div
+                  class="buddies-result-single"
+                  *ngIf="user?.display_name"
+                  [ngClass]="{'search-result-user-assigned': user.topic_assign_id}">
+                   <div class="left">
+
+                     <div class="img" style="width: 28px;height: 1px;">
+                      <div
+                        class="custom-control custom-checkbox"
+                        style="padding-top: 20px;"
+                        *ngIf="!user.topic_assign_id">
+                        <input type="checkbox"
+                               class="custom-control-input"
+                               style="top: 25px;
+                               z-index: 1;"
+                               id="{{user.user_id}}"
+                               [checked]="user.selected"
+                               (change)="checkUser(user, $event)">
+                        <label class="custom-control-label" for="{{user.user_id}}" ></label>
+                     </div>
+                    </div>
+                     <div class="img">
+                         <img src="{{baseImagePath}}{{user.avatar_image_file}}" alt="user">
+                     </div>
+                     <div class="buddies-search-info">
+                       <p><strong>{{user?.display_name}}</strong> {{user?.class_details}} Grade, <span class="text-success">
+                           {{user?.school_name}}</span></p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <p class="pt-4">No more Results found</p>
+             </div>
+
+           </div>
+         </div>
+
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+ <!-- Submit final challenge Start -->
+ <div class="modal fade bd-example-modal-lg modalChallengeStoryTelling-subModal"  data-backdrop="static" data-keyboard="false"  id="submitChallengeModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <h3>Submit final challenge</h3>
+      <div class="submit-people-img-name-outer d-flex justify-content-center">
+        <figure style="width: 6%;"><img src="{{baseImagePath}}{{groupOwnerRoleImg}}" style="width: 100%;" alt="" /></figure>
+        <h6> {{groupOwnerRole}}</h6>
+      </div>
+      <div class="submit-upload-imgs d-flex justify-content-center mb-5" style="overflow-x: scroll;">
+
+        <div class="submit-upload-imgs-list" *ngFor="let img of imageFiles">
+          <div class="submit-upload-img-container">
+            <a title="" class="submit-upload-close-btn" (click)="deleteFiles($event,img ,'image')">x</a>
+            <img src="{{baseImagePath}}{{img.file}}" class="imageLink" alt="image not found" (click)="openModalSpot(content, baseImagePath+img.file, 'image')"/>
+          </div>
+          <p>{{img.file}} </p>
+        </div>
+
+        <div class="submit-upload-imgs-list" *ngFor="let video of videoFiles">
+          <div class="submit-upload-img-container">
+            <a  title="" class="submit-upload-close-btn" (click)="deleteFiles($event,video , 'video')">x</a>
+            <video width="220" height="111" (click)="openModalSpot(content, baseImagePath+video.file, 'video')">
+              <source src="{{baseImagePath}}{{video.file}}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <!-- <figure><img src="assets/img/submit-upload-img2.png" alt="" class="img-fluid" /></figure> -->
+          </div>
+          <p>{{video.file}}</p>
+        </div>
+
+        <div class="submit-upload-imgs-list" *ngFor="let file of files">
+          <div class="submit-upload-img-container">
+            <a title="" class="submit-upload-close-btn" (click)="deleteFiles($event,file, 'doc')">x</a>
+            <div class="flex-container">
+              <div class="flex-item" (click)="openDocument($event, baseImagePath+file.file)">
+                <div class="row">
+                <div class="col-sm-3 wordIcon">
+                  <span><i class="far fa-file-word" ></i></span>
+                </div>
+                <div class="col-sm-9 fileName">
+                  <div>
+                    <p>{{ file.file.length > 10 ? (file.file | slice:0:10) + '...' : file.file }}</p>
+                    <small>5 MB</small>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <p>{{file.file}}</p>
+        </div>
+
+      </div>
+
+      <form [formGroup]="submitChallengeForm">
+        <div class="write-response-section  write-response-section d-flex justify-content-between">
+
+          <span class="write-text"> </span>
+          <span style="width: 70%;">
+              <input type="text" class="form-control" formControlName="response_description" style="background: bottom;border: none;outline: none;"
+               placeholder="Submit your final response…">
+          </span>
+
+        <div class="write-response-right d-flex justify-content-between ml-2">
+          <!-- <i class="fas fa-arrow-circle-right" style="width: 30px; color: #1395f6;"></i> -->
+          <!-- <div class="write-public">
+            <a>
+              Public
+            </a>
+          </div> -->
+          <ul class="write-public-social-icons justify-content-between">
+            <li><a title=""><img src="assets/img/smile-write-icon.png" alt="" /> </a></li>
+            <li (click)="onUploadDoc($event, 'challenge_comment', 'video')"><a title=""><img src="assets/img/video-write-icon..png" alt="" /> </a></li>
+            <li (click)="onUploadDoc($event, 'challenge_comment', 'doc')"><a title=""><img src="assets/img/file-write-icon..png" alt="" /> </a></li>
+            <li (click)="onUploadDoc($event, 'challenge_comment', 'image')"><a title=""><img src="assets/img/image-write-icon..png" alt="" /> </a></li>
+          </ul>
+        </div>
+        </div>
+      </form>
+
+
+      <div class="submit-final-challenge-button-section bottom-btn d-flex justify-content-center">
+        <button type="button" class="btn btn-outline-danger mr-4" (click)="cancelSubmit()">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="submitFinalComment()">Submit</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Submit final challenge End -->
+
+  <!-- Modal Congratulations Start -->
+  <div class="modal fade bd-example-modal-lg modalCcongratulations-outer" id="submitCongrats"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div style="color: azure;font-size: 22px; cursor: pointer;" (click)="closeCongrats()">
+          <p style="float: right;border: 1px solid; padding: 5px;border-radius: 18px;">Close</p>
+        </div>
+        <figure class="modalCongratulations-img">
+          <img src="../../../../assets/img/Congratulations-img.png" alt="" />
+        </figure>
+
+      </div>
+    </div>
+  </div>
+  <!-- Modal Congratulations End -->
+
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-body d-flex justify-content-center">
+    <ng-container *ngIf="fileType === 'video'">
+      <video width="100%" height="100%" controls>
+        <source [src]="file" [type]="mediaType">
+        Your browser does not support the video tag.
+      </video>
+    </ng-container>
+    <ng-container *ngIf="fileType === 'audio'">
+      <audio controls>
+        <source [src]="file" [type]="mediaType">
+        Your browser does not support the audio tag.
+      </audio>
+    </ng-container>
+    <ng-container *ngIf="fileType === 'image'">
+      <img [src]="file" class="mw-300p" alt="image not found" />
+    </ng-container>
+  </div>
+</ng-template>
+
+<!-- view / upload popover -->
+<ng-template #popContent let-data="data">
+  <ng-container>
+    <div class="">
+      <div class="dropdown-item" (click)="editComment(data)">Edit</div>
+      <div class="dropdown-item">Delete</div>
+    </div>
+  </ng-container>
+</ng-template>

@@ -1,0 +1,252 @@
+<!-- Tab Start -->
+<ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a
+      class="nav-link active"
+      id="pills-challenge-tab"
+      data-toggle="pill"
+      href="#pills-challenge"
+      role="tab"
+      aria-controls="pills-challenge"
+      aria-selected="true"
+      ><img src="assets/img/challenge-icon.png" alt="" />
+      <span>Challenge</span></a
+    >
+  </li>
+  <!--  <li class="nav-item" role="presentation">-->
+  <!--    <a-->
+  <!--      class="nav-link"-->
+  <!--      id="pills-groups-tab"-->
+  <!--      data-toggle="pill"-->
+  <!--      href="#pills-groups"-->
+  <!--      role="tab"-->
+  <!--      aria-controls="pills-groups"-->
+  <!--      aria-selected="false"-->
+  <!--      ><img src="assets/img/groups-icon.png" alt="" /> <span>Groups</span>-->
+  <!--    </a>-->
+  <!--  </li>-->
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <!-- Challenge TAB START -->
+  <div
+    class="tab-pane fade show active"
+    id="pills-challenge"
+    role="tabpanel"
+    aria-labelledby="pills-challenge-tab"
+  >
+    <h2>Challenge</h2>
+    <p>Challenges are where participants view and record their videos.</p>
+
+    <!-- CREATE BY ME SECTION START -->
+    <div class="create-by-me-section mb-3 mb-5">
+      <!-- FILTER START -->
+      <div class="user-filter-options-wrapper d-flex justify-content-between">
+        <div class="d-flex">
+          <h5 class="mr-3 pt-0 pt-md-2">Created by me</h5>
+          <app-search
+            [(ngModel)]="searchChallenge"
+            name="searchChallenge"
+          ></app-search>
+        </div>
+        <button
+          class="btn btn-danger shadow create-btn"
+          [routerLink]="['/main-route/m/challenge/create']"
+          type="button"
+        >
+          Create Challenge
+        </button>
+      </div>
+      <!-- FILTER END -->
+      <!-- TABLE START -->
+      <div class="table-responsive border my-3 mt-md-4">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th class="w-20" scope="col">Challenge names</th>
+              <th class="w-20" scope="col">Description</th>
+              <th class="w-12" scope="col">Created Date</th>
+              <th class="w-18" scope="col">Created by</th>
+              <th class="w-10" scope="col">Status</th>
+              <th class="w-15" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="isLoading">
+              <td colspan="7" class="text-center">
+                <app-spinner></app-spinner>
+              </td>
+            </tr>
+            <ng-container
+              *ngIf="ChallengesByMe?.length && (ChallengesByMe | tFilter: searchChallenge:dateFormatKeys) as result">
+              <ng-container *ngIf="result?.length">
+              <tr *ngFor="let challenge of result | pagination: pageSearch">
+                <td class="font-weight-medium">
+                  <img
+                    class="float-left mr-3"
+                    src="assets/img/Create your own creaft.png"
+                    alt=""
+                  />
+                  {{ challenge.topic_name }}
+                </td>
+                <td [innerHTML]="(challenge.topic_description.length > 60) ? (challenge.topic_description | slice:0:60) + '...' : challenge.topic_description"></td>
+                <td>{{ challenge.created_date | date: "dd/MM/yyyy" }}</td>
+                <td>{{ challenge.created_by }}</td>
+                <td class="text-info">{{ challenge.topic_status }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      (click)="onView(challenge)"
+                    >
+                      Preview
+                    </button>
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      (click)="onEdit(challenge)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      (click)="onDelete(challenge?.topic_id)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              </ng-container>
+              <tr *ngIf="result.length === 0" class="text-center">
+                <td colspan="6">No Data Found</td>
+              </tr>
+            </ng-container>
+            <tr *ngIf="!ChallengesByMe?.length && !isLoading">
+              <td colspan="7" class="text-center">No Data found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- TABLE END -->
+      <ng-container
+        *ngIf="
+          ChallengesByMe?.length &&
+          (ChallengesByMe | tFilter: searchChallenge:dateFormatKeys) as result
+        "
+      >
+      <app-pagination *ngIf="result?.length" [totalRecords]="result?.length" [(page)]="pageSearch"></app-pagination>
+      </ng-container>
+    </div>
+    <!-- CREATE BY ME SECTION END -->
+
+    <!-- CREATE BY OTHERS SECTION START -->
+    <div class="create-by-others-section">
+      <!-- FILTER START -->
+      <div class="user-filter-options-wrapper d-flex justify-content-between">
+        <div class="d-flex">
+          <h5 class="mr-3 pt-0 pt-md-2">Created by Others</h5>
+        </div>
+      </div>
+      <!-- FILTER END -->
+      <!-- TABLE START -->
+      <div class="table-responsive border my-3 mt-md-4">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th class="w-20" scope="col">Challenge names</th>
+              <th class="w-20" scope="col">Description</th>
+              <th class="w-12" scope="col">Created Date</th>
+              <th class="w-18" scope="col">Created by</th>
+              <th class="w-10" scope="col">Status</th>
+              <th class="w-15" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="isLoading">
+              <td colspan="7" class="text-center">
+                <app-spinner></app-spinner>
+              </td>
+            </tr>
+            <ng-container
+              *ngIf="
+                ChallengesByOthers?.length &&
+                (ChallengesByOthers
+                  | tFilter: searchChallenge:dateFormatKeys) as result
+              "
+            >
+            <ng-container *ngIf="result?.length">
+              <tr *ngFor="let challenge of result| pagination: page2Search">
+                <td class="font-weight-medium">
+                  <img
+                    class="float-left mr-3"
+                    src="assets/img/Create your own creaft.png"
+                    alt=""
+                  />
+                  {{ challenge.topic_name }}
+                </td>
+                <td [innerHTML]="(challenge.topic_description.length > 60) ? (challenge.topic_description | slice:0:60) + '...' : challenge.topic_description">
+                  <!-- {{ (challenge.topic_description.length > 60) ? (challenge.topic_description | slice:0:60) + '...' : challenge.topic_description }} -->
+                </td>
+                <td>{{ challenge.created_date | date: "dd/MM/yyyy" }}</td>
+                <td>{{ challenge.created_by }}</td>
+                <td class="text-info">{{ challenge.topic_status }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      (click)="onView(challenge)"
+                    >
+                    Preview
+                    </button>
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      (click)="onEdit(challenge)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      (click)="onDelete(challenge?.topic_id)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+              <tr *ngIf="result.length === 0" class="text-center">
+                <td colspan="6">No Data Found</td>
+              </tr>
+            </ng-container>
+            <tr *ngIf="!ChallengesByOthers?.length && !isLoading">
+              <td colspan="6" class="text-center">No Data found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- TABLE END -->
+      <ng-container *ngIf="ChallengesByOthers?.length && (ChallengesByOthers | tFilter: searchChallenge:dateFormatKeys) as result">
+      <app-pagination *ngIf="result?.length" [totalRecords]="result?.length" [(page)]="page2Search"></app-pagination>
+      </ng-container>
+    </div>
+    <!-- CREATE BY OTHERS SECTION END -->
+  </div>
+  <!-- Challenge TAB END -->
+
+  <!-- Groups BOARD TAB START -->
+  <div
+    class="tab-pane fade"
+    id="pills-groups"
+    role="tabpanel"
+    aria-labelledby="pills-leader-board-tab"
+  >
+    <app-groups></app-groups>
+  </div>
+  <!-- Groups BOARD TAB END -->
+</div>
+<!-- Tab End -->

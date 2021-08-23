@@ -1,0 +1,77 @@
+<app-loader *ngIf="isLoading"></app-loader>
+  <section class="form-section">
+    <div class="form-window">
+      <div class="title-bar">
+        Create Profile
+        <button (click)="backToOnBoarding()">
+          <img src="assets/img/back-arrow.png" alt="" />
+        </button>
+      </div>
+      <form [formGroup]="createProfileForm" (ngSubmit)="submitCreateProfile()">
+        <div class="content-box">
+          <div>
+            <label for="">Full Name<span>*</span></label>
+            <input type="text" class="form-control" formControlName="displayName"
+            placeholder="Enter Full Name" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.displayName)}">
+            <app-control-messages [control]="createProfileForm?.controls.displayName" labelName="Full name">
+           </app-control-messages>
+          </div>
+          <div>
+            <label for="">Email<span>*</span></label>
+            <input type="email" class="form-control"  formControlName="userEmail"  [readonly]="IsDisabled"
+                 placeholder="Enter Email id"  [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.userEmail)}">
+                 <app-control-messages [control]="createProfileForm?.controls.userEmail" labelName="Email">
+                </app-control-messages>
+          </div>
+          <div>
+            <label for="">Contact Number<span>*</span></label>
+            <input type="tel" class="form-control" formControlName="userPhoneNum" maxlength="10" minlength="10"
+                 placeholder="+ 91 " [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.userPhoneNum)}">
+                 <app-control-messages [control]="createProfileForm?.controls.userPhoneNum" labelName="Contact number">
+                </app-control-messages>
+          </div>
+          <div>
+            <label for="">DOB<span>*</span></label>
+            <input type="text" onkeydown="return false" class="form-control datepicker" formControlName="userDob"
+                (click)="d.toggle()" [minDate]="{year: 1920, month: 1, day: 1}" [maxDate]="dobMaxDate" placeholder="DD/MM/YYYY"  ngbDatepicker #d="ngbDatepicker" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.userDob)}">
+                <app-control-messages [control]="createProfileForm?.controls.userDob" labelName="Date of birth">
+                </app-control-messages>
+          </div>
+          <div>
+            <label for="">Gender<span>*</span></label>
+            <select  id="" class="form-control" formControlName="gender" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.gender)}">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <app-control-messages [control]="createProfileForm?.controls.gender" labelName="Gender">
+            </app-control-messages>
+          </div>
+          <div>
+            <label for="">Class<span>*</span></label>
+            <select class="form-control" formControlName="classDetails" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.classDetails)}">
+              <option hidden disabled value="">-- Select class --</option>
+              <option>5th</option>
+              <option>6th</option>
+              <option>7th</option>
+              <option>8th</option>
+              <option>9th</option>
+              <option>10th</option>
+              <option>11th</option>
+              <option>12th</option>
+            </select>
+            <app-control-messages [control]="createProfileForm?.controls.classDetails" labelName="Class">
+            </app-control-messages>
+          </div>
+          <div>
+            <label for="">School Name<span>*</span></label>
+            <input type="email" class="form-control" formControlName="schoolName"
+            placeholder="Your School name" [ngClass]="{'error-field': _uhs.isValidField(createProfileForm?.controls.schoolName)}">
+            <app-control-messages [control]="createProfileForm?.controls.schoolName" labelName="School">
+            </app-control-messages>
+          </div>
+          <button type="submit" class="btn-next">NEXT</button>
+        </div>
+      </form>
+
+    </div>
+  </section>

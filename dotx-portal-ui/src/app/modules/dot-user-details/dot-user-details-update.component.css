@@ -1,0 +1,60 @@
+
+
+/* ===================== 
+CREATE AVATAR CSS START ====================== */
+.login-bottom h5{ font-family:'Metropolis'; font-size: 23px; line-height: 33px; font-weight: 600; color: #07304C  }
+.gender-select .custom-radio-lg .custom-control-label{ color: #07304C; font-family:'Metropolis'; font-size: 23px; font-weight: 600  }    
+.gender-select .custom-radio-lg .custom-control-label::before{ width: 24px; height: 24px; top: 0; left: -34px }    
+.gender-select .custom-radio-lg .custom-control-label::after{ width: 24px; height: 24px; top: 0; left: -34px }    
+.custom-control.custom-radio-lg { min-height: 24px; padding-left: 34px }
+.custom-control.custom-radio-lg .custom-control-input{ width: 24px; height: 24px }
+.custom-radio.custom-radio-lg .custom-control-input:checked~.custom-control-label::after{ background: url('../../../assets/img/checkbox-checked.png') no-repeat center }
+.custom-radio.custom-radio-lg .custom-control-input:checked~.custom-control-label:before{ background-color: #fff }
+
+.upload-pic-wrapper{ width: 100% }
+.up-left{ width: 120px; margin-bottom: 50px }
+.up-mid{ width: 30px; margin-bottom: 50px; position: relative; }
+.up-mid:before{ width: 1px; height: 100%; position: absolute; top: 0; left: 50%; content: ''; background-color: #9FB4C4 }
+.up-mid span{ width: 100%; position: absolute; top: 50%; left: 0; margin-top: -10px; text-align: center; background: #fff }
+.up-right{ width: 258px }
+.upload-avatar-img{ padding: 15px; margin: 0 auto 18px; display: block; border: 1px solid #E1E1E1 }
+.upload-avatar-img img{ max-width: 100%; padding: 0; margin: 0 auto; display: block; border-radius: 100% }
+.up-left p, .up-right p{ color: #858585; font-family:'Metropolis'; font-weight: 500; } 
+.up-left .btn-link{ height: auto; border-radius: 0px; color: #07304C; font-weight: 600; font-family:'Metropolis'; font-size: 16px; line-height: 18px; border-bottom: 1px solid #07304C  }
+ul.avatar-list{ padding: 0 ;margin: 0 }
+ul.avatar-list li{ width: 58px; height: 58px; margin: 2px; float: left; list-style: none }
+ul.avatar-list li a{ display: block; padding: 1px; border: 1px solid #fff; border-radius: 12px }
+ul.avatar-list li.active a, ul.avatar-list li:hover a{  border: 1px solid #68c3ea; background-color: #e3f6ff }
+
+.btn-skip {
+    color: #9FB4C4;
+    font-size: 24px;
+    font-weight: normal;
+}
+.errorGender{
+    justify-content: center;
+    text-align: center;
+}
+
+.input_file_upload {
+    opacity: 0;
+}
+
+/* ===================== 
+CREATE PROFILE QUIZ CSS START ====================== */
+h5.quiz-question{ font-size: 18px; font-weight: 500; letter-spacing: -0.34px; margin-bottom: 25px }
+h5.quiz-question strong{ font-weight: bold }
+h5.quiz-question img{ height: 50px; margin-right: 10px }
+ul.answer-list{ padding: 0; margin: 0 }
+ul.answer-list > li{ list-style: none; padding: 8px 0; margin: 0; font-size: 21px; line-height: 29px; font-family:'Metropolis'; font-weight: 700  }
+ul.answer-list > li >a, ul.answer-list > li > span{ position: relative; padding: 10px 15px 10px 35%; margin: 0; color: #9FB4C4; background-color: #fff; border: 1px solid #9FB4C4; border-radius: 5px; display: block }
+ul.answer-list > li >a:hover, ul.answer-list > li > span:hover{  box-shadow: 0 4px 3px rgba(25,25,25,0.13) } 
+ul.answer-list > li >a.bg-success{ color: #fff   } 
+ul.answer-list > li >a.bg-warning{ color: #fff   } 
+ul.answer-list > li >a.bg-danger{ color: #fff   } 
+ul.answer-list > li > a > img{ margin-right: 10px}
+ul.answer-list > li img{ margin-right: 10px}
+ul.answer-list .custom-checkbox{ position: absolute; left: 30px; top: 14px }
+ul.answer-list .btn-link{ position: absolute; right: 21px; border: none; outline: none; background:inherit }
+ul.answer-list .btn-link:hover{ opacity: 0.8; }
+ul.answer-list .custom-control-input:checked~.custom-control-label:before{ background-color:#ED9896; border-color: #ED9896 }

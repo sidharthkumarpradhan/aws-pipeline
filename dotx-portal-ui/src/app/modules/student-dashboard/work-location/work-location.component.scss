@@ -1,0 +1,12 @@
+.work-location-section {
+    .answer-box-wrapper{ display: flex; justify-content: space-evenly }
+    .answer-box{ width: 154px; cursor: pointer; }
+    .answer-box-inner{ cursor: pointer;width: 100%; box-shadow: 0 1px 6px rgba(0,0,0,0.2); padding: 48px 20px 20px; margin: 26px 5px; border-radius: 4.8px }
+    .answer-box-inner:hover{ box-shadow: 0 1px 12px rgba(0,0,0,0.3); }
+    .answer-box-inner img{ width: 78px; display: block; margin: 0 auto 32px }
+    .answer-box-inner p{ font-size: 16.8px; color: #07304C; text-align: center; font-weight: 500; text-transform: uppercase; padding: 0; margin: 0 }
+    .type-work-location {opacity: 0; width: 1px; position: absolute;}
+    .answer-box-wrapper input[type="radio"]:checked ~ * { 
+        background:#a5aeb5 !important;
+    }
+}

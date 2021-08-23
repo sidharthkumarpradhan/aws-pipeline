@@ -1,0 +1,31 @@
+<app-loader *ngIf="isLoading"></app-loader>
+  <section class="form-section">
+    <div class="form-window">
+      <div class="title-bar">
+        Login
+      </div>
+      <form [formGroup]="adminLoginForm" (ngSubmit)="loginSubmit()" autocomplete="off">
+        <div class="content-box login">
+          <div>
+            <label for="">Email</label>
+            <input placeholder="Enter your email" type="text"  formControlName="username" autocomplete="false"
+            placeholder="Enter your email"  [ngClass]="{'error-field': helperService.isValidField(adminLoginForm?.controls.username)}" />
+            <app-control-messages [control]="adminLoginForm?.controls.username" labelName="Username">
+            </app-control-messages>
+            
+          </div>
+          <div>
+            <label for="">Password</label>
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password" maxlength="20"
+            placeholder="Enter your password"  [ngClass]="{'error-field': helperService.isValidField(adminLoginForm?.controls.password)}" />
+            <app-control-messages [control]="adminLoginForm?.controls.password" labelName="Password">
+            </app-control-messages>
+          </div>
+          <p class="incorrect-wrapper" *ngIf="errorMessage">Incorrect username or password</p>
+          <a class="forgot" routerLink="/auth/forgotPassword" [queryParams]="{ source: 'fromLogin'}">Forgot your password ?</a>
+          <button class="btn-next" type="submit">LOGIN</button>
+          <p class="terms"><a href="">Terms and conditions</a> and <a href="">Privacy Policy</a></p>
+        </div>
+      </form>
+    </div>
+  </section>

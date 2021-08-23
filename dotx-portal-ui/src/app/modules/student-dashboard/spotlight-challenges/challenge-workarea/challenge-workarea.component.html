@@ -1,0 +1,406 @@
+<app-loader *ngIf="isLoading"></app-loader>
+
+
+      <div class="modal-header">
+        <button type="button" class="close top-close-button" aria-label="Close" (click)="backToChallenge()">
+          <span aria-hidden="true">&#9666;</span>Back
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Challenge - {{challenge.topic_name}} </h5>
+        <button type="button" class="close top-close-button" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+          Close<span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col modal-left">
+            <div class="row d-flex align-items-stretch h-100">
+              <div class="col modal-group-solo-outer">
+                <div class="modal-group-solo-inn" *ngIf="(challenge && challenge.topic_group_size > 1); else solo">
+                  <a title="" class="group-link active">
+                    <span class="group-icon"></span>
+                    Group</a>
+                </div>
+                <ng-template #solo>
+                  <div class="modal-group-solo-inn">
+                    <a title="" class="solo-link active">
+                      <span class="solo-icon"></span>
+                      Solo</a>
+                  </div>
+                </ng-template>
+              </div>
+              <div class="col-10 modal-inprogress-outer setHeight">
+                <div class="inprogress-challenges-outer">
+                  <!-- <h4>Inprogress Challenges</h4> -->
+                  <div class="inprogress-challenges-list-details">
+                    <h5 class="inprogress-list-details-title">
+                      <a title=""> {{challenge.topic_name}} </a>
+                      <span class="list-details-title-date">{{challenge?.topic_start_date | date: 'd MMM, y'}}</span>
+                    </h5>
+                    <div
+                      class="inprogress-list-details-comments">{{comments.length | i18nPlural: pluralMapping.response}}</div>
+                    <figure class="inprogress-list-details-pic">
+                      <img src="assets/img/inprogress-list-details-pic.png" alt=""/>
+                    </figure>
+                    <p [innerHTML]="challenge.topic_description"></p>
+                    <div class="inprogress-list-details-thumbs-outer d-flex justify-content-between">
+                      <figure class="inprogress-list-details-thumbs">
+                        <img src="assets/img/inprogress-list-details-thumbs1.jpg" alt="" class="img-fluid"/>
+                      </figure>
+                      <figure class="inprogress-list-details-thumbs">
+                        <img src="assets/img/inprogress-list-details-thumbs2.jpg" alt="" class="img-fluid"/>
+                      </figure>
+                    </div>
+
+
+                    <div class="inprogress-list-details-document-outer">
+                      <ul>
+                        <li *ngIf="VideoLink">
+                          <video width="220" height="111" (click)="openModal(content, VideoLink, 'video')">
+                            <source [src]="VideoLink" type="video/mp4">
+                            Your browser does not support the video tag.
+                          </video>
+
+                        </li>
+                        <li *ngIf="AudioLink">
+                          <video width="220" height="111" controls>
+                            <source [src]="AudioLink">
+                            Your browser does not support the video tag.
+                          </video>
+                        </li>
+
+                        <li *ngIf="ImageLink">
+                          <img [src]="ImageLink" class="imageLink" alt="image not found"
+                               (click)="openModal(content, ImageLink, 'image')"/>
+                        </li>
+
+                        <li *ngIf="documentLink">
+                          
+                          <div class="flex-container">
+                            <div class="flex-item" (click)="openDocument($event, documentLink)">
+                              <div class="row">
+                                <div class="col-sm-3 wordIcon">
+                                  <span><i class="far fa-file-word"></i></span>
+                                </div>
+                                <div class="col-sm-9 fileName">
+                                  <div>
+                                    <p>{{ filePathName.length > 10 ? (filePathName | slice:0:10) + '...' : filePathName }}</p>
+                                    <small>5 MB</small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="modal-right-welcome-section">
+              <div class="row">
+                <div class="col-5">
+                  <h4 class="welcome-title">Welcome to <strong># {{challenge.topic_name}}</strong></h4>
+                </div>
+                <div class="col-5 pl-0">
+                  <div class="welcome-hours-section" *ngIf="daysLeftForSubmission >= 0">
+                    <span class="green-color">{{daysLeftForSubmission + 1 | i18nPlural: pluralMapping.day}} left.</span>
+                    <strong> Hurry..</strong> submit your response
+                  </div>
+                  <div class="welcome-hours-section" *ngIf="daysLeftForSubmission < 0">
+                    <span class="challenge-ended">Challenge ended</span>
+                  </div>
+                </div>
+                <div class="col-2 px-0" *ngIf="challenge.topic_group_size !== 1 && userInfo.user_id === groupOwner.user_id">
+                  <div class="welcome-view-group">
+                    <span style="cursor: pointer;" (click)="viewGroup()">View group</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row d-flex align-items-stretch">
+              <div class="col-9 modal-middle-outer">
+                <div class="modal-middle-inner setHeight">
+                  <div class="submit-upload-imgs d-flex justify-content-center mb-2" style="overflow-x: scroll;"
+                       *ngIf="commentVideoFiles.length>0 || commentImageFiles.length>0 || commentFiles.length>0">
+
+                    <div class="submit-upload-imgs-list" *ngFor="let img of commentImageFiles">
+                      <div class="submit-upload-img-container">
+                        <a title="" class="submit-upload-close-btn"
+                           (click)="commnetdeleteFiles($event,img ,'image')">x</a>
+                        <img [src]="img.file | imageRender" class="imageLink" alt="image not found"
+                             (click)="openModal(content, baseImagePath+img.file, 'image')"/>
+                      </div>
+                    </div>
+
+                    <div class="submit-upload-imgs-list" *ngFor="let video of commentVideoFiles">
+                      <div class="submit-upload-img-container">
+                        <a title="" class="submit-upload-close-btn"
+                           (click)="commnetdeleteFiles($event,video , 'video')">x</a>
+                        <video width="220" height="111"
+                               (click)="openModal(content, baseImagePath+video.file, 'video')">
+                          <source [src]="video.file | imageRender" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+
+                    <div class="submit-upload-imgs-list" *ngFor="let file of commentFiles">
+                      <div class="submit-upload-img-container">
+                        <a title="" class="submit-upload-close-btn"
+                           (click)="commnetdeleteFiles($event,file, 'doc')">x</a>
+                        <div class="flex-container">
+                          <div class="flex-item" (click)="openDocument($event, baseImagePath+file.file)">
+                            <div class="row">
+                              <div class="col-sm-3 wordIcon">
+                                <span><i class="far fa-file-word"></i></span>
+                              </div>
+                              <div class="col-sm-9 fileName">
+                                <div>
+                                  <p>{{ file.file.length > 10 ? (file.file | slice:0:10) + '...' : file.file }}</p>
+                                  <small>5 MB</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <form>
+                    <div class="write-response-section  write-response-section d-flex">
+
+                      <span class="write-text"> </span>
+                      <span>
+                            <input type="text" class="form-control" #comment
+                                   style="background: bottom;border: none;outline: none;"
+                                   (keyup.enter)="saveComment(comment.value)" placeholder="Write your response…">
+                        </span>
+
+                      <div class="write-response-right d-flex justify-content-between ml-2">
+                        <ul class="write-public-social-icons justify-content-between">
+                          <li><a title=""> <img src="../../../../assets/img/response-btn.gif" alt=""
+                                                (click)="saveComment(comment.value)"> </a></li>
+                          <li><a title=""><img src="assets/img/smile-write-icon.png" alt=""/> </a></li>
+                          <li (click)="onUploadComment($event, 'challenge_comment', 'video')"><a title=""><img
+                            src="assets/img/video-write-icon..png" alt=""/> </a></li>
+                          <li (click)="onUploadComment($event, 'challenge_comment', 'doc')"><a title=""><img
+                            src="assets/img/file-write-icon..png" alt=""/> </a></li>
+                          <li (click)="onUploadComment($event, 'challenge_comment', 'image')"><a title=""><img
+                            src="assets/img/image-write-icon..png" alt=""/> </a></li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="no-comments-img" *ngIf="comments?.length<1 && finalComment?.length<1"><img
+                      src="assets/img/no-comments-img.png" alt=""/></div>
+
+                  </form>
+                  <div class="modal-middle-comments-section">
+                    <div id="accordion">
+                      <div class="card">
+                        <div class="card-body-outer mb-3" *ngFor="let comment of finalComment; let i = index;">
+                          <div class="card-body " *ngIf="finalComment?.length>0">
+                            <div class="card-body-inner d-flex " style="overflow-x: scroll;">
+                              <figure class="mcomments-section-public"><img
+                                [src]="(comment.role_avatar ? comment.role_avatar : comment.avatar_image_file) | imageRender"
+                                style="height: 35px;" alt=""></figure>
+                              <div class="card-body-inner-content">
+                                <h6 class="final-submit-text">Final challenge submited <span
+                                  class="inal-submit-date">{{comment.created_date | date: 'mediumDate'}}</span></h6>
+                                <h5 class="comments-section-name">
+                                  {{comment.role_name}}
+
+                                </h5>
+                                <p style="font-weight: bold;">{{comment.response_description}}</p>
+                                <div class="card-body-inner-content-imgs d-flex">
+                                  <a title="" class=" mcomments-subject-pic"
+                                     *ngFor="let item of comment.attachments"><img *ngIf="item.type == 'image'"
+                                                                                   [src]="item.file|imageRender"
+                                                                                   class="imageLink"
+                                                                                   alt="image not found"
+                                                                                   (click)="openModal(content, baseImagePath+item.file, 'image')"/></a>
+                                  <a title="" class=" mcomments-subject-pic" *ngFor="let item of comment.attachments">
+                                    <video *ngIf="item.type == 'video'" width="220" height="111"
+                                           (click)="openModal(content, baseImagePath+item.file, 'video')">
+                                      <source [src]="item.file|imageRender" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </a>
+                                  <a title="" class=" mcomments-subject-pic" *ngFor="let item of comment.attachments">
+                                    <div class="submit-upload-img-container" *ngIf="item.type == 'doc'">
+                                      <a title="" class="submit-upload-close-btn"
+                                         (click)="commnetdeleteFiles($event,item, 'doc')">x</a>
+                                      <div class="flex-container">
+                                        <div class="flex-item" (click)="openDocument($event, baseImagePath+item.file)">
+                                          <div class="row">
+                                            <div class="col-sm-3 wordIcon">
+                                              <span><i class="far fa-file-word"></i></span>
+                                            </div>
+                                            <div class="col-sm-9 fileName">
+                                              <div>
+                                                <p>{{ item.file.length > 10 ? (item.file | slice:0:10) + '...' : item.file }}</p>
+                                                <small>5 MB</small>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card-header" id="headingOne" *ngFor="let post of comments; let i = index;">
+                          <div class="mcomments-section-date d-flex justify-content-center">
+                            <span>{{post.created_date | date: 'medium'}}</span>
+                          </div>
+                          <div class="mcomments-section-details d-flex">
+                            <figure class="mcomments-section-public"><img
+                              [src]="(post.role_avatar ? post.role_avatar : post.avatar_image_file)|imageRender"
+                              style="height: 35px;" alt=""></figure>
+                            <div class="comments-section-content">
+                              <h5 class="comments-section-name" data-toggle="collapse" data-target="#collapseOne"
+                                  aria-expanded="true" aria-controls="collapseOne">
+                                {{post.role_name}}
+                              </h5>
+                              <div class="comments-section-text-outer">
+                                <p style="font-weight: bold;">{{post.response_description}}
+                                </p>
+                              </div>
+                              <p *ngIf="post.attachments.length>0">Please click on below images to view details</p>
+                              <div class="card-body-inner-content-imgs d-flex mb-2">
+                                <a title="" class=" mcomments-subject-pic" *ngFor="let item of post.attachments"><img
+                                  *ngIf="item.type == 'image'" [src]="item.file|imageRender" class="imageLink"
+                                  alt="image not found"
+                                  (click)="openModal(content, baseImagePath+item.file, 'image')"/></a>
+                                <a title="" class=" mcomments-subject-pic" *ngFor="let item of post.attachments">
+                                  <video *ngIf="item.type == 'video'" width="220" height="111"
+                                         (click)="openModal(content, baseImagePath+item.file, 'video')">
+                                    <source [src]="item.file|imageRender" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                  </video>
+                                </a>
+                                <a title="" class=" mcomments-subject-pic" *ngFor="let item of post.attachments">
+                                  <div class="submit-upload-img-container" *ngIf="item.type == 'doc'">
+                                    <a title="" class="submit-upload-close-btn"
+                                       (click)="commnetdeleteFiles($event,item, 'doc')">x</a>
+                                    <div class="flex-container">
+                                      <div class="flex-item" (click)="openDocument($event, baseImagePath+item.file)">
+                                        <div class="row">
+                                          <div class="col-sm-3 wordIcon">
+                                            <span><i class="far fa-file-word"></i></span>
+                                          </div>
+                                          <div class="col-sm-9 fileName">
+                                            <div>
+                                              <p>{{ item.file.length > 10 ? (item.file | slice:0:10) + '...' : item.file }}</p>
+                                              <small>5 MB</small>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col modal-wolverine-outer setHeight">
+                <div class="modal-wolverine-inn">
+                  <h4 class="modal-chat-title"
+                      *ngIf="challenge && challenge.topic_group_size > 1"> {{groupOwner?.group_name}}</h4>
+                  <div class="modal-chat-outer">
+                    <div class="modal-chat-inner">
+                      <ul *ngIf="challenge !== 1 && groupList">
+                        <li *ngFor="let member of groupList">
+                          <figure style="width: 25%;"><img
+                            [src]="(member.role_avatar ? member.role_avatar : member.avatar_image_file) | imageRender"
+                            style="width: 100%;" alt=""/></figure>
+                          <div class="modal-chat-details">
+                            <h5> {{ member.display_name}}<span class="you-only"></span></h5>
+                            <h6 class="final-submitter" style="margin-bottom: 0;">{{ member.role_name }} <span
+                              style="color: #16B400;" *ngIf="member.is_group_owner && member.user_id != userInfo.user_id">> Final Submitter</span>
+                            </h6>
+                            {{member.class_details}} Grade, <span
+                            class="modal-chat-small-tex"> {{member.school_name}}</span>
+                            <span
+                              *ngIf="daysLeftForSubmission >= 0 && !topicDetails?.final_submitted && member.is_group_owner && member.user_id == userInfo.user_id"
+                              class="final-submitter"
+                              style="cursor: pointer;"
+                              (click)="submitChallenge()">
+                                <b>Click here for final submission</b>
+                              </span>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul *ngIf="challenge.topic_group_size === 1">
+                        <li>
+                          <figure style="width: 25%;"><img [src]="userInfo.avatar_image_file | imageRender:''"
+                                                           style="width: 100%;" alt=""/></figure>
+                          <div class="modal-chat-details">
+                            <h5> {{userInfo?.display_name}} <span class="you-only"></span></h5>
+                            {{userInfo?.class_details}} Grade, <span
+                            class="modal-chat-small-tex"> {{userInfo?.school_name}}</span>
+                            <span
+                              class="final-submitter"
+                              style="cursor: pointer;"
+                              (click)="submitChallenge()"
+                              *ngIf="daysLeftForSubmission >= 0 && !topicDetails?.final_submitted">
+                                 <b>Click here for final submission</b>
+                               </span>
+                          </div>
+                        </li>
+                      </ul>
+
+                    </div>
+
+                    <div class="modal-chat-discussing-section">
+                      <p><strong>Guidelines</strong></p>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-body d-flex justify-content-center">
+    <ng-container *ngIf="fileType === 'video'">
+      <video width="100%" height="100%" controls>
+        <source [src]="file" [type]="mediaType">
+        Your browser does not support the video tag.
+      </video>
+    </ng-container>
+    <ng-container *ngIf="fileType === 'audio'">
+      <audio controls>
+        <source [src]="file" [type]="mediaType">
+        Your browser does not support the audio tag.
+      </audio>
+    </ng-container>
+    <ng-container *ngIf="fileType === 'image'">
+      <img [src]="file" class="mw-300p" alt="image not found" />
+    </ng-container>
+  </div>
+</ng-template>

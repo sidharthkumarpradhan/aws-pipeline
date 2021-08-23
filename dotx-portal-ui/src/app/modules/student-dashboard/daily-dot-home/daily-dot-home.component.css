@@ -1,0 +1,165 @@
+
+/* Streak Section Css Start */
+.streak-section{ width: 100%; padding: 38px 50px 48px; background-color: #fff; }
+.streak-section h2{ font-size: 28px; line-height: 30px; font-weight: 500; font-family: 'Poppins', sans-serif; color: #303546; background-color: inherit; padding: 0; margin:0 0 24px }
+.streak-box{ width: 100%; height: 272px; text-align: center; position: relative; padding: 25px 34px; background: #fff; border-radius: 11.5px; box-shadow: 0 5px 25px rgba(0,0,0,0.18) }
+.btn-side-nav{ width: 5px; height: 20px; border: inherit; outline: none; position: absolute; top: 26px; right: 11px; background-color: inherit }
+.btn-side-nav:hover{ opacity: 0.7; }
+.streak-box h4{  font-size: 23px; line-height: 30px; font-weight: 600; font-family: 'Poppins', sans-serif; color: #303546; background-color: inherit; padding: 0; margin:0 0 5px}
+.streak-box figure{ margin-bottom: 0px }
+.streak-box.streak-box-1 h4{color: #A42F2F }
+.streak-box.streak-box-2 h4{color: #539EFF }
+.streak-box.streak-box-3 h4{color: #26963E }
+.streak-box.streak-box-4 h4{color: #59217C }
+
+.btn-upload{
+    border: none;
+    outline: none;
+    background: inherit;
+}
+.attachement_file{
+    text-decoration: underline;
+    font-size: 14px;
+    color: blue;
+    vertical-align: sub;
+    cursor: pointer;
+}
+
+
+
+
+/* .daily-dot-bottom-content{ width: 100%; padding: 65px 50px   49px; background-color: #e7e7e7 } */
+/* Daily Poll Section Css Start */
+/* .daily-poll-section{ width: 100% }
+.btn-group.sort-by{ border: inherit; padding: 0; margin: 0;  }
+.btn-group.sort-by button.dropdown-toggle{ border: inherit; padding: 0; margin: 0; background-color: inherit; color: #4584D7; font-size: 21px; line-height: 21px; font-weight: 500 }
+.btn-group.sort-by button.dropdown-toggle:after{ width: 16px; height: 17px; background: url('../../../../assets/img/sort-by-down-arrow.png') no-repeat 0 center; font-size: 0px }
+.btn-group.sort-by .dropdown-menu{ width: 283px; padding: 0; margin: 0; box-shadow: 0 5px 13px rgba(0,0,0,0.17); border-radius: 7px }
+.btn-group.sort-by .dropdown-menu .custom-control{ width: 100%; padding: 12px 50px; background: rgba(224, 224, 224, 0.43) }
+.btn-group.sort-by .dropdown-menu .custom-control .custom-control-label{ font-size: 18px; color: #303546 }
+.btn-group.sort-by .dropdown-menu .dropdown-item{ width: 100%; padding: 8px 50px; font-size: 18px; color: #303546  }
+.daily-poll-section .right-filter .btn-link{ font-size: 21px; line-height: 21px; font-weight: 500; color: #4584D7; text-decoration: underline }
+.daily-poll-section .right-filter .btn-link:hover{ color: #4584D7; text-decoration: none }
+.daily-poll-slider{  }
+.dp-slides{ width: 287px; height: 354px; border-radius: 8px; padding: 30px; margin: 43px 15px; position: relative; box-shadow: 0 4px 14px rgba(0,0,0,0.17);  }
+.dp-slides p.view-text{ text-align: right; color: #5F6372; font-size: 14px; line-height: 14px; font-weight: 500; padding: 0; margin: 0 }
+.dp-slides figure{ height: 174px; margin: 0 auto 20px; display: block; text-align: center }
+.dp-slides figure img{ height: 100%; display: block; margin: 0 auto }
+.dp-slides h6{  font-size: 20px; line-height: 29px; font-weight: 500; letter-spacing: -0.07px; text-align: center; color: #07304C; padding: 0; margin: 0 }
+.daily-poll-slider .slick-next{ width:36px; height: 82px; top: 226px; background: url('../../../../assets/img/slick-arrow-next.png') no-repeat 0 0; background-size: 100% !important; text-indent: -200000px; z-index: 9 }
+.daily-poll-slider .slick-prev{ width:36px; height: 82px; top: 226px; background: url('../../../../assets/img/slick-arrow-prev.png') no-repeat 0 0; background-size: 100% !important; text-indent: -200000px; z-index: 9 }
+.relation-box{ background-color: #FF9D9C }
+.nothing-to-do-box{ background-color:#847E8A }
+.nothing-to-do-box h6{ color: #fff }
+.time-flying-box{ background-color: #B1FFBE }
+.energy-box{ background-color: #BEA8FF }
+.about-me-box{ background-color: #FFA9D5 }
+.progress-wrapper{ margin: 15px 30px 30px; display: none !important }
+.progress-wrapper .progress{ height: 7px; border-radius:12px }
+.progress-wrapper .text{ font-size: 11px; line-height: 8px; letter-spacing: -0.04px; color: #42474C; padding-left: 10px }
+.other-options { display: none !important }
+.other-options .btn{ padding: 0; margin: 0; border: inherit; outline: none; font-size: 14px; line-height: 14px; color: #fff; font-weight: 500; border-radius: inherit }
+.other-options .btn img{ height: 44px; display: block; margin: 0 auto 6px }
+.other-options .btn.btn-like{ color: #42474C; background: url('../../../../assets/img/like-down-arrow.png') no-repeat right center; background-size: 16.5px; padding-right: 25px }
+.dp-slides:hover{ width: 330px; height: 440px !important; padding: 15px 25px; top: -43px }
+.dp-slides:hover .progress-wrapper, .dp-slides:hover .other-options { display: flex !important }
+.dp-slides.relation-box:hover{
+background: rgb(210,87,87);
+background: -moz-linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+background: -webkit-linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+background: linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d25757",endColorstr="#ff9d9c",GradientType=1); }
+.dp-slides, .dp-slides:hover{-webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition:all 0.3s ease-in-out 0s } */
+
+
+/* Daily Gratitude Css Start */
+.dg-slides{ width: 287px; height: 354px; border-radius: 8px; padding: 30px 0; margin: 43px 15px; position: relative; box-shadow: 0 4px 14px rgba(0,0,0,0.17); 
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition:all 0.3s ease-in-out 0s  }
+.dg-slides p.view-text{ text-align: right; color: #5F6372; font-size: 14px; line-height: 14px; font-weight: 500; padding: 0 30px; margin: 0 }
+.dg-slides figure{ height: 174px; margin: 0 auto 20px; display: block; text-align: center }
+.dg-slides figure img{ height: 90%; display: block; margin: 0 auto }
+.dg-slides h6{  font-size: 20px; line-height: 29px; font-weight: 500; letter-spacing: -0.07px; text-align: center; color: #07304C; padding: 0 30px; margin: 0 }
+.daily-gratitude-slider .slick-next{ width:36px; height: 82px; top: 226px; background: url('../../../../assets/img/slick-arrow-next.png') no-repeat 0 0; background-size: 100% !important; text-indent: -200000px; z-index: 9 }
+.daily-gratitude-slider .slick-prev{ width:36px; height: 82px; top: 226px; background: url('../../../../assets/img/slick-arrow-prev.png') no-repeat 0 0; background-size: 100% !important; text-indent: -200000px; z-index: 9 }
+.daily-gratitude-slider .music-help-box{ background-color: #80E3CA } 
+.daily-gratitude-slider .sufficent-sleep-box{ background-color: #FEDE8B } 
+.daily-gratitude-slider .the-world-box{ background-color: #F88C73 } 
+.daily-gratitude-slider .skills-need-to-developed-box{ background-color: #CAE7A0 } 
+.daily-gratitude-slider .all-about-me-box{ background-color: #C6AAD5 }  
+.dg-slides:hover{ width: 330px; height: 440px !important; padding: 15px 25px; top: -43px }
+.dg-slides:hover .progress-wrapper, .dg-slides:hover .other-options { display: flex !important }
+.dg-slides.relation-box:hover{
+background: rgb(210,87,87);
+background: -moz-linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+background: -webkit-linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+background: linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d25757",endColorstr="#ff9d9c",GradientType=1); }
+.dg-slides, .dg-slides:hover{-webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition:all 0.3s ease-in-out 0s }
+
+/* Daily Anecdote Css Start */
+.da-slides{ width: 287px; height: 354px; border-radius: 8px; padding: 30px 0 80px; margin:0 15px 30px; position: relative;
+    background: #b6d1e3; box-shadow: 0 4px 14px rgba(0,0,0,0.17); 
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition:all 0.3s ease-in-out 0s  }
+.da-slides p.view-text{ text-align: right; color: #5F6372; font-size: 14px; line-height: 14px; font-weight: 500; padding: 0 30px; margin: 0 }
+.da-slides figure{ height: 150px; margin: 0 auto 5px; display: block; text-align: center }
+.da-slides figure img{ height: 90%; display: block; margin: 0 auto; opacity: 0.5; }
+.da-slides:hover figure img{ height: 90%; display: block; margin: 0 auto; opacity:1; }
+.da-slides h6{  font-size: 20px; line-height: 29px; font-weight: 500; letter-spacing: -0.07px; text-align: center; color: #07304C; padding: 0 30px; margin: 0 }
+.daily-anecdote-slider .slick-next{ width:36px; height: 82px; top: 178px; background: url('../../../../assets/img/slick-arrow-next.png') no-repeat 0 0; background-size: 100% !important; text-indent: -200000px; z-index: 9 }
+.daily-anecdote-slider .slick-prev{ width:36px; height: 82px; top: 178px; background: url('../../../../assets/img/slick-arrow-prev.png') no-repeat 0 0; background-size: 100% !important; text-indent: -200000px; z-index: 9 }
+.daily-anecdote-slider .bottom-text{ width: calc(100% - 54px); position: absolute; bottom: 20px; left: 0; display: flex; align-items: center; margin: 0 27px 0; padding-top: 17px; border-top: 1px solid rgba(151, 151, 151,0.11) }
+.daily-anecdote-slider .bottom-text .avatar{ width: 40px; margin-right: 8px }
+.daily-anecdote-slider .bottom-text .avatar img{ width: 100% }
+.daily-anecdote-slider .bottom-text h5{ font-size: 12px; line-height: 12px; font-weight: 600; color: #555574; padding: 0; margin: 0 }
+.daily-anecdote-slider .bottom-text p{ font-size: 10px; line-height: 12px; color: #8C8DB5; padding: 0; margin: 0 }
+.daily-anecdote-section .right-filter .btn-link{ font-size: 21px; line-height: 21px; font-weight: 500; color: #4584D7; text-decoration: underline }
+.daily-anecdote-section .right-filter .btn-link:hover{ color: #4584D7; text-decoration: none }
+
+.da-slides img{ -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition:all 0.3s ease-in-out 0s }
+
+    .da-slides:hover{ width: 330px; height: 140px !important; padding: 15px 25px; top: -43px }
+    .da-slides:hover .progress-wrapper, .da-slides:hover .other-options { display: flex !important }
+    .da-slides.relation-box:hover{
+    background: rgb(210,87,87);
+    background: -moz-linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+    background: linear-gradient(0deg, rgba(210,87,87,1) 0%, rgba(247,168,170,1) 40%, rgba(255,157,156,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d25757",endColorstr="#ff9d9c",GradientType=1); }
+    .da-slides, .da-slides:hover{-webkit-transition: all 0.3s ease-in-out 0s;
+        -moz-transition: all 0.3s ease-in-out 0s;
+        -ms-transition: all 0.3s ease-in-out 0s;
+        -o-transition: all 0.3s ease-in-out 0s;
+        transition:all 0.3s ease-in-out 0s }
+
+
+
+/* Modal Css Start ---  for Stundent Dashboard modals daily dot*/
+/* .modal-content{ border:inherit; box-shadow: 0 5px 13px rgba(0,0,0,0.24); border-radius: 8px; overflow: hidden; }
+.modal .modal-header{ padding: 20px 13px; background: #07304C; align-items: center; border-radius: 8px 8px 0 0 }
+.modal .modal-header h5.modal-title{ width: 100%; text-align: center; padding:0; margin: 0; background: #07304C; font-size: 36px; line-height: 36px; font-weight: bold; letter-spacing: -0.67px; color: #9FB4C4 }
+.modal .close{ font-size: 28px; color: #9FB4C4; font-weight: 400; text-shadow: inherit; display: flex; opacity: 1; outline: none }
+.modal .close span{ font-size: 42px; line-height: 30px; color: #9FB4C4; padding-left: 8px;  opacity: 1; }
+.modal .close:focus{ outline: none }
+.modal-body{ background: #E7E7E7 } */
+
+

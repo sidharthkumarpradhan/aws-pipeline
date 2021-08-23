@@ -1,0 +1,20 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<section class="form-section">
+  <div class="form-window">
+    <div class="title-bar">Join Code</div>
+    <form [formGroup]="joinCodeForm" (ngSubmit)="formSubmit()">
+      <div class="content-box join-code">
+        <p class="green">Enter Join Code</p>
+        <input
+        type="text" class="form-control text-center input-joincode"
+        formControlName="joincode" placeholder="12345"
+        [ngClass]="{
+          'error-field': _uhs.isValidField(joinCodeForm?.controls.joincode)
+        }"
+      />
+      <app-control-messages [control]="joinCodeForm?.controls.joincode" labelName="Join code"> </app-control-messages>
+        <button type="submit" class="btn-next">JOIN</button>
+      </div>
+    </form>
+  </div>
+</section>

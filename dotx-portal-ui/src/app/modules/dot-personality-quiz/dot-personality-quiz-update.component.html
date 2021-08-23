@@ -1,0 +1,51 @@
+<app-loader *ngIf="isLoading"></app-loader>
+  <section class="form-section" *ngIf="enableQuizCard !== 'quizCard'">
+    <div class="form-window">
+      <div class="title-bar">
+        Create Profile
+        <button (click)="backTo()">
+          <img src="assets/img/back-arrow.png" alt="" />
+        </button>
+        <button (click)="skipTo(showTypeOfForm)">
+          <p>Skip</p>
+        </button>
+      </div>
+      <div class="content-box">
+        <div class="heading-container">
+          <img src="assets/img/q1.png" alt="" />
+          <p>{{dotPersonalityQuizs?.quizDescription}}</p>
+        </div>
+          <div class="options-container" [formGroup]="editForm">
+            <ng-container *ngFor="let item of options; let i = index">
+              <div class="option-wrapper" >
+                <input class="styled-checkbox" type="checkbox"  id="{{item.option}}"
+                [checked]="item.selected" (change)="checkItem(item.option, i, $event)"/>
+                <label for="{{item.option}}">{{item.option}}</label>
+              </div>
+              <textarea type="text" class="form-control" *ngIf="item.option==='Others' && enableTextBox"  (change)="speicfyOthers()"
+        placeholder="Write here how did you hear about us ?"></textarea>
+            </ng-container>
+             
+          </div>
+          <button type="button" (click)="save()" class="btn-next">{{showPersonQuiz !== 'personQuiz' ? 'NEXT' : 'SAVE'}}</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section" *ngIf="enableQuizCard === 'quizCard'">
+    <div class="form-window">
+      <div class="title-bar">Create Profile</div>
+      <div class="content-box profile-completed">
+        <p>Successfully Completed your profile</p>
+        <div class="box">
+          <img src="assets/img/backgound-1.png" alt="" />
+          <div class="content-wrapper">
+            <img src="assets/img/profile-completed.png" alt="" />
+            <h2>YAY!</h2>
+            <h3>You are all set</h3>
+          </div>
+        </div>
+        <button class="btn-next">Ok</button>
+      </div>
+    </div>
+  </section>

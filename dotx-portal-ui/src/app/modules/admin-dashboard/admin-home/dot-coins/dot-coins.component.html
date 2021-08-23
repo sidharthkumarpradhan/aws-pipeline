@@ -1,0 +1,120 @@
+<h2>Overview</h2>
+<p>See your achievement snapshot across learning and engagement activities</p>
+<h5>Dotcoin</h5>
+<div class="user-filter-options-wrapper d-flex">
+    <app-search [(ngModel)]="searchdotCoins" name="searchdotCoins"></app-search>
+    <button class="btn btn-danger shadow create-btn ml-3" type="button" (click)="createDotCoin()">
+        + ADD DOTCOINS 
+    </button>
+</div>
+
+<div class="table-responsive border mt-3 my-md-4">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th class="w-15 pl-5" scope="col"> Title</th>
+        <th class="w-15" scope="col"><img src="assets/img/list-topics-icon.png" alt=""> Topic Name
+        </th>
+        <th class="w-11" scope="col"><img src="assets/img/dotcoins-icon-2.png" alt=""> Dotcoins</th>
+        <th class="w-15" scope="col"><img src="assets/img/created-by-icon.png" alt=""> Created By</th>
+        <th class="w-12" scope="col"><img src="assets/img/created-date-icon.png" alt=""> Created Date
+        </th>
+        <th class="w-14" scope="col"><img src="assets/img/action-icon.png" alt=""> Reward Actions</th>
+        <th class="w-10" scope="col"><img src="assets/img/action-icon.png" alt=""> Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="dotCoins?.length && (dotCoins | tFilter: searchdotCoins) as result">
+      <tr *ngFor="let item of result | pagination: dotCoinsPage; let i = index">
+        <td class="font-weight-medium">
+          <img class="avatar-sm-2" [src]="fileLocation+item.reward_badge" (error)="onImgError($event)" alt="" />
+          {{item.reward_title | titlecase}}</td>
+        <td>{{item['topic'].topic_name}}</td>
+        <td>{{item.reward_points }}</td>
+        <td>{{item.created_by}}</td>
+        <td>{{item.created_date | date: "dd/MM/yyyy"}}</td>
+        <td>{{item.reward_action}}</td>
+        <td>
+            <div class="action-buttons">
+              <button class="btn btn-link" type="button" (click)="onEdit(item)">Edit</button>
+              <button class="btn btn-link" type="button" (click)="onDelete(item?.reward_setup_id)">Delete</button>
+            </div>
+        </td>
+      </tr>
+      <tr *ngIf="result.length === 0" class="text-center">
+        <td colspan="7">No Data Found</td>
+      </tr>
+      </ng-container>
+      <tr *ngIf="!dotCoins?.length && !isCoinsLoading">
+        <td colspan="7" class="text-center">No Data found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-container *ngIf=" dotCoins?.length && (dotCoins | tFilter: searchdotCoins) as result">
+  <app-pagination *ngIf="result?.length" [totalRecords]="result?.length" [(page)]="dotCoinsPage"></app-pagination>
+</ng-container>
+
+
+<!-- Modal -->
+<div class="modal fade addDotcoinModal custom-modal" id="addDotcoinModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addDotcoinModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="gratitudeJournalModalLabel">Dotcoins Setup</h5>
+          <button type="button" class="close" (click)="closeModal()">Close
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="rewardsForm" (ngSubmit)="saveDotCoin($event)">
+            <div class="form-group">
+              <label>Topic Name<span class="text-danger">*</span></label>
+              <select class="form-control" formControlName="topic"
+              [ngClass]="{'error-field': _uhs.isValidField(rewardsForm?.controls.topic)}">
+                <option value="">Select</option>
+                <option *ngFor="let action of listOfTopics" [value]="action.topic_id">{{action.topic_name}}</option>
+              </select>
+              <app-control-messages [control]="rewardsForm?.controls.topic" labelName="Topic Name"></app-control-messages>
+            </div>
+            <div class="form-group">
+              <label>Reward Action<span class="text-danger">*</span></label>
+              <select class="form-control" formControlName="reward_action"
+              [ngClass]="{'error-field': _uhs.isValidField(rewardsForm?.controls.reward_action)}">
+                <option value="">Select</option>
+                <option *ngFor="let action of listOfActions" [value]="action">{{action}}</option>
+              </select>
+              <app-control-messages [control]="rewardsForm?.controls.reward_action" labelName="Reward Action"></app-control-messages>
+            </div>
+            <div class="form-group">
+              <label>Title<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" placeholder="Type Title here" formControlName="reward_title"
+              [ngClass]="{'error-field': _uhs.isValidField(rewardsForm?.controls.reward_title)}" />
+              <app-control-messages [control]="rewardsForm?.controls.reward_title" labelName="Title"></app-control-messages>
+            </div>
+            <div class="form-group">
+              <label>Dotcoins<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" placeholder="0" formControlName="reward_points"
+              [ngClass]="{'error-field': _uhs.isValidField(rewardsForm?.controls.reward_points)}" />
+              <app-control-messages [control]="rewardsForm?.controls.reward_points" labelName="Dotcoins"></app-control-messages>
+            </div>
+            <div class="form-group badge-upload" >
+              <label>Badges<span class="text-danger">*</span></label>
+              <input type="hidden"  formControlName="reward_badge" />
+              <div class="upload-badge" (click)="uploadBadge()">
+                <img [src]="dotCoinsBadge" alt="" (error)="onImgError($event)" />
+              </div>
+              <app-control-messages [control]="rewardsForm?.controls.reward_badge" labelName="Badges"></app-control-messages>
+            </div>
+            <div class="text-danger" *ngIf="errorMessage">Please enter all required fields</div>
+            <div class="text-center">
+              <img src="assets/img/inline_spinner.svg" *ngIf="formLoading" alt="" />
+            <button type="submit" class="btn btn-dark mw-120" [disabled]="formLoading" [ngClass]="{'disabledTab':formLoading}">
+              {{ rewardsSetupId ? 'Update' : 'SAVE'}}
+            </button>
+            </div>
+          </form>
+        </div> 
+      </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="login-section work-location-section">
+    <div class="container">
+      <div class="login-wrapper">
+        <h2 class="text-center">Select your purpose</h2>
+        <div class="login-box">
+          <div class="login-header">
+            <div class="row">
+              <div class="col-12">
+                <h3>Select One</h3>
+              </div>
+            </div>
+          </div>
+          <div class="login-bottom">
+            <form method="POST" action="">
+              <h5 class="text-center quiz-question student-work">Are you using from home or school? </h5>
+              <div class="answer-box-wrapper mb-5">
+                <div class="answer-box">
+                    <input type="radio" id="schoolradio" name="customRadioInline" class="type-work-location" value="School" (click)="submitLocation('School')" />
+                    <label class="answer-box-inner" for="schoolradio">
+                        <img src="assets/img/school-icon.png" alt="">
+                        <p>School</p>
+                    </label>                  
+                </div>
+                <div class="answer-box">
+                    <input type="radio" id="homeRadio" name="customRadioInline" class="type-work-location" value="Home" (click)="submitLocation('Home')" />
+                    <label class="answer-box-inner" for="homeRadio">
+                        <img src="assets/img/home-icon.png" alt="">
+                        <p>Home</p>
+                    </label>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                  <button class="btn btn-dark btn-block btn-next position-relative" (click)="submitLocation()" [disabled]="isFormLoading">
+                       <span *ngIf="!isFormLoading">Next</span>                       
+                       <span *ngIf="isFormLoading">Processing...  -->
+                           <!-- <app-spinner></app-spinner> -->
+                    <!-- </span>
+                  </button>
+              </div> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

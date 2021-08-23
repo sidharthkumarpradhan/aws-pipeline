@@ -1,0 +1,257 @@
+<div class="quest-map-wrapper container-fluid">
+    <div class="">
+        <div class="col-12 d-flex justify-content-center">
+          <div class="map map-1"><img src="assets/img/quest-map-1.jpg" alt="Map"></div>
+          <div class="map map-2 cursor-pointer"><img src="assets/img/quest-map-2.jpg" alt="Map"></div>
+          <div class="map map-3"><img src="assets/img/quest-map-3.jpg" alt="Map"></div>
+          <div class="map map-4"><img src="assets/img/quest-map-4.jpg" alt="Map"></div>
+          <div class="map map-5"><img src="assets/img/quest-map-5.jpg" alt="Map"></div>
+          <div class="map map-6"><img src="assets/img/quest-map-6.jpg" alt="Map"></div>
+          <div class="map map-7"><img src="assets/img/quest-map-7.jpg" alt="Map"></div>
+          <div class="map map-8"><img src="assets/img/quest-map-8.jpg" alt="Map"></div>
+        </div>
+        <div class="position position-0" (click)="openQuest(0)"></div>
+        <div class="position position-1 d-none" (click)="openQuest(1)"></div>
+        <div class="position position-2 d-none" (click)="openQuest(2)"></div>
+        <div class="position position-3 d-none" (click)="openQuest(3)"></div>
+   </div>
+</div>
+
+  <!--Introduction Modal Start-->
+  <div class="modal fade introductionModal" id="introductionModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="introductionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="introductionModalLabel">Introduction</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> Close
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="welcome-content">
+            <h2>Welcome to the Quest <span>Time management</span> </h2>
+            <div class="introduction-content">
+              <figure>
+                <img src="assets/img/welcome-left-img.png" alt="">
+              </figure>
+              <div class="introduction-text text-center">
+                <p>This <strong>3</strong> week quest includes <br>
+                  <strong>9</strong> Challenges <br>
+                  <strong>12</strong> Quizzes <br>
+                  <strong>6</strong> Videos <br>
+                  and opportunity to earn 1000 Dotcoins and achievement badges</p>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+            <div class="col-12 text-center">
+              <button data-toggle="modal" data-target="#quizModal" type="button" class="btn btn-danger"
+                data-dismiss="modal">Start</button>
+            </div>
+          </div>
+          <ul class="activity-nav">
+            <li><a href="#"><img src="assets/img/my-buddies-icon.png" alt=""> My Buddies</a></li>
+            <li><a href="#"><img src="assets/img/history-icon.png" alt=""> History</a></li>
+            <li><a href="#"><img src="assets/img/tracker-icon.png" alt=""> Tracker</a></li>
+            <li><a href="#"><img src="assets/img/badges-icon-2.png" alt=""> Badges</a></li>
+            <li><a href="#"><img src="assets/img/dotcoins-icon.png" alt=""> Dotcoins</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Introduction Modal End-->
+
+
+  <!--1. Quiz  Modal Start-->
+  <div class="modal fade quizModal" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="quizModalLabel">1. Quiz </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> Close
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <h2 class="write-response-text"><img src="assets/img/day-time-icon.png" alt=""> What time of the day do you
+            enjoy the most? <span class="text-word">10</span> </h2>
+          <p class="timer-text"><img src="assets/img/timer-icon.png" alt=""> Time limit 00:60</p>
+
+          <div class="row">
+            <div class="col-12 col-md-10 offset-md-1">
+              <div class="form-row answer-set">
+                <div class="col-12 col-md-6 mb-2">
+                  <button type="button" class="btn-poll-answer d-block w-100 text-left btn-danger">
+                    <div class="poll poll-1"><span class="pr-3">a.</span> Morning</div>
+                  </button>
+                </div>
+                <div class="col-12 col-md-6 mb-2">
+                  <button type="button" class="btn-poll-answer d-block w-100 text-left btn-info">
+                    <div class="poll poll-1"><span class="pr-3">b.</span> Afternoon</div>
+                  </button>
+                </div>
+                <div class="col-12 col-md-6 mb-2">
+                  <button type="button" class="btn-poll-answer d-block w-100 text-left btn-warning">
+                    <div class="poll poll-1"><span class="pr-3">c.</span> Evening</div>
+                  </button>
+                </div>
+                <div class="col-12 col-md-6 mb-2">
+                  <button type="button" class="btn-poll-answer d-block w-100 text-left btn-success">
+                    <div class="poll poll-1"><span class="pr-3">d.</span> Night</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+            <div class="col-12 text-center">
+              <button data-toggle="modal" data-target="#challengeModal" type="button" class="btn btn-primary"
+                data-dismiss="modal">Submit</button>
+            </div>
+          </div>
+          <ul class="activity-nav">
+            <li><a href="#"><img src="assets/img/my-buddies-icon.png" alt=""> My Buddies</a></li>
+            <li><a href="#"><img src="assets/img/history-icon.png" alt=""> History</a></li>
+            <li><a href="#"><img src="assets/img/tracker-icon.png" alt=""> Tracker</a></li>
+            <li><a href="#"><img src="assets/img/badges-icon-2.png" alt=""> Badges</a></li>
+            <li><a href="#"><img src="assets/img/dotcoins-icon.png" alt=""> Dotcoins</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--1. Quiz  Modal End-->
+
+
+  <!--1. Challenge Modal Start-->
+  <div class="modal fade challengeModal" id="challengeModal" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-labelledby="challengeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="challengeModalLabel">1. Challenge</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> Close
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h2 class="write-response-text"><img src="assets/img/write-icon.png" alt=""> <strong>Write your
+              Response</strong> (250 words) <span class="text-word">100</span> </h2>
+          <p class="text-center topic-text">Topic: Imagine you traveled through time to the future, how do you <br>
+            imagine the world in 100,000 AD?</p>
+
+          <div class="row challenge-list">
+            <div class="col-10 offset-1">
+              <div class="row">
+                <div class="col-3">
+                  <div class="challenge-box text-center">
+                    <figure>
+                      <img src="assets/img/chota-bheem-img.png" alt="">
+                    </figure>
+                    <p>Chota Bheem</p>
+                    <div class="custom-control custom-radio custom-radio-lg">
+                      <input type="radio" id="challengeRadio1" name="challengeRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="challengeRadio1"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="challenge-box text-center">
+                    <figure>
+                      <img src="assets/img/kalia-img.png" alt="">
+                    </figure>
+                    <p>Kalia</p>
+                    <div class="custom-control custom-radio custom-radio-lg">
+                      <input type="radio" id="challengeRadio2" name="challengeRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="challengeRadio2"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="challenge-box text-center">
+                    <figure>
+                      <img src="assets/img/chutki-img.png" alt="">
+                    </figure>
+                    <p>Chutki</p>
+                    <div class="custom-control custom-radio custom-radio-lg">
+                      <input type="radio" id="challengeRadio3" name="challengeRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="challengeRadio3"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="challenge-box text-center">
+                    <figure>
+                      <img src="assets/img/dholu-img.png" alt="">
+                    </figure>
+                    <p>Dholu</p>
+                    <div class="custom-control custom-radio custom-radio-lg">
+                      <input type="radio" id="challengeRadio4" name="challengeRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="challengeRadio4"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+            <div class="col-12 text-center">
+              <button data-toggle="modal" data-target="#influencerVideoModal" type="button" class="btn btn-primary"
+                data-dismiss="modal">Submit</button>
+            </div>
+          </div>
+          <ul class="activity-nav">
+            <li><a href="#"><img src="assets/img/my-buddies-icon.png" alt=""> My Buddies</a></li>
+            <li><a href="#"><img src="assets/img/history-icon.png" alt=""> History</a></li>
+            <li><a href="#"><img src="assets/img/tracker-icon.png" alt=""> Tracker</a></li>
+            <li><a href="#"><img src="assets/img/badges-icon-2.png" alt=""> Badges</a></li>
+            <li><a href="#"><img src="assets/img/dotcoins-icon.png" alt=""> Dotcoins</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--1. Challenge Modal End-->
+
+
+  <!--Influencer video Modal Start-->
+  <div class="modal fade influencerVideoModal" id="influencerVideoModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="influencerVideoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="influencerVideoModalLabel">Influencer video</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">Close
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bg-white">
+          <div class="video-frame">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/xcJtL7QggTI" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+          <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+            <div class="col-12 text-center">
+              <button disabled data-toggle="modal" data-target="#dailyPollModal" type="button" class="btn btn-primary"
+                data-dismiss="modal">Done</button>
+            </div>
+          </div>
+          <ul class="activity-nav">
+            <li><a href="#"><img src="assets/img/my-buddies-icon.png" alt=""> My Buddies</a></li>
+            <li><a href="#"><img src="assets/img/history-icon.png" alt=""> History</a></li>
+            <li><a href="#"><img src="assets/img/tracker-icon.png" alt=""> Tracker</a></li>
+            <li><a href="#"><img src="assets/img/badges-icon-2.png" alt=""> Badges</a></li>
+            <li><a href="#"><img src="assets/img/dotcoins-icon.png" alt=""> Dotcoins</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Influencer video Modal End-->
+

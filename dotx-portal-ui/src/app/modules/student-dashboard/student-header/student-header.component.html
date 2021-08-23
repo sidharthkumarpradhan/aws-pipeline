@@ -1,0 +1,155 @@
+ <!-- HEADER START -->
+ <header id="header">
+    <!-- Nav normal view start -->
+    <div class="nav-normal-view">
+      <div class="container-fluid">
+        <div class="d-flex justify-content-between">
+          <div class="nav-left">
+            <img src="assets/img/hamburger-menu.png" class="hamburger-menu mr-3" alt="">
+            <ul class="nav-2">
+              <li>
+                <div class="trigger" id="badgesListNormal" data-toggle="dropdown">
+                  <img src="assets/img/badges-icon.png" alt=""/>
+                  <!--                  <span class="status-red"></span> -->
+                  Badges
+                  <span class="number">{{badges}}</span>
+                  <img class="header-down-arrow" src="../../../../assets/img/arrow-down-black.png" alt="">
+                </div>
+                <div class="dropdown-menu" aria-labelledby="badgesListNormal">
+                  <div class="option" *ngFor="let badge of badgesList | slice: 0:3">
+                    <img alt="" src="{{filePathLocation}}{{badge.reward_badge}}"/>
+                    <p>For completing {{badge.reward_title}}</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <img src="assets/img/my-space/dotcoin-big.png" alt="">
+                <!-- <span class="status-red"></span> -->
+                Dotcoins
+                <span class="number">{{dotCoins}}</span>
+              </li>
+              <!-- <li><img src="assets/img/badges-icon.png" alt=""> <span class="status-red"></span> Notification <span
+                  class="number">3</span></li> -->
+            </ul>
+          </div>
+          <img
+							class="chhallenges-page-logo"
+							style="position: relative; transform: translateX(-100px)"
+							src="assets/img/challenges-page-logo.png"
+							alt=""
+						/>
+          <!-- <div class="logo-wrapper">
+            <div class="logo-wrapper-inner">
+              <h2>Welcome to </h2>
+              <a routerLink="/main-route/student/spotlight">
+                <img src="assets/img/logo.png" alt="">
+              </a>
+            </div>
+          </div> -->
+          <div class="admin-menu-wrapper">
+            <button class="btn btn-link dropdown-toggle" type="button" id="adminMenuNormal" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+              <div class="name">{{userInfo?.display_name}}</div>
+              <img (error)="onImgError($event)" [src]="imageUrl" alt=""/>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="adminMenuNormal">
+              <div class="option" (click)="openDashboard()">
+                <img src="assets/img/menu-icon-1.png" alt=""/>
+                <p>My Space</p>
+              </div>
+              <div class="option">
+                <img src="assets/img/menu-icon-2.png" alt=""/>
+                <p>Notification</p>
+              </div>
+              <div class="option">
+                <img src="assets/img/menu-icon-3.png" alt=""/>
+                <p>Help</p>
+              </div>
+              <div class="option" (click)="logout()">
+                <img src="assets/img/menu-icon-4.png" alt=""/>
+                <p>Log Out</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Nav normal view End -->
+
+    <!-- Nav Expend view start -->
+    <div class="nav-expend-view">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center">
+                <a class="expend-logo" routerLink="/main-route/student/home"><img src="assets/img/logo.png" alt=""></a>
+                <span class="devider"></span>
+                <img src="assets/img/hamburger-menu.png" class="hamburger-menu mr-3" alt="">
+                <nav>
+                  <ul>
+                    <li routerLink="/main-route/student/spotlight" routerLinkActive="active"><a >Hub</a></li>
+                    <!--                    <li [routerLink]="['/main-route/student/quest-map']" routerLinkActive="active"><a >Quest</a></li>-->
+                    <li routerLink="/main-route/student/daily-dot" routerLinkActive="active"><a >Dock</a></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="d-flex align-items-center">
+                <ul class="nav-2">
+                  <li>
+                    <div class="trigger" id="badgesListExpend" data-toggle="dropdown">
+                      <img src="assets/img/badges-icon.png" alt=""/>
+                      <!--                  <span class="status-red"></span> -->
+                      Badges
+                      <span class="number">{{badges}}</span>
+                    </div>
+                    <div class="dropdown-menu" aria-labelledby="badgesListExpend">
+                      <div class="option" *ngFor="let badge of badgesList | slice: 0:2">
+                        <img alt="" src="{{filePathLocation}}{{badge.reward_badge}}"/>
+                        <p>For completing {{badge.reward_title}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <img src="assets/img/my-space/dotcoin-big.png" alt="">
+                    <!-- <span class="status-red"></span> -->
+                    Dotcoins
+                    <span class="number">{{dotCoins}}</span>
+                  </li>
+                </ul>
+                <div class="admin-menu-wrapper">
+                  <button class="btn btn-link dropdown-toggle" type="button" id="adminMenuExpend" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" style="display: flex; align-items: center;">
+                    <div class="name">{{userInfo?.display_name}}</div>
+                    <img (error)="onImgError($event)" [src]="imageUrl" alt=""/>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="adminMenuExpend">
+                    <div class="option" (click)="openDashboard()">
+                      <img src="assets/img/menu-icon-1.png" alt=""/>
+                      <p>My Space</p>
+                    </div>
+                    <div class="option">
+                      <img src="assets/img/menu-icon-2.png" alt=""/>
+                      <p>Notification</p>
+                    </div>
+                    <div class="option">
+                      <img src="assets/img/menu-icon-3.png" alt=""/>
+                      <p>Help</p>
+                    </div>
+                    <div class="option" (click)="logout()">
+                      <img src="assets/img/menu-icon-4.png" alt=""/>
+                      <p>Log Out</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Nav Expend view End -->
+  </header>
+  <!-- HEADER END -->
+
+  <!-- <app-student-dashboard (userInfoEmit)="userInfoEmitData($event)"></app-student-dashboard> -->

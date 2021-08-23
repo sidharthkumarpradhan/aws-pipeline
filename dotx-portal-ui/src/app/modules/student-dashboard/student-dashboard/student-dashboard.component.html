@@ -1,0 +1,423 @@
+  <!-- Student Dashboard Modal Start -->
+  <app-loader *ngIf="isLoading"></app-loader>
+  <div class="my-space modal-box">
+    <!-- Badges Popup Start -->
+    <div *ngIf="displayBadgesPopup" class="popup badges">
+      <button (click)="displayBadgesPopup = !displayBadgesPopup" class="btn-close">
+        <img alt="" src="assets/img/my-space/close-white.png"/>
+      </button>
+
+      <div class="heading">
+        <img alt="" src="assets/img/my-space/star.png"/>
+        <h2>My Badges</h2>
+        <p class="stats">Total Badges Earned: <span>{{badges}}</span></p>
+      </div>
+
+      <div *ngIf="badgesList.length === 0" class="img-large">
+        <img alt="" src="assets/img/my-space/badge-2.png"/>
+        <p>You don’t have earned Badges yet</p>
+        <p><span>Join the Challenge</span> and earn Badges</p>
+      </div>
+
+      <div *ngIf="badgesList && badgesList.length" class="card-container">
+        <div *ngFor="let reward of badgesList" class="card">
+          <div class="img-wrapper">
+            <img alt="" src="{{filePathLocation}}{{reward.reward_badge}}"/>
+          </div>
+          <p>
+            For completed <br/>
+            <span>{{reward.reward_title}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Badges Popup End -->
+
+    <!-- Dotcoins Popup Start -->
+    <div *ngIf="displayDotcoinsPopup" class="popup dotcoins">
+      <button (click)="displayDotcoinsPopup = !displayDotcoinsPopup" class="btn-close">
+        <img alt="" src="assets/img/my-space/close-white.png"/>
+      </button>
+
+      <div class="heading">
+        <img alt="" src="assets/img/dotcoin.png"/>
+        <h2>My Dotcoins</h2>
+        <p class="stats">Total Dotcoins Earned: <span>{{dotCoins}}</span></p>
+      </div>
+
+      <div
+        *ngIf="!achievementsList || (achievementsList?.participation_dot_coins === '0' && achievementsList?.winning_dot_coins === '0')"
+        class="img-large">
+        <img alt="" src="assets/img/my-space/dotcoin-big.png"/>
+        <p>You don’t have earned Dotcoins yet</p>
+        <p><span>Join the Challenge</span> and earn Dotcoins</p>
+      </div>
+
+      <div class="card-container">
+        <div *ngIf="achievementsList && achievementsList.participation_dot_coins !== '0'" class="card">
+          <div class="img-wrapper">
+            <img alt="" src="assets/img/my-space/dotcoin-big.png"/>
+          </div>
+          <p class="green-txt">Earned <span>{{achievementsList.participation_dot_coins}}</span> Dotcoins</p>
+          <p>
+            For participating<br/>
+            <span>{{achievementsList.participation_count}}</span> challenges
+          </p>
+        </div>
+
+        <div *ngIf="achievementsList && achievementsList.winning_dot_coins !== '0'" class="card">
+          <div class="img-wrapper">
+            <img alt="" src="assets/img/my-space/dotcoin-big.png"/>
+          </div>
+          <p class="green-txt">Earned <span>{{achievementsList.winning_dot_coins}}</span> Dotcoins</p>
+          <p>
+            For winning <br/>
+            <span> {{achievementsList.winning_badges_count}}</span> challenges
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Dotcoins Popup End -->
+
+    <div class="title-bar">
+      <p class="title" id="studentDashboardModalLabel">My Space</p>
+      <button class="btn-close" (click)="closeModal()">
+        <img src="assets/img/close.png" alt=""/>
+      </button>
+    </div>
+    <div class="content-box">
+      <div class="left-side">
+        <div class="section-1">
+          <button class="btn-edit" (click)="openEditStudentDashboard()" [disabled]="isUsersLoading">
+            <ng-container *ngIf="!isUsersLoading">
+              <img src="assets/img/my-space/pencil.png" alt="" />
+            </ng-container>
+            <p>Edit your profile</p>
+          </button>
+          <div class="img-container img-container-add-edit-popup-section">
+            <img [src]="fileName" alt="Image" (error)="onImgError($event)"/>
+            <div class="info-container">
+              <p class="name">{{userDetails?.display_name}}</p>
+              <p class="age-grade">{{age}} years old, {{userDetails?.class_details}} grade,</p>
+              <p class="school">{{userDetails?.school_name}}</p>
+              <button class="btn-video" *ngIf="!userDetails.user_bio_video_file">
+                <img src="assets/img/my-space/video-camera.png" alt=""/>
+                <p class="bio-video-text">Bio video</p>
+                <p class="bio-add-text" (click)="uploadBioVideo()">+ <span>Add</span></p>
+              </button>
+              <button class="btn-video" *ngIf="userDetails.user_bio_video_file">
+                <img src="assets/img/my-space/video-camera.png" alt=""/>
+                <p class="bio-video-text bio-link"
+                   (click)="openBioVideo(content, userDetails.user_bio_video_file, 'mp4')">Bio video</p>
+                <p class="bio-video-text bio-edit" (click)="uploadBioVideo()"></p>
+              </button>
+            </div>
+          </div>
+          <div class="achivements-container">
+            <img src="assets/img/my-space/achivements.png" alt="" />
+            <div class="wrapper">
+              <p class="title">My Achievements</p>
+              <div class="info-container">
+                <div (click)="displayBadgesPopup = !displayBadgesPopup" class="info-wrapper">
+                  <img src="assets/img/my-space/badges-icon.png" alt=""/>
+                  <p class="value">{{badges}}</p>
+                  <p class="tag">Badges</p>
+                </div>
+                <div class="line"></div>
+                <div (click)="displayDotcoinsPopup = !displayDotcoinsPopup" class="info-wrapper">
+                  <img src="assets/img/dotcoin.png" alt=""/>
+                  <p class="value">{{dotCoins}}</p>
+                  <p class="tag">Dot Coins</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-2">
+          <img src="assets/img/my-space/activities-bck.png" alt="" />
+          <div class="activities">
+            <img src="assets/img/my-space/activities.png" alt="" />
+            <p>My Activities</p>
+          </div>
+          <div class="info-container">
+            <div class="info-wrapper" (click)="openMyChallengesPopup()">
+              <img src="assets/img/my-space/challenges-icon.png" alt=""/>
+              <p class="tag">Challenges</p>
+              <p class="value">{{totalChallengesCount}}</p>
+            </div>
+            <div class="info-wrapper">
+              <img src="assets/img/my-space/dock-icon.png" alt="" />
+              <p class="tag">Dock</p>
+              <p class="value">{{dot_activitiesData?.daily_dots}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="section-3">
+          <div class="tabs-container">
+            <div class="tab" [class.active]="myTalentsFlag" (click)="openMyTalents()">
+              <img src="assets/img/my-space/talents-tab.png" alt="" />
+              <p class="tab-name">My Talents</p>
+            </div>
+            <div class="tab" [class.active]="myFavouritesFlag" (click)="openMyFavourites()">
+              <img src="assets/img/my-space/fav-tab.png" alt="" />
+              <p class="tab-name">My Favourites</p>
+            </div>
+          </div>
+          <ng-container *ngIf="myTalentsFlag">
+            <div class="tags-container">
+              <div class="tag" *ngFor="let skill of mySkillsList; let i = index;">
+                <button class="btn-close">
+                  <img src="assets/img/my-space/white-close.png" alt=""/>
+                </button>
+                <p class="tag-name">{{skill.skill_name}}</p>
+              </div>
+              <button class="btn-add-tag" (click)="openEditStudentDashboard('talents')">
+                <img src="assets/img/my-space/blue-plus.png" alt=""/>
+              </button>
+            </div>
+            <div class="talents-container">
+              <div class="talent-wrapper" *ngFor="let item of myTalentsList; let i = index;">
+                <button class="btn-close">
+                  <img [src]="item.filePath" alt="" *ngIf="item.fileType === 'image'; else videotype"/>
+                  <ng-template #videotype>
+                    <video width="100%" height="100%" controls>
+                      <source [src]="item.filePath" type='video/mp4'>
+                      Your browser does not support the video tag.
+                    </video>
+                  </ng-template>
+                </button>
+              </div>
+            </div>
+            <div class="x-small col-12" *ngIf="isMySkillsLoaded">
+              <app-spinner></app-spinner>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="myFavouritesFlag">
+            <div class="tags-container">
+              <div class="tag" *ngFor="let skill of favourites; let i = index;">
+                <button class="btn-close">
+                  <img src="assets/img/my-space/white-close.png" alt=""/>
+                </button>
+                <p class="tag-name">{{skill.skill_name}}</p>
+              </div>
+              <button class="btn-add-tag" (click)="openEditStudentDashboard('favourites')">
+                <img src="assets/img/my-space/blue-plus.png" alt=""/>
+              </button>
+            </div>
+            <div class="talents-container">
+              <div class="talent-wrapper" *ngFor="let item of favouriteList; let i = index;">
+                <button class="btn-close">
+                  <img [src]="item.filePath" alt="" *ngIf="item.fileType === 'image'; else videotype"/>
+                  <ng-template #videotype>
+                    <video width="100%" height="100%" controls>
+                      <source [src]="item.filePath" type='video/mp4'>
+                      Your browser does not support the video tag.
+                    </video>
+                  </ng-template>
+                </button>
+              </div>
+            </div>
+            <div class="x-small col-12" *ngIf="isMySkillsLoaded">
+              <app-spinner></app-spinner>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="tab-container">
+          <div class="tab" [class.active]="myBuddiesFlag" (click)="openMyBuddies()">My Buddies</div>
+          <div class="line">.</div>
+          <div class="tab" [class.active]="myNotificationsFlag" (click)="openMyNotifications()">Notifications</div>
+        </div>
+        <ng-container *ngIf="myBuddiesFlag">
+          <div class="search-filter">
+            <div class="trigger">
+              <p class="current-value">Search by school</p>
+              <img src="assets/img/my-space/red-arrow-down.png" alt=""/>
+            </div>
+          </div>
+          <div class="search-bar-container">
+            <input type="text" [(ngModel)]="searchName" (keyup)="onChangeValue($event.target.value)"/>
+            <button class="btn-search" (click)="onChangeValue(searchName)">
+              <img src="assets/img/my-space/black-search.png" alt=""/>
+            </button>
+          </div>
+          <div class="no-user" *ngIf="alluserDetails?.length === 0">
+            <p>Don’t have user yet</p>
+            <img src="assets/img/my-space/no-user.png" alt=""/>
+          </div>
+          <div class="buddies-container">
+            <div class="buddy-wrapper" *ngFor="let buddie of alluserDetails; let i = index">
+              <div>
+                <div class="avatar-wrapper">
+                  <img
+                    src="{{filePathLocation}}{{buddie?.avatar_image_file ? buddie?.avatar_image_file : 'assets/img/friend-' + i + '.png'}}"
+                    alt="user" (error)="onImgError($event)"/>
+                </div>
+                <div>
+                  <p class="name">{{buddie?.display_name ? buddie?.display_name : buddie?.user_email}}</p>
+                  <p class="grade">{{buddie?.class_details ? buddie?.class_details : '7th'}} Grade</p>
+                  <p class="school">{{buddie?.school_name ? buddie?.school_name : 'Cambridge High School'}}</p>
+                </div>
+              </div>
+              <button (click)="openMessagePopup(buddie)">
+                <img src="assets/img/my-space/message.png" alt=""/>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="myNotificationsFlag">
+          <div class="no-user" *ngIf="myNotificationList?.length === 0">
+            <p>Don’t have notifications</p>
+            <img src="assets/img/my-space/no-notif.png" alt="" />
+          </div>
+<!--          <div class="notif-container">-->
+<!--            <div class="new-notif">-->
+<!--              <h3>New</h3>-->
+<!--              <div class="notif-wrapper">-->
+<!--                <div class="img-wrapper">-->
+<!--                  <img src="assets/img/my-space/notif-1.png" alt=""/>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <h5>Addend new responds in to the challenge</h5>-->
+<!--                  <p>Hunt for Time</p>-->
+<!--                </div>-->
+<!--                <div class="unred"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="earlier-notif">-->
+<!--              <h3>Earlier</h3>-->
+<!--              <div class="notif-wrapper">-->
+<!--                <div class="img-wrapper">-->
+<!--                  <img src="assets/img/my-space/notif-4.png" alt=""/>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <h5>Addend new responds in to the challenge</h5>-->
+<!--                  <p>Let’s paint time</p>-->
+<!--                </div>-->
+<!--                <div class="unred"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </ng-container>
+        <div class="m-5" *ngIf="!alluserDetails">
+          <app-spinner></app-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Student Dashboard Modal End -->
+
+ <!-- Modal -->
+  <div class="modal fade" id="buddiesSearchModal" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-labelledby="buddiesSearchModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="buddiesSearchModalLabel">My Space</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            Close <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="buddied-search-result-wrapper">
+            <div class="form-row title-bar">
+              <div class="col-12">
+                <button  class="btn-back" type="button" (click)="backTo()" ><img src="assets/img/back-arrow.png" alt=""></button>
+                <button class="btn-search" type="button"><img src="assets/img/search-icon2.png" alt=""></button>
+                <span class="search-text">Search results</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4 border-right">
+
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control"  [(ngModel)]="searchName" (change)="onChangeValue($event.target.value)">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary search_buddies" style="width: 70%;" type="button"
+                            (click)="searchByCatagory()">
+                            <img src="assets/img/search-icon2.png"  style="width: 60%;height: auto;" />
+                            </button>
+                        </div>
+                      </div>
+                 </div>
+
+                <div class="custom-control custom-radio mb-2">
+                  <input type="radio" class="custom-control-input" [checked]="isCheck == 'school'" (click)="searchBy('school')" name="customRadioInline" id="searchCheck1">
+                  <label class="custom-control-label" for="searchCheck1">By School </label>
+                </div>
+                <div class="custom-control custom-radio mb-2">
+                  <input type="radio" class="custom-control-input" [checked]="isCheck == 'skill'" (click)="searchBy('skill')" name="customRadioInline" id="searchCheck2">
+                  <label class="custom-control-label" for="searchCheck2">By Skill</label>
+                </div>
+                <div class="custom-control custom-radio mb-2">
+                  <input type="radio" class="custom-control-input" [checked]="isCheck == 'class'" (click)="searchBy('class')" name="customRadioInline" id="searchCheck3">
+                  <label class="custom-control-label" for="searchCheck3">By Class</label>
+                </div>
+                <div class="custom-control custom-radio mb-2">
+                  <input type="radio" class="custom-control-input" [checked]="isCheck == 'age'" (click)="searchBy('age')" name="customRadioInline" id="searchCheck4">
+                  <label class="custom-control-label" for="searchCheck4">By Age</label>
+                </div>
+                <div class="custom-control custom-radio mb-2">
+                  <input type="radio" class="custom-control-input" [checked]="isCheck == 'name'"  (click)="searchBy('name')" name="customRadioInline" id="searchCheck5">
+                  <label class="custom-control-label" for="searchCheck5">By Name</label>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="buddies-results">
+                  <p>{{searchRes?.length}} Results found with {{searchValue}} name</p>
+                  <div class="buddies-results-list" *ngFor="let user of searchRes | slice : 0: 4; let i = index;">
+                    <div class="buddies-result-single"  *ngIf='user?.display_name'>
+                      <div class="left">
+                        <div class="img">
+                            <img [src]="'assets/img/friend-'+i+'.png'" alt="user">
+                        </div>
+                        <div class="buddies-search-info">
+                          <p><strong>{{user?.display_name}}</strong> {{user?.class_details}} Grade, <span class="text-success">
+                              {{user?.school_name}}</span></p>
+                        </div>
+                      </div>
+                      <div class="right">
+                        <button type="button" class="btn-chat"><img src="assets/img/chat-icon.png" alt=""></button>
+                        <button type="button" class="btn-arrow"><svg xmlns="http://www.w3.org/2000/svg" height="24"
+                            viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z" /></svg></button>
+                      </div>
+                    </div>
+
+                  </div>
+                  <p class="pt-4">No more Results found</p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template #content let-modal>
+    <div class="modal-body d-flex justify-content-center">
+      <ng-container *ngIf="fileType === 'video'">
+        <video width="100%" height="100%" controls>
+          <source [src]="filePath" [type]="mediaType">
+          Your browser does not support the video tag.
+        </video>
+      </ng-container>
+      <ng-container *ngIf="fileType === 'audio'">
+        <audio controls>
+          <source [src]="filePath" [type]="mediaType">
+          Your browser does not support the audio tag.
+        </audio>
+      </ng-container>
+      <ng-container *ngIf="fileType === 'image'">
+        <img [src]="filePath" class="mw-300p" alt="image not found" />
+      </ng-container>
+    </div>
+  </ng-template>

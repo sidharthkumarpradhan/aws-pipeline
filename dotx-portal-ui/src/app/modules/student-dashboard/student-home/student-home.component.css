@@ -1,0 +1,366 @@
+/* Communities Section Start */
+.bg-color {
+  background: #F0F4F5 !important;
+}
+
+.communities-section {
+  margin-top: 179px;
+  margin-bottom: 179px;
+}
+
+.communities-section h3.communities-title {
+  font: 500 28px/46px 'Poppins', sans-serif;
+  color: #303546;
+  padding: 0 0 11px 0;
+  margin: 0 0 0 0px;
+}
+
+.communities-section .communities-banner {
+  margin-bottom: 44px;
+  position: relative;
+  /* min-height: 1172px; */
+}
+
+.communities-section .communities-banner .communities-banner-top {
+  /* position: absolute;
+  left: 32px;
+  top: 32px;
+  right: 32px; */
+  width: 100%;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer {
+  position: absolute;
+  right: 68px;
+  top: 62px;
+  width: 50.55px;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .guide-button {
+  padding: 8px;
+  background-color: #fff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.37) 0px 2px 8px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.37) 0px 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.37) 0px 2px 8px;
+  font-family: 'Conv_GothamRndSSm-Medium';
+  /* font-weight: 600; */
+  color: #303546;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .guide-button span {
+  display: block;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .guide-button.dropdown-toggle::after {
+  display: none;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .dropdown-menu {
+  width: 378px;
+  padding: 18px 30px 30px 30px;
+  margin: 2px 0 0 0;
+  -webkit-border-radius: 2.7px;
+  -moz-border-radius: 2.7px;
+  border-radius: 2.7px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.38) 0px 4px 9px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.38) 0px 4px 9px;;
+  box-shadow: rgba(0, 0, 0, 0.38) 0px 4px 9px;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .dropdown-menu h6 {
+  font-size: 18px;
+  line-height: 22px;
+  font-family: 'Conv_GothamRndSSm-Medium';
+  color: #000;
+  padding: 12px 0 10px 65px;
+  margin: 0 0 0 0;
+  position: relative;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .dropdown-menu h6:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 55px;
+  height: 55px;
+  background: url('src/assets/img/communities/community-icon.png') no-repeat 0 0;
+  background-size: 55px;
+}
+
+/* .communities-section  .communities-coming-soon-section .communities-coming-soon-list-rules-right .communities-coming-soon-content .communities-guide-outer .dropdown-menu{
+  left:  inherit !important;
+  right: 0;
+} */
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .dropdown-menu ul {
+  padding: 21px 0 0 97px;
+  margin: 0;
+  list-style-type: none;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .dropdown-menu ul li {
+  padding: 0;
+  margin: 0 0 11px 0;
+  list-style: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Conv_GothamRndSSm-Medium';
+  color: #5F6372;
+  position: relative;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .dropdown-menu ul li:hover {
+  background-color: transparent;
+}
+
+.communities-section .communities-banner .communities-banner-top .communities-guide-outer .dropdown-menu ul li:before {
+  content: ".";
+  position: absolute;
+  left: -30px;
+  top: -9px;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.communities-section .communities-banner .communities-banner-bottom {
+  position: absolute;
+  left: 0;
+  bottom: 166px;
+  right: 0;
+  width: 100%;
+}
+
+.communities-section .communities-banner .communities-banner-bottom a {
+  font: 600 14px/21px 'Poppins', sans-serif;
+  color: #fff;
+  font-size: 20px;
+  line-height: 29px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #DB4744;
+  /* letter-spacing: -0.06px; */
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  /* -webkit-box-shadow: rgba(0,0,0,0.06) 0px 2px 5px;
+  -moz-box-shadow: rgba(0,0,0,0.06) 0px 2px 5px;
+  box-shadow: rgba(0,0,0,0.06) 0px 2px 5px; */
+  padding: 10px 26px;
+}
+
+.communities-section .communities-banner .communities-banner-bottom a:hover {
+  background-color: rgb(219 71 68 / 70%);
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-banner {
+  position: relative;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-banner img {
+  border-radius: 5px 5px 0 0;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-banner .communities-coming-soon-banner-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-banner h4 {
+  font-family: 'Conv_GothamRndSSm-Bold';
+  font-size: 32px;
+  line-height: 28px;
+  color: #fff;
+  letter-spacing: -0.11px;
+  padding: 59px 0 20px 0;
+  margin: 0;
+  text-align: center;
+  background: url(src/assets/img/communities/heading-bg.png) no-repeat 0 bottom;
+  background-size: 100%;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content {
+  padding: 59px 79px 14px 47px;
+  color: #777C7F;
+  background-color: #fff;
+  min-height: 396px;
+  position: relative;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50.55px;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .guide-button {
+  padding: 8px;
+  background-color: #fff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.37) 0px 2px 8px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.37) 0px 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.37) 0px 2px 8px;
+  font-family: 'Conv_GothamRndSSm-Medium';
+  /* font-weight: 600; */
+  color: #303546;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .guide-button span {
+  display: block;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .guide-button.dropdown-toggle::after {
+  display: none;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .dropdown-menu {
+  width: 378px;
+  padding: 18px 30px 30px 30px;
+  margin: 2px 0 0 0;
+  -webkit-border-radius: 2.7px;
+  -moz-border-radius: 2.7px;
+  border-radius: 2.7px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.38) 0px 4px 9px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.38) 0px 4px 9px;;
+  box-shadow: rgba(0, 0, 0, 0.38) 0px 4px 9px;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .dropdown-menu h6 {
+  font-size: 18px;
+  line-height: 22px;
+  font-family: 'Conv_GothamRndSSm-Medium';
+  color: #000;
+  padding: 12px 0 10px 65px;
+  margin: 0 0 0 0;
+  position: relative;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .dropdown-menu h6:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 55px;
+  height: 55px;
+  background: url('src/assets/img/communities/community-icon.png') no-repeat 0 0;
+  background-size: 55px;
+}
+
+/* .communities-section  .communities-coming-soon-section .communities-coming-soon-list-rules-right .communities-coming-soon-content .communities-guide-outer .dropdown-menu{
+  left:  inherit !important;
+  right: 0;
+} */
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .dropdown-menu ul {
+  padding: 21px 0 0 97px;
+  margin: 0;
+  list-style-type: none;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .dropdown-menu ul li {
+  padding: 0;
+  margin: 0 0 11px 0;
+  list-style: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Conv_GothamRndSSm-Medium';
+  color: #5F6372;
+  position: relative;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .dropdown-menu ul li:hover {
+  background-color: transparent;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content .communities-guide-outer .dropdown-menu ul li:before {
+  content: ".";
+  position: absolute;
+  left: -30px;
+  top: -9px;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content p {
+  font: 400 14px/21px 'Poppins', sans-serif;
+  color: #777C7F;
+  padding: 0 0 34px 0;
+  margin: 0 0 0 0px;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content h5 {
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Conv_GothamRndSSm-Bold';
+  color: #42474C;
+  padding: 0 0 0 0;
+  margin: 0 0 42px 0;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content h6 {
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Conv_GothamRndSSm-Book';
+  color: #42474C;
+  padding: 0 0 0 0;
+  margin: 0 0 15px 0;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content h6.mb-42 {
+  margin-bottom: 42px;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content ul li {
+  padding: 0;
+  margin: 0 18px 0 0;
+  list-style: none;
+  font: 500 12px/19px 'Poppins', sans-serif;
+  color: #5F6372;
+  letter-spacing: -0.04px;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-content ul li:last-child {
+  margin-right: 0;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-footer {
+  color: #fff;
+  background-color: #ED9896;
+  border-radius: 0 0 5px 5px;
+  padding: 10px 0 10px 0;
+  text-align: center;
+}
+
+.communities-section .communities-coming-soon-section .communities-coming-soon-footer p {
+  font: 600 20px/29px 'Poppins', sans-serif;
+  color: #fff;
+  padding: 0 0 0 0;
+  margin: 0;
+  text-align: center;
+}
+
+/* Communities Section End */

@@ -1,0 +1,322 @@
+ <!-- Student Profile Edit Profile Modal Start -->
+ <app-loader *ngIf="isLoading"></app-loader>
+<div class="modal-header">
+  <h5 class="modal-title" id="editStudentProfileModalLabel">My Space</h5>
+  <button type="button" class="close" (click)="closeModal()">
+    Close <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body s-dashboard-body">
+  <div class="student-edit-wrapper">
+    <!-- Left Start -->
+    <div class="se-left">
+      <div class="student-card d-flex">
+        <div class="img">
+        <img [src]="fileName" alt="Image" class="avatar-md-2" (error)="onImgError($event)" />
+        </div>
+        <div class="edit-student-info">
+          <h4>{{userDetails?.display_name}}</h4>
+          <p>{{userDetails?.user_type}}, {{age}} years old <span>{{userDetails?.class_details}} grade, {{userDetails?.school_name}}</span></p>
+        </div>
+      </div>
+
+      <div class="student-nav">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <!-- <a class="nav-link active" id="v-pills-summary-tab" data-toggle="pill" href="#v-pills-summary"
+            role="tab" aria-controls="v-pills-summary" aria-selected="true">
+            <img src="assets/img/summary-icon.png" alt=""> Summary
+          </a> -->
+          <a class="nav-link" id="v-pills-pDetails-tab" (click)="onClickPersonalInfo('personalInfo')" (click)="onClickPersonalInfo('personalInfo')" data-toggle="pill" href="#v-pills-pDetails" role="tab"
+            aria-controls="v-pills-pDetails" aria-selected="false"><img src="assets/img/personal-details.png"
+              alt=""> About me</a>
+          <a class="nav-link" id="v-pills-mAvtar-tab" (click)="onClickAvatar('userAvatar')" data-toggle="pill" href="#v-pills-mAvtar" role="tab"
+            aria-controls="v-pills-mAvtar" aria-selected="false"><img src="assets/img/avatar-icon.png" alt="">
+            My Avatar</a>
+          <!-- <a class="nav-link" id="v-pills-pQuiz-tab" (click)="onClickPersonalQuiz('personQuiz')" data-toggle="pill" href="#v-pills-pQuiz" role="tab"
+            aria-controls="v-pills-pQuiz" aria-selected="false"><img src="assets/img/quiz-icon.png" alt="">
+            Personality Quiz</a> -->
+          <a class="nav-link" id="v-pills-pSkills-tab" (click)="onClickSkills('Skills')" data-toggle="pill" href="#v-pills-pSkills" role="tab"
+            aria-controls="v-pills-pSkills" aria-selected="false"><img src="assets/img/quiz-icon.png" alt="">
+            Gifts and Faves</a>
+          <a class="nav-link" id="v-pills-pReset-tab" *ngIf="isGoogle != 'fromGoogle'" (click)="onClickRestPassword('resetPassword')" data-toggle="pill" href="#v-pills-pReset" role="tab"
+            aria-controls="v-pills-pReset" aria-selected="false"><img src="assets/img/avatar-icon.png" alt="">
+            Reset Password</a>
+        </div>
+      </div>
+
+    </div>
+    <!-- Left End  -->
+
+    <!-- Middle Start -->
+    <div class="se-mid">
+      <div class="tab-content" id="v-pills-tabContent">
+        <!-- <div class="tab-pane fade show active" id="v-pills-summary" role="tabpanel"
+          aria-labelledby="v-pills-summary-tab">
+          <div class="my-badges-section">
+            <h4><img src="assets/img/activites-icon.png" alt="Badges"> My Badges</h4>
+            <p>See your achievement snapshot across learning and engagement activities</p>
+            <div class="form-row">
+              <div class="col-4">
+                <div class="badge-info color-1">
+                  <div class="badge-info-inner">
+                    <img src="assets/img/badge-1.png" alt="">
+                    <p>Badge 1</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="badge-info color-2">
+                  <div class="badge-info-inner">
+                    <img src="assets/img/badge-1.png" alt="">
+                    <p>Badge 2</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="badge-info color-3">
+                  <div class="badge-info-inner">
+                    <img src="assets/img/badge-1.png" alt="">
+                    <p>Badge 3</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> -->
+        <div class="tab-pane fade bg-white show active p-4" id="v-pills-pDetails" role="tabpanel"
+          aria-labelledby="v-pills-pDetails-tab">
+          <!-- <div class="title-section">
+            <h4><img src="assets/img/personal-details-icon.png" alt="Badges"> Personal Details</h4>
+            <p>See your achievement snapshot across learning and engagement activities</p>
+            <hr>
+          </div> -->
+            <app-personal-info [userData]="userDetails" (profileUpdated)="userInfoUpdate($event)"></app-personal-info>
+
+        </div>
+        <div class="tab-pane fade bg-white p-3" id="v-pills-mAvtar" role="tabpanel"
+          aria-labelledby="v-pills-messages-tab">
+          <div class="title-section">
+            <h4><img src="assets/img/my-avatar-icon.png" alt="Badges"> My Avatar</h4>
+            <p>See your achievement snapshot across learning and engagement activities</p>
+            <hr>
+          </div>
+
+          <!-- <div class="customMargin">
+            <app-dotUser-avatar [applyCssAvatar]="applyCssAvatar" [userAvatar]="userAvatar"></app-dotUser-avatar>
+          </div> -->
+          <app-avatar [userAvatar]="fileName" [userData]="userDetails" (avatarUpdate)="avatarUpdate($event)"></app-avatar>
+        </div>
+        <div class="tab-pane fade bg-white p-4" id="v-pills-pQuiz" role="tabpanel"
+          aria-labelledby="v-pills-pQuiz-tab">
+          <div class="title-section">
+            <h4><img src="assets/img/personality-quiz-icon.png" alt="Badges"> Personality Quiz</h4>
+            <p>See your achievement snapshot across learning and engagement activities</p>
+            <hr>
+          </div>
+
+          <app-quiz-attempt></app-quiz-attempt>
+          <!-- <div class="customMargin">
+          <jhi-dot-personality-quiz-update [applyCssQuiz]="applyCssQuiz" [quizDashboard]="quizDashboard"></jhi-dot-personality-quiz-update>
+          </div> -->
+
+        </div>
+
+        <div class="tab-pane fade bg-white p-4" id="v-pills-pSkills" role="tabpanel"
+          aria-labelledby="v-pills--pSkills-tab">
+          <div class="title-section">
+            <h4><img src="assets/img/my-avatar-icon.png" alt="Badges"> My Gifts and Faves</h4>
+            <p>Show off your gifted talents and share some of your favourites. Don't forget to upload image or a video!</p>
+            <hr>
+          </div>
+          <app-skills [skillsList]="skillsList" [userSkills]="userSkills"  (skillsUpdated)="skillsUpdated($event)"></app-skills>
+
+          <!-- <div class="customMargin">
+          <jhi-dot-user-skills-update [applyCssSkills]="applyCssSkills" [skillsDashboard]="skillsDashboard"></jhi-dot-user-skills-update>
+          </div> -->
+        </div>
+
+        <div class="tab-pane fade bg-white p-4" id="v-pills-pReset" role="tabpanel"
+          aria-labelledby="v-pills--pReset-tab">
+          <div class="title-section">
+              <h4><img src="assets/img/my-avatar-icon.png" alt="Badges"> Reset Password</h4>
+              <p></p>
+              <hr>
+          </div>
+          <!-- <div class="customMargin">
+            <app-reset-password [userReset]="userReset"></app-reset-password>
+          </div> -->
+          <app-password></app-password>
+        </div>
+
+      </div>
+    </div>
+    <!-- Middle end -->
+
+    <!-- Right Start -->
+<!--    <div class="se-right">-->
+<!--      <h2>My Buddies</h2>-->
+<!--      &lt;!&ndash; <div class="dropdown search-buddies-dropdown">-->
+<!--      <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"-->
+<!--        aria-haspopup="true" aria-expanded="false">-->
+<!--        Search by {{searchValue}}-->
+<!--      </button>-->
+<!--      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--        <a class="dropdown-item" (click)="searchBy('school')">by School </a>-->
+<!--        <a class="dropdown-item" (click)="searchBy('skill')">by Skill</a>-->
+<!--        <a class="dropdown-item" (click)="searchBy('age')">by Age</a>-->
+<!--        <a class="dropdown-item" (click)="searchBy('name')">by Name</a>-->
+<!--        <a class="dropdown-item" (click)="searchBy('class')">by Class</a>-->
+<!--      </div>-->
+<!--      </div> &ndash;&gt;-->
+<!--      <div class="form-group">-->
+<!--        <div class="form-group">-->
+<!--          <div class="input-group mb-3">-->
+<!--              <input type="text" class="form-control"  [(ngModel)]="searchName" (keyup)="onChangeValue($event.target.value)">-->
+<!--              <div class="input-group-append">-->
+<!--                <button class="btn btn-outline-secondary search_buddies" style="width: 70%;" type="button" (click)="onChangeValue(searchName)">-->
+<!--                  &lt;!&ndash; <i class="fa fa-search" style="width: 30px; color: #1395f6;"></i> &ndash;&gt;-->
+<!--                  <img src="assets/img/search-icon2.png"  style="width: 60%;height: auto;" />-->
+<!--                  </button>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--       -->
+<!--        <div class="form-row buddies-group">-->
+<!--          &lt;!&ndash; <div class="col-12 d-flex mb-4">-->
+<!--            <div class="custom-control custom-radio custom-radio-xl custom-control-inline" style="padding-left: 25px;">-->
+<!--                <input type="radio" id="customRadioInline1Edit" name="customRadioInline" (change)="AllUsers()"-->
+<!--                [checked]="checkListFriends" class="custom-control-input">-->
+<!--                <label class="custom-control-label" for="customRadioInline1Edit">List of Friends</label>-->
+<!--              </div>-->
+<!--              <div class="custom-control custom-radio custom-radio-xl custom-control-inline" style="padding-left: 25px;">-->
+<!--                <input type="radio" id="customRadioInline2Edit" name="customRadioInline" (change)="buddiesListFilter()"-->
+<!--                  class="custom-control-input">-->
+<!--                <label class="custom-control-label" for="customRadioInline2Edit">My Groups</label>-->
+<!--              </div>-->
+<!--           -->
+<!--          </div> &ndash;&gt;-->
+<!--          &lt;!&ndash; <div class="friends-info" >-->
+<!--          <h4>{{buddie?.display_name}}</h4>-->
+<!--          <button type="button" class="btn-chat"><img src="assets/img/chat-icon.png" alt=""></button>-->
+<!--          <p> {{buddie?.class_details ? buddie?.class_details : '7th'}} Grade, <span>{{buddie?.school_name ? buddie?.school_name : 'Cambridge High School'}}</span></p>-->
+<!--        </div> &ndash;&gt;-->
+
+<!--           <div class="buddies-friends-list" *ngFor="let buddie of alluserDetails; let i = index">-->
+<!--            <div class="friends-box" *ngIf="buddie?.display_name">-->
+<!--               <div class="friends-img">-->
+<!--                &lt;!&ndash; <img [src]="getImageName(buddie.avatar_image_file, i)" alt="user"  (error)="onImgError($event)"/> &ndash;&gt;-->
+<!--                &lt;!&ndash; <img [src]="'assets/img/friend-'+i+'.png'" alt="user"> &ndash;&gt;-->
+<!--                <img src="{{filePathLocation}}{{buddie?.avatar_image_file ? buddie?.avatar_image_file : 'assets/img/friend-' + i + '.png'}}" alt="user"  (error)="onImgError($event)"/>-->
+<!--               </div>-->
+<!--               <div class="friends-info" >-->
+<!--                <h4>{{buddie?.display_name}}</h4>-->
+<!--                &lt;!&ndash; <button type="button" class="btn-chat"><img src="assets/img/chat-icon.png" alt=""></button> &ndash;&gt;-->
+<!--                <p> {{buddie?.class_details ? buddie?.class_details : '7th'}} Grade, <span>{{buddie?.school_name ? buddie?.school_name : 'Cambridge High School'}}</span></p>-->
+<!--              </div>-->
+<!--              -->
+<!--             </div>-->
+<!--           </div>-->
+<!--         </div>-->
+<!--         &lt;!&ndash; Right End &ndash;&gt;-->
+<!--       </div>-->
+
+<!--     </div>-->
+   </div>
+</div>
+
+<!-- Student Profile Edit Profile Modal End -->
+
+ <!-- Modal -->
+ <div class="modal fade" id="buddiesSearchModal2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="buddiesSearchModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-xl">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="buddiesSearchModalLabel">My Space</h5>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         Close <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <div class="buddied-search-result-wrapper">
+         <div class="form-row title-bar">
+           <div class="col-12">
+             <button class="btn-back" type="button" (click)="backTo()"><img src="assets/img/back-arrow.png" alt=""></button>
+             <button class="btn-search" type="button"><img src="assets/img/search-icon2.png" alt=""></button>
+             <span class="search-text">Search results</span>
+           </div>
+         </div>
+
+         <div class="row">
+           <div class="col-4 border-right">
+
+            <div class="form-group">
+              <div class="input-group mb-3">
+                  <input type="text" class="form-control"  [(ngModel)]="searchName" (change)="onChangeValue($event.target.value)">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary search_buddies" style="width: 70%;" type="button"
+                      (click)="searchByCatagory()">
+                      <img src="assets/img/search-icon2.png"   style="width: 60%;height: auto;" />
+                        <!-- <i class="fa fa-search" style="width: 30px; color: #1395f6;"></i> -->
+                      </button>
+                  </div>
+                </div>
+           </div>
+
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck == 'school'" (click)="searchBy('school')" name="customRadioInline" id="searchCheckSchool">
+               <label class="custom-control-label" for="searchCheckSchool">By School </label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck == 'skill'" (click)="searchBy('skill')" name="customRadioInline" id="searchCheckSkill">
+               <label class="custom-control-label" for="searchCheckSkill">By Skill</label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck == 'class'" (click)="searchBy('class')" name="customRadioInline" id="searchCheckClass">
+               <label class="custom-control-label" for="searchCheckClass">By Class</label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck == 'age'" (click)="searchBy('age')" name="customRadioInline" id="searchCheckAge">
+               <label class="custom-control-label" for="searchCheckAge">By Age</label>
+             </div>
+             <div class="custom-control custom-radio mb-2">
+               <input type="radio" class="custom-control-input" [checked]="isCheck == 'name'" (click)="searchBy('name')" name="customRadioInline" id="searchCheckName">
+               <label class="custom-control-label" for="searchCheckName">By Name</label>
+             </div>
+           </div>
+           <div class="col-8">
+             <div class="buddies-results">
+               <p>{{searchRes?.length}} Results found with {{searchValue}} name</p>
+               <div class="buddies-results-list" *ngFor="let user of searchRes | slice : 0: 4; let i = index;">
+                <div class="buddies-result-single"  *ngIf='user?.display_name'>
+                   <div class="left">
+                     <div class="img">
+                         <img [src]="'assets/img/friend-'+i+'.png'" alt="user">
+                     </div>
+                     <div class="buddies-search-info">
+                       <p><strong>{{user?.display_name}}</strong> {{user?.class_details}} Grade, <span class="text-success">
+                           {{user?.school_name}}</span></p>
+                     </div>
+                   </div>
+                   <div class="right">
+                     <button type="button" class="btn-chat"><img src="assets/img/chat-icon.png" alt=""></button>
+                     <button type="button" class="btn-arrow"><svg xmlns="http://www.w3.org/2000/svg" height="24"
+                         viewBox="0 0 24 24" width="24">
+                         <path d="M0 0h24v24H0z" fill="none" />
+                         <path d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z" /></svg></button>
+                   </div>
+                 </div>
+
+               </div>
+               <p class="pt-4">No more Results found</p>
+             </div>
+
+           </div>
+         </div>
+
+       </div>
+     </div>
+   </div>
+ </div>
+</div>

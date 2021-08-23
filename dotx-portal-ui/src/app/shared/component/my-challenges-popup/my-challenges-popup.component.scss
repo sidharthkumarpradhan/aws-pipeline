@@ -1,0 +1,60 @@
+// VARIABLES
+
+$green: #16b400;
+
+.challenge-modal {
+
+  .modal-box {
+    width: unset;
+    box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.24);
+
+    .content-box {
+      display: block;
+      background-color: #fff;
+
+      .heading {
+        padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .info-container {
+          display: flex;
+
+          div {
+            display: flex;
+            align-items: center;
+
+            &:first-child {
+              margin-right: 20px;
+            }
+          }
+
+          div > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &:first-child {
+              margin-right: 5px;
+            }
+
+            img {
+              height: 35px;
+            }
+          }
+        }
+      }
+
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .completed {
+          color: $green;
+        }
+      }
+    }
+  }
+}

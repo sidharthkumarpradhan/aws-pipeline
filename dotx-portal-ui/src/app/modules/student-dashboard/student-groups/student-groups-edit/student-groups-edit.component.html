@@ -1,0 +1,517 @@
+<!-- <app-student-header [userInfo]="userInfo"></app-student-header> -->
+<section class="admin-container">
+    <div class="bottom-content">
+      <div class="container"><h2>Group</h2>
+        <p>Groups allow you to organize and share multiple Challenge.</p>
+        <form [formGroup]="creategroupForm" (ngSubmit)="saveGroup()">
+        <!-- Invite Buddies Start -->
+        <section class="invite-buddies mb-3 mb-md-4">
+            <app-loader *ngIf="isLoading || isLoader2"></app-loader>
+            <h2>{{ groupType }} Group</h2>
+            <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                <label>Group Name <span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <input
+                    type="text"
+                    class="form-control"
+                    maxlength="100"
+                    formControlName="group_name"
+                    [readonly]="fromPage === 'view'"
+                    [ngClass]="{
+                    'error-field': _uhs.isValidField(
+                        creategroupForm?.controls.group_name
+                    )
+                    }"
+                />
+                <app-control-messages
+                    [control]="creategroupForm?.controls.group_name"
+                    labelName="Group name"
+                >
+                </app-control-messages>
+                </div>
+                <!-- <div class="form-group">
+                <label>Select Challenge <span class="text-danger" *ngIf="!isViewMode">*</span></label>
+                <ng-container *ngIf="isViewMode">
+                    <input class="form-control" formControlName="topic_id" />
+                </ng-container>
+
+                <ng-container *ngIf="!isViewMode">
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="challenges" formControlName="topic_id"
+                    [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+                </ng-multiselect-dropdown>
+                    <app-control-messages
+                    [control]="creategroupForm?.controls.topic_id"
+                    labelName="Challenge"
+                    >
+                    </app-control-messages>
+                </ng-container>
+                </div> -->
+
+                <!-- Create Role Start -->
+                <section class="create-role-section mb-3 mb-md-4" *ngIf="fromPage !== 'view'">
+                <h2>{{roleText}} Role</h2>
+                <div class="card">
+                    <div class="card-body" formArrayName="roles">
+                    <div
+                        class="role-box"
+                        *ngFor="let item of roleFields.controls; let roleIndex = index"
+                        [formGroupName]="roleIndex"
+                    >
+                        <div class="role-img">
+                        <img src="assets/img/role-img.png" alt="" />
+                        </div>
+                        <div class="form-group mb-0">
+                        <input
+                            type="text"
+                            class="form-control"
+                            maxlength="50"
+                            formControlName="role_name"
+                            [readonly]="isRoleMode"
+                            [ngClass]="{
+                            'error-field': _uhs.isValidField(
+                                creategroupForm?.controls.role_name
+                            )
+                            }"
+                            placeholder="Type Role name here"
+                        />
+                        <app-control-messages
+                            [control]="creategroupForm?.controls.role_name"
+                            labelName="Role"
+                        >
+                        </app-control-messages>
+                        </div>
+                        <div class="custom-control custom-radio  custom-control-inline mr-3 ml-5" *ngIf="isViewMode">
+                          <input type="radio" id="{{'role' + roleIndex}}" 
+                          value="" (change)="onChangeRole(roleIndex)" [readonly] ="isRoleMode" [checked]="roleIndex == checkedIndex" name="role_assigned_to" class="custom-control-input" formControlName="role_assigned_to" >
+                          <label class="custom-control-label" for="{{'role' + roleIndex}}"></label>
+                        </div>
+                        <div class="form-group mb-0">
+                          <input
+                              type="text"
+                              class="form-control"
+                              hidden
+                              formControlName="group_role_id"
+                          />
+                          </div>
+                        <button *ngIf="roleIndex && !isViewMode" type="button" class="ml-2 btn btn-link"  ngbTooltip="Delete" (click)="deleteRole(roleIndex)">
+                        <img src="assets/img/icon-delete-dark.svg" alt="" />
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                        class="btn btn-link add-role"
+                        type="button"
+                        (click)="addRoleField()"
+                        *ngIf="!isViewMode && roleFields.controls.length < 4"
+                        >
+                        + Add more role
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                </section>
+                <!-- Create Role End -->
+
+                        <!-- Create Role view mode Start -->
+              <section class="create-role-section mb-3 mb-md-4" *ngIf="fromPage === 'view'">
+                          <h2>{{roleText}} Role</h2>
+                          <div class="card">
+                              <div class="card-body" formArrayName="roles">
+                              <div
+                                  class="role-box"
+                                  *ngFor="let item of roleFields.controls; let roleIndex = index"
+                                  [formGroupName]="roleIndex"
+                              >
+                                  <div class="role-img">
+                                  <img src="assets/img/role-img.png" alt="" />
+                                  </div>
+                                  <div class="form-group mb-0">
+                                  <input
+                                      type="text"
+                                      class="form-control"
+                                      maxlength="50"
+                                      formControlName="role_name"
+                                      [readonly]="isViewMode"
+                                      [ngClass]="{
+                                      'error-field': _uhs.isValidField(
+                                          creategroupForm?.controls.role_name
+                                      )
+                                      }"
+                                      placeholder="Type Role name here"
+                                  />
+                                  <app-control-messages
+                                      [control]="creategroupForm?.controls.role_name"
+                                      labelName="Role"
+                                  >
+                                  </app-control-messages>
+                                  </div>
+                                  <div class="custom-control custom-radio  custom-control-inline mr-3 ml-5" *ngIf="isViewMode">
+                                    <input type="radio" id="{{'role' + roleIndex}}" 
+                                    value="" (change)="onChangeRole(roleIndex)" [readonly] ="isViewMode" [checked]="roleIndex == checkedIndex" name="role_assigned_to" class="custom-control-input" formControlName="role_assigned_to" >
+                                    <label class="custom-control-label" for="{{'role' + roleIndex}}"></label>
+                                  </div>
+                                  <!-- <button *ngIf="roleIndex && !isViewMode" type="button" class="ml-2 btn btn-link"  ngbTooltip="Delete" (click)="deleteRole(roleIndex)"> -->
+                                  <!-- <img src="assets/img/icon-delete-dark.svg" alt="" /> -->
+                                  <!-- </button> -->
+                              </div>
+                              <!-- <div>
+                                  <button
+                                  class="btn btn-link add-role"
+                                  type="button"
+                                  (click)="addRoleField()"
+                                  *ngIf="!isViewMode && roleFields.controls.length < 4"
+                                  >
+                                  + Add more role
+                                  </button>
+                              </div> -->
+                              </div>
+                          </div>
+              </section>
+                          <!-- Create Role view mode End -->
+            </div>
+            </div>
+        </section>
+
+        <!-- Invite Buddies Start -->
+        <section class="invite-buddies mb-3 mb-md-4" *ngIf="!isViewMode">
+            <h2>Invite Buddies <span class="text-danger" *ngIf="!isViewMode">*</span></h2>
+            <div class="card">
+            <div class="card-body">
+
+            <div class="col-12 text-center gender-select" *ngIf="!editGroup">
+                <div class="custom-control custom-radio custom-control-inline mr-3" >
+                <input type="radio" id="radioctrlName11" value="invite" [checked]="isCheckInvite" name="skillIdId" (change)="onChange()"  class="custom-control-input">
+                <label class="custom-control-label" for="radioctrlName11">Invite buddies</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="radioctrlName44" value="all" name="skillIdId" (change)="onChange()" class="custom-control-input">
+                <label class="custom-control-label" for="radioctrlName44">Auto assign</label>
+                </div>
+            </div>
+
+            <div class="se-right" *ngIf="inviteShow">
+                <div class="dropdown search-buddies-dropdown">
+                 <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                 aria-haspopup="true" aria-expanded="false">
+                 Search by {{searchValue}}
+               </button>
+               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                 <a class="dropdown-item" (click)="searchBy('school')">by School </a>
+                 <a class="dropdown-item" (click)="searchBy('skill')">by Skill</a>
+                 <a class="dropdown-item" (click)="searchBy('age')">by Age</a>
+                 <a class="dropdown-item" (click)="searchBy('name')">by Name</a>
+                 <a class="dropdown-item" (click)="searchBy('class')">by Class</a>
+               </div>
+                </div>
+                <div class="form-group">
+                 <div class="input-group mb-3">
+                     <input type="text" class="form-control" [(ngModel)]="searchName" (change)="onChangeValue($event.target.value)">
+                     <div class="input-group-append">
+                       <button class="btn btn-outline-secondary search_buddies" style="width: 70%;" type="button" 
+                        (click)="searchByCatagory()">
+                        <img src="assets/img/search-icon2.png"  style="width: 60%;height: auto;" />
+                         </button>
+                     </div>
+                   </div>
+              </div>
+            
+             </div>
+                <!-- Tab Start -->
+               <div class="tab-content" id="pills-tabContent" *ngIf="inviteShow">
+                <!-- Private TAB START -->
+                <div
+                    class="tab-pane fade show active"
+                    id="pills-private"
+                    role="tabpanel"
+                    aria-labelledby="pills-private-tab"
+                >
+                    <div class="email-block clearfix mb-4">
+                    <div class="email-text float-left">
+                        <h4>Buddies Email</h4>
+                        <p>Buddies join using their email.</p>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <tag-input
+                        [disable]="isViewMode"
+                        [formControlName]="'assignments'"
+                        onTextChangeDebounce="100"
+                        [placeholder]="'Invite by email address...'"
+                        [secondaryPlaceholder]="'Invite by email address...'"
+                        [maxItems]='4'
+                        
+                        [editable]='true'
+                        [separatorKeyCodes]="[32,188,186,13,9, 'TAB']"
+                        [clearOnBlur]="true" 
+                        [addOnPaste]="true"
+                        [addOnBlur]="true"
+                        (onAdd)="onAdded($event)"
+                        (onRemove)="onItemRemoved($event)"
+                       
+                    >
+                        <tag-input-dropdown
+                        [focusFirstElement]="false"
+                        [keepOpen]="!isViewMode"
+                        [displayBy]="'user_email'"
+                        [identifyBy]="'user_email'"
+                        [minimumTextLength]="1"
+                        [autocompleteItems]="buddiesList"
+                        >
+                        </tag-input-dropdown>
+                    </tag-input>
+                    <div class="text-right small">**Allowed maximum 4  emails only</div>
+
+                    </div>
+                </div>
+                <!-- Private TAB END -->
+                </div>
+
+                <div class="col-6">
+                  <div class="buddies-results">
+                    <div class="buddies-results-list" *ngFor="let user of presentUsers; let i = index;">
+                     <div class="buddies-result-single">
+                        <div class="left">
+                          <div class="img">
+                            <img src="{{filePathLocation}}{{user?.avatar_image_file ? user?.avatar_image_file : 'assets/img/friend-' + i + '.png'}}" alt=""  (error)="onImgError($event)"/>
+                              <!-- <img [src]="'assets/img/friend-'+i+'.png'" alt="user"> -->
+                          </div>
+                          <div class="buddies-search-info">
+                            
+                            <p><strong>{{user?.display_name ? user?.display_name : user?.user_email}}</strong><span *ngIf="user?.class_details"> {{user?.class_details}} Grade, </span><span class="text-success" *ngIf="user?.school_name"> 
+                                  {{user?.school_name}}</span></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="login-bottom"  *ngIf="!inviteShow">
+                  <div class="form-group">
+                    <!-- <h3>Invite all</h3> -->
+                  </div>
+                </div>
+             </div>
+            </div>
+        </section>
+
+        <!-- Invite Buddies End -->
+
+        <!-- Add comments start -->
+       
+        <!-- Add comments end -->
+
+               <!-- Add comments start -->
+             <div class="challenge-bottom" *ngIf="isViewMode">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="pills-details-tab" data-toggle="pill" href="#pills-details" role="tab"
+                      aria-controls="pills-details" aria-selected="true">Details</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <!-- Challenge  Details Tab Start -->
+                  <div class="tab-pane fade show active" id="pills-details" role="tabpanel"
+                    aria-labelledby="pills-details-tab">
+    
+                    <div class="challenge-member-info">
+                      <div class="accordion " id="accordionExample">
+                        <div id="headingOne">
+                          <div class="form-row">
+                            <div class="col-8">
+                              <h2>{{ st_details.display_name }} </h2>
+                              <div class="comments" *ngIf="commentsRetrieved!==undefined">
+                                <h6 *ngIf="commentsRetrieved?.length<1">No Comments found</h6>
+                                <ul *ngIf="commentsRetrieved?.length>0">
+                                   <li *ngFor="let post of commentsRetrieved; let i = index;">
+                                     <div class="row">
+                                      <div class="col-6 col-sm-10 comment-container">
+                                         <p class="mb-2">{{post.response_description}} - <b>{{post.display_name}}</b></p>
+                                         <p class="date-view-text">{{post.created_date | date: 'medium'}} .<span> {{post.likes_count}}
+                                            <b [ngClass]="post.rating_value=='Like' ? 'ratinglike_' : 'like_'" [class.disabled]="post.rating_value!='None'" 
+                                            (click)="commentLike('Like')">Like</b></span> .<span> {{post.dislikes_count}}
+                                           <b [ngClass]="post.rating_value=='Dislike' ? 'ratingdislike_' : 'dislike_'"  [class.disabled]="post.rating_value!='None'"  (click)="commentLike('Dislike')">Dislike</b>
+                                          </span></p>
+                                      </div>
+                                      <div class="col-6 col-sm-2 comment-attachment" *ngIf="(post.attachment_file_path !== null && post.attachment_file_path !== '')">
+                                        <a (click)="openDocument('content', post.attachment_file_path)">Attachment</a>
+                                       </div>
+                                      </div>
+                                   </li>
+                                </ul>
+                             </div>
+                             
+                            </div>
+                            <div class="col-4">
+                           
+                              <button class="btn-arrow" type="button" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="true" aria-controls="collapseOne"></button>
+                            </div>
+                          </div>
+                        </div>
+    
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                          data-parent="#accordionExample">
+                          <h3>{{commentsRetrieved?.length}} Comments</h3>
+                          <form [formGroup]="commentForm">
+                            <div class="form-group">
+                             <div class="comments-box">
+                                <div class="comments-box-top">
+                                    <img class="upload-icon" src="assets/img/upload-icon.png" [class.disabled]="fromPage === 'view'" alt="" (click)="onUpload($event, 'challenge_comment')">
+                                   
+                                    <input type="text" class="form-control" placeholder="Write your comment" [ngClass]="{ 'is-invalid': commentForm.controls['response_description'].errors }"
+                                    (keydown)="wordCounter()"  [readonly]="fromPage === 'view'" #text formControlName="response_description">
+                                    <button class="btn btn-send" type="button" [disabled]="fromPage === 'view'" (click)="saveComment()"></button>
+                                    <div class="invalid-feedback" *ngIf="commentForm.controls['response_description'].errors">
+                                        <!-- <div *ngIf="commentForm.controls['comment'].errors.required">Comment is required</div> -->
+                                        <div *ngIf="commentForm.controls['response_description'].errors.minlength">Comment must be at least 6 characters</div>
+                                        <div *ngIf="commentForm.controls['response_description'].errors.maxlength">Comment must be at most 100 characters</div>
+                                    </div>
+                                </div>
+                              
+                              </div>
+                            </div>
+                          <i class='fas fa-file iconRemove position-relative' *ngIf="FileUploaded"><span>&nbsp;</span> <span class="fileLink" (click)="openFile()">file</span>
+                            <div class="close delete_mediafile" (click)="deleteFile($event)">
+                              <span aria-hidden="true">&times;</span>
+                            </div>
+                          </i>
+                          </form>
+                            <div class="comments-box-bottom">  
+                              Commenting as <span>{{st_details.display_name}}</span> <span class="float-right">{{words ? words : 0}}/500</span>
+                            </div>
+                          </div>
+                        </div>
+    
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Challenge  Details Tab End -->
+                
+              </div>
+            <!-- Add comments end -->
+
+        <div class="d-flex justify-content-end">
+            <img src="assets/img/inline_spinner.svg" *ngIf="isFormSubmitted" alt="" />
+            <button
+            class="btn btn-outline-danger"
+            type="button"
+            [disabled]="isFormSubmitted" (click)="backToGroups()"
+            >
+            Back
+            </button>
+            <button class="btn btn-danger ml-3" type="submit" *ngIf="fromPage !== 'view'" [disabled]="isFormSubmitted || isLoading">
+            {{ groupType === 'Edit' ? 'Update' : 'Save' }} Group
+            </button>
+        </div>
+        </form>
+        </div>
+       </div>
+    </section> 
+
+
+   <!-- Modal -->
+   <div class="modal fade" id="buddiesSearchModal4" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="buddiesSearchModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-xl">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="buddiesSearchModalLabel">My Space</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           Close <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <div class="buddied-search-result-wrapper">
+           <div class="form-row title-bar">
+             <div class="col-12">
+               <button (click)="backToChallenge()" class="btn-back" type="button" ><img src="assets/img/back-arrow.png" alt=""></button>
+               <button class="btn-search" type="button"><img src="assets/img/search-icon2.png" alt=""></button>
+               <span class="search-text">Search results</span>
+             </div>
+           </div>
+  
+           <div class="row">
+             <div class="col-4 border-right">
+          
+              <div class="form-group">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control"  [(ngModel)]="searchName" (change)="onChangeValue($event.target.value)">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary search_buddies" style="width: 70%;" type="button" 
+                        (click)="searchByCatagory()">
+                        <img src="assets/img/search-icon2.png"  style="width: 60%;height: auto;" />
+                        </button>
+                    </div>
+                  </div>
+             </div>
+             
+               <div class="custom-control custom-radio mb-2">
+                 <input type="radio" class="custom-control-input" [checked]="isCheck === 'school'"  (click)="searchBy('school')" name="customRadioInline" id="searchSchool">
+                 <label class="custom-control-label" for="searchSchool">By School </label>
+               </div>
+               <div class="custom-control custom-radio mb-2">
+                 <input type="radio" class="custom-control-input" [checked]="isCheck === 'skill'"  (click)="searchBy('skill')" name="customRadioInline" id="searchSkill">
+                 <label class="custom-control-label" for="searchSkill">By Skill</label>
+               </div>
+               <div class="custom-control custom-radio mb-2">
+                 <input type="radio" class="custom-control-input" [checked]="isCheck === 'class'"  (click)="searchBy('class')" name="customRadioInline" id="searchClass">
+                 <label class="custom-control-label" for="searchClass">By Class</label>
+               </div>
+               <div class="custom-control custom-radio mb-2">
+                 <input type="radio" class="custom-control-input" [checked]="isCheck === 'age'"  (click)="searchBy('age')" name="customRadioInline" id="searchAge">
+                 <label class="custom-control-label" for="searchAge">By Age</label>
+               </div>
+               <div class="custom-control custom-radio mb-2">
+                 <input type="radio" class="custom-control-input" [checked]="isCheck === 'name'"  (click)="searchBy('name')" name="customRadioInline" id="searchName">
+                 <label class="custom-control-label" for="searchName">By Name</label>
+               </div>
+  
+               <div>
+                  <button class="btn btn-outline-primary btn-lg mt-3" type="button" (click)="saveEmails()">Next</button> 
+                 </div>
+             </div>
+  
+             
+  
+             <div class="col-8">
+               <div class="buddies-results">
+                 <p>{{searchRes?.length}} Results found with {{searchValue}} name</p>
+                 <div class="buddies-results-list" *ngFor="let user of searchRes | slice : 0: 6; let i = index;">
+                  <div class="buddies-result-single"  *ngIf='user?.display_name'>
+                     <div class="left">
+                       <div class="custom-control custom-checkbox" style="align-self: center;">
+                          <input type="checkbox" class="custom-control-input" id="{{user.user_id}}"
+                          [checked]="user.selected" (change)="checkUser(user, $event)">
+                          <label class="custom-control-label" for="{{user.user_id}}" ></label>
+                       </div>
+                       <div class="img">
+                           <img [src]="'assets/img/friend-'+i+'.png'" alt="user">
+                       </div>
+                       <div class="buddies-search-info">
+                         <p><strong>{{user?.display_name}}</strong> {{user?.class_details}} Grade, <span class="text-success"> 
+                             {{user?.school_name}}</span></p>
+                       </div>
+                     </div>
+                     <div class="right">
+                       <button type="button" class="btn-chat"><img src="assets/img/chat-icon.png" alt=""></button>
+                       <button type="button" class="btn-arrow"><svg xmlns="http://www.w3.org/2000/svg" height="24"
+                           viewBox="0 0 24 24" width="24">
+                           <path d="M0 0h24v24H0z" fill="none" />
+                           <path d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z" /></svg></button>
+                     </div>
+                   </div>
+                 
+                 </div>
+                 <p class="pt-4">No more Results found</p>
+               </div>
+  
+             </div>
+           </div>
+  
+         </div>
+       </div>
+     </div>
+   </div>
+  </div>

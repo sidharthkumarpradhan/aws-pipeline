@@ -1,0 +1,78 @@
+body{ width: 100%; background:url('../img/body-line-bg.svg') no-repeat center 650px #fcfcfc }
+
+
+/* BANNER CSS START */
+.banner-section{ width: 100%; padding: 140px 0 0; background:url('../img/header-bg.png') no-repeat center bottom #fff; }
+.bannet-left h2{ font:700 48px/61px 'Poppins', sans-serif; color: #3C4852; padding: 0 0 42px; margin: 0 }
+.bannet-left p{ font:normal 21px/30px 'Metropolis', sans-serif; color: #5F6372; padding: 0 0 12px; margin: 0 }
+.bannet-left p strong{ font-weight: bold; color: #3C4852 }
+.bannet-left .btn{ padding-left: 60px; padding-right: 60px }
+.banner-section .login-bottom{ padding: 28px }
+.banner-section .login-bottom:before{ display: none }
+.login-right{position: relative;}
+.login-right:before{ width: 410px; height: 314px; background: url('../img/login-book-img.png') no-repeat 0 0; position: absolute; bottom: 0; left: 0px; top: 0; z-index: 1; content: '' }
+
+
+/* LEARNING JOURNEY SECTION CSS START */
+.learning-journey-section{ width: 100%; display: block; padding: 258px 0; background: url('../img/learning-journey-bg.png') no-repeat center bottom }
+.learning-journey-content{ padding: 48px 32px 68px 144px;}
+.learning-journey-content-wrapper{ max-width: 644px;  margin: 0 auto; border-radius: 8px; position: relative; background:url('../img/learning-journey-content-bg.svg') no-repeat left bottom #fff; box-shadow: 0 0 13px rgba(0,0,0,0.24)  }
+.learning-journey-content-wrapper:before{ width: 263px; height: 229px; background: url('../img/learning-journey-img.png') no-repeat 0 0; position: absolute; bottom: 0; left: -100px; z-index: 9; content: '' }
+.learning-journey-content:after{ width: 129px; height: 145px; background: url('../img/learning-journey-right-bg.png') no-repeat 0 0; position: absolute; bottom: 0; right:-129px; z-index: 9; content: '' }
+.learning-journey-content:before{ width: 117px; height: 51px; background: url('../img/learning-journey-left-bg.png') no-repeat 0 0; position: absolute; bottom: 0; left:-217px; z-index: 9; content: '' }
+.learning-journey-content h2{ text-align: right; font-weight: 500; font-size: 28px; line-height: 30px; padding: 0; margin: 0 0 30px; color: #3C4852 }
+.learning-journey-content p{ text-align: right; font:500  20px/29px 'Metropolis', sans-serif; padding: 0; margin: 0 0 30px; color: #3C4852 }
+
+
+/* LIST OPTION SECTION CSS START */
+.list-option-section{ width: 100% }
+.list-box{ width: calc(33.33% - 20px); margin: 10px; border-radius: 13px; box-shadow: 0 0 16px rgba(0,0,0,0.07); background-color: #fff; float: left; outline: none !important }
+.list-box:hover{ box-shadow: 0 0 16px rgba(0,0,0,0.1) }
+.list-box .icon{ width: 180px; height: 180px; position: relative; margin:-90px auto 0; display: block }
+.list-box .s-logo{ width: 72px; height: 18px; display: block; margin:27px auto }
+.list-box h3{ text-align: center; min-height: 92px; color: #58585B; font-size: 30px; line-height: 36px; font-weight: 500; padding: 0 15px 20px; margin: 0 }
+.list-box p{ text-align: center; letter-spacing: -0.08px; color: #454545; font-size: 20px; line-height: 27px; font-weight: 400; padding: 0 15px; margin: 0 }
+.list-box .btn{ height: 56px; font-size: 20px; border-radius:0 0 13px 13px; margin-top: 58px }
+.list-option-section .slick-list{ padding-top: 100px }
+.list-option-section .slick-next{ width: 49px; height: 356px; margin-top: 24px; right: -49px; box-shadow: 0 0 8px rgba(0,0,0,0.07); background: url('../img/next-arrow.png') no-repeat center #fff; background-size: 28px; text-indent: -200000px; border-radius: 8px }
+.list-option-section .slick-prev{ width: 49px; height: 356px; margin-top: 24px; left: -49px; box-shadow: 0 0 8px rgba(0,0,0,0.07); background: url('../img/prev-arrow.png') no-repeat center #fff; background-size: 28px; text-indent: -200000px; border-radius: 8px }
+.list-option-section .slick-prev:hover, .list-option-section .slick-prev:focus{ background: url('../img/prev-arrow-hover.png') no-repeat center  #DB4744 }
+.list-option-section .slick-next:hover, .list-option-section .slick-next:focus{ background: url('../img/next-arrow-hover.png') no-repeat center  #DB4744 }
+
+/* IMAGE SECTION CSS START */
+.img-section{ padding:126px 0 45px }
+
+/* BOOK SECTION CSS START */
+.book-section{ padding-bottom: 80px }
+.book-section h3{ font-weight: 700; font-size: 31px }
+
+
+/* TESTIMONIALS SECTION CSS START */
+/* .testimonial-section{ padding-bottom: 75px }
+.testimonial-section .t-slides{ padding: 0 100px; position: relative; padding-top: 65px }
+.testimonial-section .t-slides:before{ width: 55px; height: 43px; position: absolute; top: 0; left: 50%; margin-left: -27px; content: ''; opacity: 0.6; background: url('../img/quotes-icon.svg') no-repeat center top; padding-top: 50px; background-size: 55px }
+.testimonial-section .t-slides h5{ font-size: 20px; line-height: 30px }
+.testimonial-section .t-slides p strong{ display: block }
+.slick-next{ width: 41px; height: 70px; background:url('../img/next-arrow-red.png') no-repeat 0 0; text-indent: -200000px; background-size: 26px  }
+.slick-next:hover, .slick-next:focus{ background:url('../img/next-arrow-red.png') no-repeat 0 0; opacity: 0.7; background-size: 26px  }
+.slick-prev{ width: 41px; height: 70px; background:url('../img/prev-arrow-red.png') no-repeat 0 0; text-indent: -200000px; background-size: 26px  }
+.slick-prev:hover, .slick-prev:focus{ background:url('../img/prev-arrow-red.png') no-repeat 0 0; opacity: 0.7; background-size: 26px  }
+ */
+
+/* Daily Dot Slider Start */
+/* .daily-dot-slider-wrapper{ padding: 130px 50px 0; position: relative; background: #fff; border-bottom: 14px solid #e7e7e7 }
+.btn-daily-dot-back{  top: 50px; left: 0; font-size: 36px; font-family: 'Poppins', sans-serif; color: #9FB4C4; background-color: inherit; border: inherit; outline: none }
+.btn-daily-dot-back img{ width: 44px; margin-right: 36px }
+.btn-daily-dot-back:focus{ outline: none }
+.btn-daily-dot-back:hover{ color: rgb(106, 121, 133)    }
+.daily-dot-slider{ padding: 0; } 
+.daily-dot-slider h3{ font-size: 36px; line-height: 42px; font-family: 'Poppins', sans-serif; color: #5F6372; background-color: inherit; padding: 0; margin:0 0 20px }
+.daily-dot-slider p{ font-size: 18px; line-height: 29px; font-weight: 500; font-family: 'Poppins', sans-serif; letter-spacing: -0.15px; color: #5F6372; background-color: inherit; padding: 0; margin:0 0 20px }
+.daily-dot-slider .btn-primary{ padding: 0 55px; font-size: 22px; font-family: 'Chalkboard'; font-weight: 500 }
+.dd-slides{ padding-top: 154px; padding-bottom: 74px; background-size: contain !important; background-position: right top !important; background-repeat: no-repeat !important }
+.dd-slides:focus{ outline: none !important; border: none }
+.daily-dot-slider .slick-dots{ bottom: 0 }
+.daily-dot-slider .slick-dots li{ margin: 0 20px }
+.daily-dot-slider .slick-dots li button:before{ width: 22px; height: 22px; font-size: 46px; border: 1px solid #07304C; border-radius: 100% }
+
+ */

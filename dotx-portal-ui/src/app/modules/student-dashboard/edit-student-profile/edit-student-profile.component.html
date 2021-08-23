@@ -1,0 +1,111 @@
+<!-- Student Profile Edit Profile Modal Start -->
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="modal-box my-space student-dashboard">
+  <div class="title-bar">
+    <p class="title">My Space</p>
+    <button (click)="closeModal()" class="btn-close">
+      <img alt="" src="assets/img/close.png"/>
+    </button>
+  </div>
+  <div class="content-box">
+    <div class="left-side">
+      <div class="section-1">
+        <div class="img-container img-container-add-edit-popup-section">
+          <img (error)="onImgError($event)" [src]="fileName" alt="Image"/>
+          <div class="info-container">
+            <p class="name">{{userDetails?.display_name}}</p>
+            <p class="age-grade">{{age}} years old, {{userDetails?.class_details}} grade,</p>
+            <p class="school">{{userDetails?.school_name}}</p>
+            <button class="btn-video" *ngIf="!userDetails.user_bio_video_file">
+              <img src="assets/img/my-space/video-camera.png" alt=""/>
+              <p class="bio-video-text">Bio video</p>
+              <p class="bio-add-text" (click)="uploadBioVideo()">+ <span>Add</span></p>
+            </button>
+            <button class="btn-video" *ngIf="userDetails.user_bio_video_file">
+              <img src="assets/img/my-space/video-camera.png" alt=""/>
+              <p class="bio-video-text bio-link"
+                 (click)="openBioVideo(content, userDetails.user_bio_video_file, 'mp4')">Bio video</p>
+              <p class="bio-video-text bio-edit" (click)="uploadBioVideo()"></p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="side-bar">
+        <div (click)="currentPage='personalInfo'" class="sidebar-item active">
+          <img alt="" src="assets/img/my-space/personal-details.png"/>
+          <p>About Me</p>
+        </div>
+        <div (click)="currentPage='userAvatar'" class="sidebar-item">
+          <img alt="" src="assets/img/my-space/avatar-icon.png"/>
+          <p>My Avatar</p>
+        </div>
+        <div (click)="currentPage='personalityQuiz'" class="sidebar-item">
+          <img alt="" src="assets/img/my-space/quiz-icon.png"/>
+          <p>Personality Quiz</p>
+        </div>
+        <div (click)="currentPage='talents'" class="sidebar-item">
+          <img alt="" src="assets/img/my-space/sidebar-4.png"/>
+          <p>My Talents</p>
+        </div>
+        <div (click)="currentPage='favourites'" class="sidebar-item">
+          <img alt="" src="assets/img/my-space/sidebar-5.png"/>
+          <p>My Favourites</p>
+        </div>
+        <div (click)="currentPage='resetPassword'" class="sidebar-item">
+          <img alt="" src="assets/img/my-space/sidebar-6.png"/>
+          <p>Reset Password</p>
+        </div>
+      </div>
+    </div>
+    <div class="right-side">
+      <div *ngIf="currentPage === 'personalInfo'" class="personal-info-tab">
+        <app-personal-info [userData]="userDetails" (profileUpdated)="userInfoUpdate($event)"></app-personal-info>
+      </div>
+      <div *ngIf="currentPage === 'userAvatar'" class="my-avatar-tab">
+        <div class="title-section">
+          <h4><img alt="Badges" src="assets/img/my-avatar-icon.png"> My Avatar</h4>
+          <p>See your Personal details</p>
+          <hr>
+        </div>
+        <app-avatar [userAvatar]="fileName" [userData]="userDetails" (avatarUpdate)="avatarUpdate($event)"></app-avatar>
+      </div>
+      <div *ngIf="currentPage === 'personalityQuiz'" class="personal-info-tab">
+        <app-personality-quiz ></app-personality-quiz>
+      </div>
+      <div *ngIf="currentPage === 'talents'" class="personal-info-tab">
+        <app-talents-favourites [page]="'Talents'" [userData]="userDetails"></app-talents-favourites>
+      </div>
+      <div *ngIf="currentPage === 'favourites'" class="personal-info-tab">
+        <app-talents-favourites [page]="'Favourites'" [userData]="userDetails"></app-talents-favourites>
+      </div>
+      <div *ngIf="currentPage === 'resetPassword'" class="reset-password-tab">
+        <div class="title-section">
+          <h4><img alt="Badges" src="assets/img/my-avatar-icon.png"> Reset Password</h4>
+          <p></p>
+          <hr>
+        </div>
+        <app-password></app-password>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-body d-flex justify-content-center">
+    <ng-container *ngIf="fileType === 'video'">
+      <video width="100%" height="100%" controls>
+        <source [src]="filePath" [type]="mediaType">
+        Your browser does not support the video tag.
+      </video>
+    </ng-container>
+    <ng-container *ngIf="fileType === 'audio'">
+      <audio controls>
+        <source [src]="filePath" [type]="mediaType">
+        Your browser does not support the audio tag.
+      </audio>
+    </ng-container>
+    <ng-container *ngIf="fileType === 'image'">
+      <img [src]="filePath" class="mw-300p" alt="image not found"/>
+    </ng-container>
+  </div>
+</ng-template>

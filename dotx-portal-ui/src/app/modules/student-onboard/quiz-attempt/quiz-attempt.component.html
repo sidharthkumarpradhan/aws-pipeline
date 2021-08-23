@@ -1,0 +1,148 @@
+<section class="quiz-form">
+    <span class="x-small" *ngIf="!stepItems">
+        <app-spinner></app-spinner>
+      </span>
+    <ng-container *ngIf="showQuizCard">
+    <ng-container
+        *ngFor="let form of formContent; let i = index; trackBy: trackByFn"
+    >
+        <form [formGroup]="quizForm"
+        *ngIf="i === activeStepIndex || formContent.length === 1"
+        >
+        <h5 class="text-center quiz-question"><img src="assets/img/clock-icon.png" alt="avatar"> {{formContent[i]?.quiz_description}}</h5>
+        <!-- <ul class="answer-list mb-3 mb-md-5">
+
+            <li *ngIf="formContent[i]?.option1">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option1" name="option" [value]="formContent[i]?.option1" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option1">{{formContent[i]?.option1}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option2">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option2" name="option" [value]="formContent[i]?.option2" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option2">{{formContent[i]?.option2}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option3">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option3" name="option" [value]="formContent[i]?.option3" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option3">{{formContent[i]?.option3}}</label>
+                </div>
+            </li>
+
+            <li *ngIf="formContent[i]?.option4">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option4" name="option" [value]="formContent[i]?.option4" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option4">{{formContent[i]?.option4}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option5">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option5" name="option" [value]="formContent[i]?.option5" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option5">{{formContent[i]?.option5}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option6">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option6" name="option" [value]="formContent[i]?.option6" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option6">{{formContent[i]?.option6}}</label>
+                </div>
+            </li>
+
+            <li *ngIf="formContent[i]?.option7">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option7" name="option" [value]="formContent[i]?.option7" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option7">{{formContent[i]?.option7}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option8">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option8" name="option" [value]="formContent[i]?.option8" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option8">{{formContent[i]?.option8}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option9">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option9" name="option" [value]="formContent[i]?.option9" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option9">{{formContent[i]?.option9}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option10">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option10" name="option" [value]="formContent[i]?.option10" [(ngModel)]="formContent[i]['quiz_response']">
+                    <label class="custom-control-label" for="option10">{{formContent[i]?.option10}}</label>
+                </div>
+            </li> -->
+            <!-- <li *ngIf="formContent[i]?.option2" [ngClass]="{'active':active == formContent[i]?.option2}">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="option1"  [name]="index"  [value]="answer" [(ngModel)]="answers[index]">
+                    <label class="custom-control-label" for="option1">{{formContent[i]?.option2}}</label>
+                </div>
+            </li>
+            <li *ngIf="formContent[i]?.option3" [ngClass]="{'active':active == formContent[i]?.option3}">
+                <a>{{formContent[i]?.option3}}</a>
+            </li>
+            <li *ngIf="formContent[i]?.option4" [ngClass]="{'active':active == formContent[i]?.option4}"><a>{{formContent[i]?.option4}}</a></li>
+            <li *ngIf="formContent[i]?.option5" [ngClass]="{'active':active == formContent[i]?.option5}"><a>{{formContent[i]?.option5}}</a></li>
+            <li *ngIf="formContent[i]?.option6" [ngClass]="{'active':active == formContent[i]?.option6}"><a>{{formContent[i]?.option6}}</a></li>
+            <li *ngIf="formContent[i]?.option7" [ngClass]="{'active':active == formContent[i]?.option7}"><a>{{formContent[i]?.option7}}</a></li>
+            <li *ngIf="formContent[i]?.option8" [ngClass]="{'active':active == formContent[i]?.option8}"><a>{{formContent[i]?.option8}}</a></li>
+            <li *ngIf="formContent[i]?.option9" [ngClass]="{'active':active == formContent[i]?.option9}"><a>{{formContent[i]?.option9}}</a></li>
+            <li *ngIf="formContent[i]?.option10"  [ngClass]="{'active':active == formContent[i]?.option10}"><a>{{formContent[i]?.option10}}</a></li> -->
+        <!-- </ul>   -->
+
+        <ul class="answer-list mb-3">
+            <li *ngFor="let item of options; let i = index">
+              <span class="text-violet d-flex">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="{{item.option}}"
+                   [checked]="item.selected" (change)="checkItem(item.option, i, $event)">
+                  <label class="custom-control-label" for="{{item.option}}" ></label>
+                </div>
+                <span style="margin:auto; font-size: 14px;"> {{item.option}}</span>
+                
+              </span>
+            </li>
+          </ul>
+
+          <div class="form-group" *ngIf="enableTextBox">
+            <textarea type="text" class="form-control" formControlName="others" (change)="speicfyOthers()"
+            placeholder="Specify answer"></textarea>
+            <app-control-messages [control]="quizForm?.controls.others" labelName="Answer">
+            </app-control-messages>
+          </div>
+
+        <div class="button-container d-flex" [class.justify-content-end]="!activeStepIndex"
+        [class.justify-content-between]="activeStepIndex">
+        <button
+            type="button" class="btn btn-secondary btn-save-md"
+            [class.d-none]="!activeStepIndex"
+            (click)="backTo()"
+        >Previous</button>
+
+        <div>
+            <button type="button" *ngIf="activeStepIndex !== stepItems - 1" class="btn btn-link btn-sm" (click)="goToStep('next')">skip</button>
+            <img src="assets/img/inline_spinner.svg" *ngIf="isSubmit" alt="" />
+            <button type="button" class="btn btn-danger btn-save-md" (click)="save(activeStepIndex)"
+            [ngClass]="{'disabledTab': isSubmit}" [disabled]="isSubmit">
+                Save <ng-container  *ngIf="activeStepIndex !== stepItems - 1">& Continue</ng-container>
+            </button>
+        </div>
+
+        </div>
+        </form>
+    </ng-container>
+    </ng-container>
+    <div class="login-bottom profile-compleated-bg" *ngIf="!showQuizCard">
+        <div class="text-center">
+          <img class="mb-3 mb-md-5" src="assets/img/success-img.png" alt="">
+          <p class="mb-3 mb-md-5"><span>Yay!</span> Your Quiz completed.</p>
+        </div>
+        <div class="form-group">
+          <button type="button" (click)="goToQuiz()"
+            class="btn btn-success btn-block btn-d-block">Edit Personality Quiz</button>
+        </div>
+    </div>
+</section>
+  

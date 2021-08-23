@@ -1,0 +1,69 @@
+<form [formGroup]="createAvatarForm" (ngSubmit)="saveAvatar()">
+  <!--  <div class="row mb-3">-->
+  <!--    <div class="col-12 text-center gender-select">-->
+  <!--      <div class="custom-control custom-radio  custom-control-inline mr-3 custom-radio-lg">-->
+  <!--        <input type="radio" id="{{ctrlName1}}" value="Female" name="gender" class="custom-control-input" formControlName="gender" >-->
+  <!--        <label class="custom-control-label" for="{{ctrlName1}}">Female</label>-->
+  <!--      </div>-->
+  <!--      <div class="custom-control custom-radio custom-control-inline mr-3 custom-radio-lg">-->
+  <!--        <input type="radio" id="{{ctrlName2}}" value="Male" name="gender" class="custom-control-input" formControlName="gender" >-->
+  <!--        <label class="custom-control-label" for="{{ctrlName2}}">Male</label>-->
+  <!--      </div>-->
+  <!--      <div class="custom-control custom-radio custom-control-inline custom-radio-lg">-->
+  <!--        <input type="radio" id="{{ctrlName3}}" value="Other" formControlName="gender" name="gender" class="custom-control-input">-->
+  <!--        <label class="custom-control-label" for="{{ctrlName3}}">Other</label>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--  <div class="row errorGender">-->
+  <!--    <app-control-messages [control]="createAvatarForm?.controls.gender" labelName="Gender">-->
+  <!--    </app-control-messages>-->
+  <!--  </div>-->
+  <div class="upload-pic-wrapper d-flex justify-content-between mb-4">
+    <div class="up-left">
+      <p>Upload photo</p>
+      <figure class="upload-avatar-img position-relative">
+      <img [src]="userProfilePic" alt=""  (error)="onImgError($event)" />
+      <a class="img-edit-btn" (click)="openAvatarModal()"></a>
+      <input type="hidden" formControlName="avatar_image_file" />
+    </figure>
+    </div>
+    <div class="up-mid"><span>Or</span></div>
+    <div class="up-right">
+      <p>Select your avatar</p>
+      <ul class="avatar-list">
+
+        <!-- Female Avatar -->
+        <ng-container *ngIf="!createAvatarForm.get('gender').value || createAvatarForm.get('gender').value === 'Female'">
+          <li *ngFor="let avatar of femaleAvatars" (click)="selectAvatar(avatar)" [ngClass]="{'active': selectedAvatar == avatar}">
+            <a href="javascript:void(0)">
+              <img [src]="'assets/img/'+avatar" alt="" />
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- Male Avatars -->
+        <ng-container *ngIf="createAvatarForm.get('gender').value === 'Male'">
+          <li *ngFor="let avatar of maleAvatars" (click)="selectAvatar(avatar)" [ngClass]="{'active': selectedAvatar == avatar}">
+            <a href="javascript:void(0)">
+              <img [src]="'assets/img/'+avatar" alt="" />
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- Others Avatars -->
+        <ng-container *ngIf="createAvatarForm.get('gender').value === 'Other'">
+          <li *ngFor="let avatar of otherAvatars" (click)="selectAvatar(avatar)" [ngClass]="{'active': selectedAvatar == avatar}">
+            <a href="javascript:void(0)">
+              <img [src]="'assets/img/'+avatar" alt="" />
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <img src="assets/img/inline_spinner.svg" *ngIf="isFormSubmitted" alt="" />
+    <button type="submit" class="btn btn-danger btn-save" [ngClass]="{'disabledTab': isFormSubmitted}" [disabled]="isFormSubmitted">Save</button>
+  </div>
+</form>

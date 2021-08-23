@@ -1,0 +1,166 @@
+<ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a
+      class="nav-link active"
+      id="pills-users-tab"
+      data-toggle="pill"
+      href="#pills-users"
+      role="tab"
+      aria-controls="pills-users"
+      aria-selected="true"
+    >
+      <img src="assets/img/user-icon.png" alt="" />
+      <span>USERS</span></a
+    >
+  </li>
+  <!--  <li class="nav-item" role="presentation">-->
+  <!--    <a-->
+  <!--      class="nav-link"-->
+  <!--      id="pills-leader-board-tab"-->
+  <!--      data-toggle="pill"-->
+  <!--      href="#pills-leader-board"-->
+  <!--      role="tab"-->
+  <!--      aria-controls="pills-leader-board"-->
+  <!--      aria-selected="false"-->
+  <!--    >-->
+  <!--      <img src="assets/img/leader-board-icon.png" alt="" />-->
+  <!--      <span>LEADER BOARD</span>-->
+  <!--    </a>-->
+  <!--  </li>-->
+  <!--  <li class="nav-item" role="presentation">-->
+  <!--    <a-->
+  <!--      class="nav-link"-->
+  <!--      id="pills-dotcoin-tab"-->
+  <!--      data-toggle="pill"-->
+  <!--      href="#pills-dotcoin"-->
+  <!--      role="tab"-->
+  <!--      aria-controls="pills-dotcoin"-->
+  <!--      aria-selected="false"-->
+  <!--    >-->
+  <!--      <img src="assets/img/dotcoin-icon.png" alt="" />-->
+  <!--      <span>Dotcoin</span></a-->
+  <!--    >-->
+  <!--  </li>-->
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div
+    class="tab-pane fade show active"
+    id="pills-users"
+    role="tabpanel"
+    aria-labelledby="pills-users-tab"
+  >
+    <h2>Overview</h2>
+    <p>
+      See your achievement snapshot across learning and engagement activities
+    </p>
+    <h5>List of USERS</h5>
+    <div class="user-filter-options-wrapper d-flex">
+      <app-search [(ngModel)]="searchParam" name="searchParam"></app-search>
+      <button
+        class="btn btn-danger shadow create-btn ml-3"
+        type="button"
+        (click)="createUser()"
+      >
+        + ADD USER
+      </button>
+    </div>
+    <div class="table-responsive border my-3 mt-md-4">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th class="w-25" scope="col">User names</th>
+            <th class="w-17" scope="col">
+              <img src="assets/img/ph-no-icon.png" alt="" /> Phone Number
+            </th>
+            <th class="w-20" scope="col">
+              <img src="assets/img/email-icon.png" alt="" /> Email Address
+            </th>
+            <th class="w-15" scope="col">
+              <img src="assets/img/action-icon.png" alt="" /> Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="isLoading">
+            <td colspan="6" class="text-center">
+              <app-spinner></app-spinner>
+            </td>
+          </tr>
+          <ng-container
+            *ngIf="
+              usersList?.length &&
+              (usersList | tFilter: searchParam:dateFormatKeys) as result
+            "
+          >
+            <tr *ngFor="let user of result | pagination: page; let i = index">
+              <td class="font-weight-medium">
+                <img [src]="'assets/img/pic-' + i + '.png'" (error)="onImgError($event)" alt="" />
+                {{ user.display_name | titlecase }}
+              </td>
+              <td>{{ user.user_phone_num }}</td>
+              <td>{{ user.user_email }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-link"
+                    type="button"
+                    (click)="onView(user)"
+                  >
+                    View
+                  </button>
+                  <button
+                    class="btn btn-link"
+                    type="button"
+                    (click)="onEdit(user)"
+                  >
+                    Edit
+                  </button>
+                  <button *ngIf="userName !== user.user_email"
+                    class="btn btn-link"
+                    type="button"
+                    (click)="onDelte(user?.user_id)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="result.length === 0" class="text-center">
+              <td colspan="5">No Data Found</td>
+            </tr>
+          </ng-container>
+          <tr *ngIf="!usersList?.length && !isLoading">
+            <td colspan="5" class="text-center">No Data found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-container
+      *ngIf="
+        usersList?.length &&
+        (usersList | tFilter: searchParam:dateFormatKeys) as result
+      "
+    >
+      <app-pagination *ngIf="result?.length" [totalRecords]="result?.length" [(page)]="page"></app-pagination>
+    </ng-container>
+  </div>
+
+  <div
+    class="tab-pane fade"
+    id="pills-leader-board"
+    role="tabpanel"
+    aria-labelledby="pills-leader-board-tab"
+  >
+    <app-leader-board></app-leader-board>
+  </div>
+
+  <div
+    class="tab-pane fade"
+    id="pills-dotcoin"
+    role="tabpanel"
+    aria-labelledby="pills-dotcoin-tab"
+  >
+    <app-dot-coins></app-dot-coins>
+  </div>
+</div>

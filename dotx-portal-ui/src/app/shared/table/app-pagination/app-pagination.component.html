@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-between" *ngIf="totalRecords">
+  <div class="dataTables_info" >
+      <span class="d-none d-md-inline-block">Showing</span> {{ startIndex + 1 }} to {{ endIndex + 1 }} of {{ totalRecords }} <span class="d-none d-md-inline-block">entries</span>
+  </div>
+  <nav aria-label="page navigation" *ngIf="pageCount > 1" class="d-none d-md-block">  
+    <ul class="pagination">
+      <li class="page-item" [attr.disabled]="activePage === 1" [ngClass]="{ disabled: activePage === 1 }"  (click)="onClickFirstPage(1)"><a class="page-link" href="javascript:void(0);">First</a></li>
+      <li class="page-item" [attr.disabled]="activePage === 1" [ngClass]="{ hide: activePage === 1 }"  (click)="onClickPage(activePage - 1)"><a class="page-link" href="javascript:void(0);">Previous</a></li>  
+      <li class="page-item" [ngClass]="{'active': activePage === item}" *ngFor="let item of pages" (click)="onClickPage(item)"><a class="page-link" href="javascript:void(0);">{{item}}</a></li>  
+      <li class="page-item" [attr.disabled]="activePage === pageCount" [ngClass]="{ hide: activePage === pageCount }" (click)="onClickPage(activePage + 1)"><a class="page-link" href="javascript:void(0);">Next</a></li>
+      <li class="page-item" [attr.disabled]="activePage === pageCount" [ngClass]="{ disabled: activePage === pageCount }"  (click)="onClickLastPage(pageCount)"><a class="page-link" href="javascript:void(0);">Last</a></li>     
+    </ul>
+  </nav>
+
+  <nav aria-label="Page navigation " class="d-block d-md-none" *ngIf="pageCount > 1">
+    <ul class="m-pager">
+        <li [ngClass]="{ disabled: activePage === 1 }" (click)="onClickPage(activePage - 1)">
+            <a href="javascript:void(0)"><img src="assets/img/icon-left-white.svg" alt="Previous" /></a>
+        </li>
+        <li [ngClass]="{ disabled: activePage === pageCount }" (click)="onClickPage(activePage + 1)">
+            <a href="javascript:void(0)"><img src="assets/img/icon-right-white.svg" alt="Next" /></a>
+        </li>
+    </ul>
+  </nav>
+</div>

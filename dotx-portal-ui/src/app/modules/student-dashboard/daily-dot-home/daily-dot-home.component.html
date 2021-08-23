@@ -1,0 +1,554 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<!-- Daily Dot Slider Start -->
+<div class="daily-dot-slider-wrapper" *ngIf="DailyDots?.length > 0">
+    <div class="container-fluid" *ngIf="DailyDots?.length > 0">
+      <div class="row">
+        <div class="col-12">
+          <button routerLink="/main-route/student/home" type="button" class="btn-daily-dot-back"><img src="assets/img/back-arrow.png" alt=""> The Daily
+            Dot</button>
+        </div>
+      </div>
+    </div>
+    <!-- Slider Start -->
+    <div class="daily-dot-slider">
+      <div class="dd-slides" *ngFor="let item of DailyDots"
+       style="background: url('../../../../assets/img/daily-dot-image.jpg')">
+        <h3>{{item.record_description}}</h3>
+        <div class="row md-5">
+          <div class="col-7 col-md-3">
+            <div class="progress mb-5">
+              <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70"
+                aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+        </div>
+        <p>Complete the pending challenge</p>
+        <button class="btn btn-primary" type="button" (click)="onClickContinue(item)">Continue</button>
+    </div>
+
+    
+    </div>
+    <!-- Slider End -->
+  </div>
+  <!-- Daily Dot Slider End -->
+
+
+  <!-- Streak Section Start -->
+  <div class="streak-section" style="margin-top: 5%;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h2>Streak</h2>
+          <div class="row">
+
+            <div class="col-6 col-md-3">
+              <div class="streak-box streak-box-1 d-flex justify-content-center">
+                <div class="streak-box-inner">
+                  <!-- <button  class="btn-side-nav"> <img src="assets/img/side-nav-icon.png" alt=""></button> -->
+                  <h4>Daily Quote</h4>
+                  
+                    <!-- <canvas baseChart
+                                [data]="doughnutChartData1"
+                                [labels]="doughnutChartLabels1"
+                                [legend]="doughnutChartLegend"
+                                [colors]="colors1"
+                                [chartType]="doughnutChartType">
+                    </canvas> -->
+                    <img [src]="'assets/img/quote-image.jpg'" alt="" style="width: 100%;" />
+                    <span style="float: right;font-size: 24px;color: #aa2f2f;"><b>{{Quote}}</b></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="streak-box streak-box-2 d-flex justify-content-center">
+                <div class="streak-box-inner">
+                  <!-- <button class="btn-side-nav"> <img src="assets/img/side-nav-icon.png" alt=""></button> -->
+                  <h4>Daily Anecdote</h4>
+                  <!-- <canvas baseChart
+                                [data]="doughnutChartData2"
+                                [labels]="doughnutChartLabels2"
+                                [legend]="doughnutChartLegend"
+                                [colors]="colors2"
+                                [chartType]="doughnutChartType">
+                    </canvas> -->
+                    <img [src]="'assets/img/great-feeling-icon.png'" alt="" style="width: 100%;max-height: 75%;" />
+                    <span style="float: right;font-size: 24px;color: #539eff;"><b>{{Anectode}}</b></span>
+                  </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="streak-box streak-box-3 d-flex justify-content-center">
+                <div class="streak-box-inner">
+                  <!-- <button class="btn-side-nav"> <img src="assets/img/side-nav-icon.png" alt=""></button> -->
+                  <h4>Daily Poll</h4>
+                  <!-- <canvas baseChart
+                                [data]="doughnutChartData3"
+                                [labels]="doughnutChartLabels3"
+                                [legend]="doughnutChartLegend"
+                                [colors]="colors2"
+                                [chartType]="pieChartType">
+                    </canvas> -->
+                    <img [src]="'assets/img/poll9.png'" alt="" style="width: 100%;max-height: 75%;" />
+                    <span style="float: right;font-size: 24px;color: #26963e;"><b>{{Poll}}</b></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="streak-box streak-box-4 d-flex justify-content-center">
+                <div class="streak-box-inner">
+                  <!-- <button class="btn-side-nav"> <img src="assets/img/side-nav-icon.png" alt=""></button> -->
+                  <h4>Daily Gratitude</h4>
+                  <!-- <canvas baseChart
+                                [data]="doughnutChartData4"
+                                [legend]="doughnutChartLegend"
+                                [labels]="doughnutChartLabels4"
+                                [colors]="colors4"
+                                [chartType]="pieChartType">
+                    </canvas> -->
+                    <img [src]="'assets/img/women-img.png'" alt="" style="width: 100%; max-height: 75%;" />
+                    <span style="float: right;font-size: 24px;color: #592191;"><b>{{Gratitude}}</b></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Streak Section End -->
+
+
+    <!-- Daily Dot Bottom Content Start -->
+    <div class="daily-dot-bottom-content">
+        <!-- Daily Poll Section Start -->
+        <div class="daily-poll-section pb-5">
+          <div class="container-fluid">
+            <div class="row mb-4">
+              <div class="col-12 d-flex justify-content-between">
+                <h2>Daily Poll</h2>
+              <!--   <div class="right-filter">
+                  <div class="btn-group sort-by">
+                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                      Sort By
+                    </button> 
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">All</label>
+                      </div>
+                      <button class="dropdown-item" type="button">Completed</button>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                        <label class="custom-control-label" for="customCheck2">Pending</label>
+                      </div>
+                      <button class="dropdown-item" type="button">Monthly</button>
+                      <button class="dropdown-item" type="button">Weekly</button>
+                      <button class="dropdown-item" type="button">Last 4 days</button>
+                    </div>
+                  </div>
+                 <button class="btn btn-link" type="button">View All </button> 
+                </div>-->
+              </div>
+            </div>
+    
+            <div class="daily-poll-slider">
+              <!-- <button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="">Previous</button> -->
+            <!-- <ng-container *ngFor="let customCss of cssClasses">{{customCss}} -->
+             <div class="dp-slides time-flying-box" *ngFor="let poll of polls; let i = index">
+                 <!-- <p class="view-text">Views 8</p> -->
+                <figure>
+                  <img [src]="'assets/img/poll' + i + '.png'" alt="">
+                </figure>
+                <h6>{{poll?.record_description}}</h6>
+                <div class="other-options d-flex justify-content-between">
+                  <div class="left">
+                    <button class="btn onClick" id="poll" type='button'><img src="assets/img/continue-icon.png" alt=""
+                      (click)="onClickEdit(poll)"> Edit</button>
+                  </div>
+                </div>
+                <p class="mt-4" style="font-size: 12px;"> Date: {{poll?.record_date |  date: 'medium'}}</p>
+              </div>
+              <!-- <button class="slick-next slick-arrow" aria-label="Next" type="button" style="">Next</button> -->
+            <!-- </ng-container> -->
+            </div>
+    
+          </div>
+        </div>
+        <!-- Daily Poll Section End -->
+    
+    
+        <!-- Daily Gratitude Section Start -->
+        <div class="daily-poll-section mb-5">
+          <div class="container-fluid">
+            <div class="row mb-4">
+              <div class="col-12 d-flex justify-content-between">
+                <h2>Daily Gratitude</h2>
+                <div class="right-filter">
+                  <!-- <div class="btn-group sort-by">
+                     <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                      Sort By
+                    </button> 
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">All</label>
+                      </div>
+                      <button class="dropdown-item" type="button">Completed</button>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                        <label class="custom-control-label" for="customCheck2">Pending</label>
+                      </div>
+                      <button class="dropdown-item" type="button">Monthly</button>
+                      <button class="dropdown-item" type="button">Weekly</button>
+                      <button class="dropdown-item" type="button">Last 4 days</button>
+                    </div>
+                  </div> -->
+                  <!-- <button class="btn btn-link" type="button">View All </button> -->
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="da-slides" *ngFor="let anecdote of questions">
+              <figure>
+                <img src="assets/img/Anecdote-img.png" alt="">
+              </figure>
+              <h6>{{anecdote?.record_description}}</h6>
+              <div class="bottom-text">
+                <div class="avatar">
+                  <img src="assets/img/friend-1.png" alt="">
+                </div>
+                <div class="anecdote-info">
+                  <h5>{{anecdote?.created_by}}</h5>
+                  <p>Created Date: {{anecdote?.created_date |  date: 'medium'}}</p>
+                </div>
+              </div>
+            </div> -->
+    
+            <div class="daily-gratitude-slider">
+              <!-- <button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="">Previous</button> -->
+              <div class="dg-slides music-help-box" *ngFor="let journal of journals; let i = index">
+                <figure>
+                  <img [src]="'assets/img/journal-' + i + '.png'" alt="">
+                </figure>
+                <h6>{{journal?.record_description}}</h6>
+                 <div class="other-options d-flex justify-content-between">
+                  <div class="left">
+                    <button class="btn" type='button'><img src="assets/img/continue-icon.png" alt=""
+                      (click)="onClickEdit(journal)"> Edit</button>
+                   </div>
+                </div>
+                <p class="mt-4 ml-4" style="font-size: 12px;"> Date: {{journal?.record_date |  date: 'medium'}}</p>
+
+               </div>
+               <!-- <button class="slick-next slick-arrow" aria-label="Next" type="button" style="">Next</button> -->
+          </div>
+        </div>
+        <!-- Daily Gratitude Section End -->
+    
+    
+        <!-- Daily Anecdote Section Start -->
+        <div class="daily-anecdote-section">
+          <div class="container-fluid">
+            <div class="row mb-4">
+              <div class="col-12 d-flex justify-content-between">
+                <h2>Daily Anecdote</h2>
+               <!-- <div class="right-filter">
+                  <div class="btn-group sort-by">
+                     <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                      Sort By
+                    </button> 
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">All</label>
+                      </div>
+                      <button class="dropdown-item" type="button">Completed</button>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                        <label class="custom-control-label" for="customCheck2">Pending</label>
+                      </div>
+                      <button class="dropdown-item" type="button">Monthly</button>
+                      <button class="dropdown-item" type="button">Weekly</button>
+                      <button class="dropdown-item" type="button">Last 4 days</button>
+                    </div>
+                  </div>
+                   <button class="btn btn-link" type="button">View All </button> 
+                </div>-->
+              </div>
+            </div>
+    
+            <div class="daily-anecdote-slider">
+              <!-- <button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="">Previous</button> -->
+              <div class="da-slides" *ngFor="let anecdote of questions; let i = index">
+                <figure>
+                  <img [src]="'assets/img/poll' + i + '.png'" alt="">
+                </figure>
+                <h6>{{anecdote?.record_description}}</h6>
+                <div class="other-options d-flex justify-content-between">
+                  <div class="left">
+                    <button class="btn" type='button'><img src="assets/img/continue-icon.png" alt=""
+                      (click)="onClickEdit(anecdote)"> Edit</button>
+                   </div>
+                </div>
+                <div class="bottom-text">
+                  <div class="anecdote-info">
+                    <h5> Date: {{anecdote?.record_date |  date: 'medium'}}</h5>
+                  </div>
+                </div>
+              </div>
+              <!-- <button class="slick-next slick-arrow" aria-label="Next" type="button" style="">Next</button> -->
+            </div>
+    
+          </div>
+        </div>
+        <!-- Daily Anecdote Section End -->
+    
+      </div>
+      <!-- Daily Dot Bottom Content End -->
+    
+
+  <!-- <app-student-dashboard></app-student-dashboard> -->
+
+     <!--Student Daily Quote Modal Start-->
+     <div class="modal fade studentDailyQuoteModal" id="studentDailyQuoteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" 
+     aria-labelledby="studentDailyQuoteModalLabel" aria-hidden="true">
+       <div class="modal-dialog modal-xl">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="studentDailyQuoteModalLabel">Daily Quote</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body bg-white">
+             <div class="row pt-3 pt-md-5 pb-3 pb-md-5">
+               <div class="col-12 col-md-4 offset-md-2 text-center">
+                 <img class="img-fluid" src="assets/img/quote-image.jpg" alt="">
+               </div>
+               <div class="col-12 col-md-5 text-center">
+                 <!-- <p class="quote-text"><span class="you">You </span> <span class="dont"> don’t </span> <span class="have"> have </span> <span class="too"> To </span><br>
+                   <span class="be"> be </span> <span class="perfect"> PERFECT </span> <span class="to"> To </span> <span class="be_"> be </span> <br />
+                    <span class="amazing"> AMAZING </span>
+                  </p> -->
+                  <p class="quote-text">
+                    <span class="you">
+                     {{DailyQuoteToday}}
+                    </span>
+                  </p>
+               </div>
+             </div>
+             <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+               <div class="col-12 text-center">
+                 <button data-toggle="modal" data-target="#studentTodayQuestionModal" type="button" class="btn btn-primary"
+                   data-dismiss="modal" (click)="submitQailyQuote()">Submit</button>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!--Student Daily Quote Modal End-->
+   
+     <!--Student Today's Question Modal Start-->
+     <div class="modal fade studentTodayQuestionModal" id="studentTodayQuestionModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     *ngIf="quoteDetails?.length" aria-labelledby="studentTodayQuestionModalLabel" aria-hidden="true">
+       <div class="modal-dialog modal-xl">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="studentTodayQuestionModalLabel">Today’s question</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body bg-white">
+             <div class="row mt-3 mt-md-5">
+               <div class="col-12 text-center">
+                 <!-- <p class="date-text">{{TodayDate | date:'MMM d, y h:mm:ss'}}</p> -->
+                 <h5 class="question-text">{{DailyQuestionToday ? DailyQuestionToday : ''}}</h5>
+               </div>
+             </div>
+             <div class="row mt-3 mt-md-5 mb-3 mb-md-5">
+               <div class="col-12 col-md-8 offset-md-2">
+                 <div class="row answer-set">
+                   <div class="col-12 col-md-3 text-center">
+                     <button type="button" class="btn-answer"
+                      [ngClass]="{'active':active == quoteDetails[1]?.option1}" (click)="onSelect(quoteDetails[1]?.option1,'anectodeAnswer')">
+                       <img class="icon-96 mb-2" src="../../../../assets/img/great-feeling-icon.png" alt="">
+                       <p class="great-text">{{quoteDetails[1]?.option1}}</p>
+                     </button>
+                   </div>
+                   <div class="col-12 col-md-3 text-center">
+                     <button type="button" class="btn-answer"
+                      [ngClass]="{'active':active == quoteDetails[1]?.option2}" (click)="onSelect(quoteDetails[1]?.option2, 'anectodeAnswer')">
+                       <img class="icon-96 mb-2" src="../../../../assets/img/good-face.png" alt="">
+                       <p class="good-text">{{quoteDetails[1]?.option2}}</p>
+                     </button>
+                   </div>
+                   <div class="col-12 col-md-3 text-center">
+                     <button type="button" class="btn-answer"
+                      [ngClass]="{'active':active == quoteDetails[1]?.option3}" (click)="onSelect(quoteDetails[1]?.option3,'anectodeAnswer')">
+                       <img class="icon-96 mb-2" src="../../../../assets/img/bad-face.png" alt="">
+                       <p class="bad-text">{{quoteDetails[1]?.option3}}</p>
+                     </button>
+                   </div>
+                   <div class="col-12 col-md-3 text-center">
+                     <button type="button" class="btn-answer"
+                      [ngClass]="{'active':active == quoteDetails[1]?.option4}" (click)="onSelect(quoteDetails[1]?.option4,'anectodeAnswer')">
+                       <img class="icon-96 mb-2" src="../../../../assets/img/worst-face.png" alt="">
+                       <p class="worst-text">{{quoteDetails[1]?.option4}}</p>
+                     </button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+               <div class="col-12 text-center">
+                 <button type="button" class="btn btn-primary"
+                  (click)="submitQuestion()">Submit</button>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!--Student Today's Question Modal End-->
+   
+   
+     <!--Daily poll Modal Start-->
+     <div class="modal fade dailyPollModal" id="dailyPollModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="dailyPollModalLabel"
+     *ngIf="quoteDetails?.length" aria-hidden="true">
+       <div class="modal-dialog modal-xl">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="dailyPollModalLabel">Daily poll</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body bg-white">
+             <div class="row mt-3 mt-md-5">
+               <div class="col-12 text-center">
+                 <!-- <h5 class="poll-text">Whom do you like as a scientist? </h5> -->
+                 <h5 class="poll-text">{{DailyPollToday}} </h5>
+               </div>
+             </div>
+             <div class="row mt-3 mt-md-5 mb-3 mb-md-5">
+               <div class="col-12 col-md-8 offset-md-2">
+                 <div class="form-row answer-set">
+                   <div class="col-12 col-md-6 mb-2">
+                     <button type="button" class="btn-poll-answer d-block w-100 text-left btn-danger" 
+                      (click)="onSelect(quoteDetails[2]?.option1,'pollAnswer')">
+                       <div class="poll poll-1"><span class="pr-3"></span> {{quoteDetails[2]?.option1}}</div>
+                     </button>
+                   </div>
+                   <div class="col-12 col-md-6 mb-2">
+                     <button type="button" class="btn-poll-answer d-block w-100 text-left btn-info"
+                     (click)="onSelect(quoteDetails[2]?.option2,'pollAnswer')">
+                       <div class="poll poll-1"><span class="pr-3"></span> {{quoteDetails[2]?.option2}}</div>
+                     </button>
+                   </div>
+                   <div class="col-12 col-md-6 mb-2">
+                     <button type="button" class="btn-poll-answer d-block w-100 text-left btn-warning"
+                      (click)="onSelect(quoteDetails[2]?.option3,'pollAnswer')">
+                       <div class="poll poll-1"><span class="pr-3"></span> {{quoteDetails[2]?.option3}}</div>
+                     </button>
+                   </div>
+                   <div class="col-12 col-md-6 mb-2">
+                     <button type="button" class="btn-poll-answer d-block w-100 text-left btn-success"
+                     (click)="onSelect(quoteDetails[2]?.option4,'pollAnswer')">
+                       <div class="poll poll-1"><span class="pr-3"></span> {{quoteDetails[2]?.option4}}</div>
+                     </button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+               <div class="col-12 text-center">
+                 <button type="button" class="btn btn-primary"
+                    (click)="submitPoll()">Submit</button>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!--Daily poll Modal End-->
+   
+   
+     <!--Gratitude Journal Modal Start-->
+     <div class="modal fade gratitudeJournalModal" id="gratitudeJournalModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     *ngIf="quoteDetails?.length" aria-labelledby="gratitudeJournalModalLabel" aria-hidden="true" style="overflow: scroll;">
+       <div class="modal-dialog modal-xl">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="gratitudeJournalModalLabel">Gratitude Journal</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <form [formGroup]="createJournalForm">
+           <div class="modal-body bg-white">
+             <div class="row today-question">
+               <div class="col-12 text-center">
+                 <p class="date-text pb-2 pb-md-4">Today’s Question</p>
+                 <h5>{{DailyJournalToday}}</h5>
+                 <img class="women-img" src="../../../../assets/img/women-img.png" alt="">
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-12 col-md-8 offset-md-2">
+                 <ul class="gratitude-Journal-list mb-3">
+                   <li>
+                     <p class="offset-md-10">
+                      <button type="file" class="p-0 btn-upload mr-2" (click)="openAvatarModal()"><img src="assets/img/download-icon.png"
+                           alt="Download"></button>
+                           <span class="attachement_file" *ngIf="gratitudeFile !== undefined" (click)="openDocument()">Attachment</span>
+                     </p>
+                     <span class="text" style="height: 50px;">
+                         <input type="text" class="btn-edit p-0" formControlName="option1"
+                         placeholder="Enter Your answer" style="width: 95%; background: initial;">
+                         <img class="btn-edit p-0" src="../../../../assets/img/edit-icon.png" alt="Edit">
+                        
+                     </span>
+                   </li>
+                   <li *ngIf="answersArr.length > 0">
+                     <span class="text" style="height: 50px;">
+                         <input type="text" class="btn-edit p-0" formControlName="option2"
+                         placeholder="Enter Your answer" style="width: 95%; background: initial;">
+                         <img class="btn-edit p-0" src="../../../../assets/img/edit-icon.png" alt="Edit">
+                     </span>
+                   </li>
+                   <li *ngIf="answersArr.length > 1">
+                     <span class="text" style="height: 50px;">
+                         <input type="text" class="btn-edit p-0" formControlName="option3"
+                         placeholder="Enter Your answer" style="width: 95%; background: initial;">
+                         <img class="btn-edit p-0" src="../../../../assets/img/edit-icon.png" alt="Edit">
+                         
+                     </span>
+                   </li>
+                   <li *ngIf="answersArr.length > 2">
+                     <span class="text" style="height: 50px;">
+                         <input type="text" class="btn-edit p-0" formControlName="option4"
+                         placeholder="Enter Your answer" style="width: 95%; background: initial;">
+                         <img class="btn-edit p-0" src="../../../../assets/img/edit-icon.png" alt="Edit">
+                     </span>
+                   </li>
+                 </ul>
+                 <button  type="button" *ngIf="answersArr.length < 3" class="btn btn-success float-right" (click)="addAnswer()"
+                   >+ Add answer</button>
+               </div>
+             </div>
+             <div class="row mb-3 mb-md-5 mt-3 mt-md-5">
+               <div class="col-12 text-center">
+                 <button type="button" class="btn btn-primary" (click)="submitJournal()"
+                   >Submit</button>
+               </div>
+             </div>
+           </div>
+         </form>
+         </div>
+       </div>
+     </div>

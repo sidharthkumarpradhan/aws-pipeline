@@ -1,0 +1,83 @@
+<form [formGroup]="editForm" (ngSubmit)="save()">
+    <div class="row mb-4">
+      <div class="col-12 text-center gender-select">
+        <div class="custom-control custom-radio custom-radio custom-control-inline custom-radio-lg mr-3">
+          <input type="radio" id="{{radioctrlName1}}" value="talent"  [checked]="isCheck" (change)="onSkillChange()" formControlName="skill_id" name="skill_id" class="custom-control-input">
+          <label class="custom-control-label" for="{{radioctrlName1}}">Talents</label>
+        </div>
+        <div class="custom-control custom-radio custom-radio custom-control-inline custom-radio-lg">
+          <input type="radio" id="{{radioctrlName2}}" value="basic" formControlName="skill_id" (change)="onSkillChange()"  name="skill_id" class="custom-control-input">
+          <label class="custom-control-label" for="{{radioctrlName2}}">Basic Attributes</label>
+        </div>
+      </div>
+    </div>
+    <div class="row errorGender">
+      <app-control-messages [control]="editForm?.controls.skill_id" labelName="Skill">
+      </app-control-messages>
+    </div>
+    <ul class="answer-list mb-3" *ngIf="TalentsShow">
+      <ng-container *ngFor="let skill of skillsList; let i = index">
+        <li>
+          <span class="text-violet d-flex">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="{{skill.skill_id}}"
+              [checked]="skill.selected" (change)="checkSkill(skill, skill, $event)">
+              <label class="custom-control-label" for="{{skill.skill_id}}" ></label>
+            </div>
+             {{skill.skill_name}}
+             <span *ngIf="!skill.skill_file" class="skil_file_upload ml-auto" [ngbTooltip]="defaultTooltip">
+               <img src="assets/img/download-icon.png" alt="" (click)="onUpload(skill, i)" />
+             </span>
+             <div class="skil_file_upload ml-auto" *ngIf="skill.skill_file">
+                <img src="assets/img/video_icon.png" alt="" [ngbPopover]="popContent" triggers="manual" #p1="ngbPopover" (click)="toggleWithViewUpload(p1, [skill, i])" />
+              </div>                 
+            </span>
+          </li>
+      </ng-container>
+    </ul>
+
+    <!-- <div class="form-group" *ngIf="enableTextBox">
+      <textarea type="text" class="form-control" formControlName="others" (change)="speicfyOthers()"
+      placeholder="Specify answer"></textarea>
+      <app-control-messages [control]="quizForm?.controls.others" labelName="Answer">
+      </app-control-messages>
+    </div> -->
+    
+    <div class="login-bottom"  *ngIf="!TalentsShow">
+         <div class="form-group">
+          <label>Attributes</label>
+          <textarea type="text" rows="4" class="form-control" formControlName="skill_achievements"
+           placeholder="Enter Attributes"></textarea>
+        </div>       
+    </div>
+
+    <div class="form-group text-center">
+      <img src="assets/img/inline_spinner.svg" *ngIf="isFormSubmitted" alt="" />
+      <button type="submit" class="btn btn-danger btn-save" [ngClass]="{'disabledTab': isFormSubmitted}" [disabled]="isFormSubmitted">Save</button>
+    </div>
+</form>
+
+<!-- view / upload popover -->
+<ng-template #popContent let-data="data">
+  <ng-container>
+    <div class="">
+      <div class="dropdown-item" (click)="openDocument(content, data[0].skill_file)">view</div>
+      <div class="dropdown-item" (click)="onUpload(data[0], data[1])">upload file</div>
+    </div>
+  </ng-container>
+</ng-template>
+
+
+<ng-template #content let-modal>
+  <div class="modal-body d-flex justify-content-center">
+    <ng-container *ngIf="fileType==='video'">
+      <video width="100%" height="100%" controls>
+        <source [src]="fileUrl" [type]="mediaType">
+        Your browser does not support the video tag.
+      </video>
+    </ng-container>
+    <ng-container *ngIf="fileType==='image'">
+      <img [src]="fileUrl" class="mw-300p" alt="image not found" />      
+    </ng-container> 
+  </div>
+</ng-template>

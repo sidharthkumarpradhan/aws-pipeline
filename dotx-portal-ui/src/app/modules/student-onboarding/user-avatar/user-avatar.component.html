@@ -1,0 +1,64 @@
+
+      <app-loader *ngIf="isLoading"></app-loader>
+      <section class="form-section">
+          <div class="form-window">
+              <div class="title-bar">
+                  Create Profile
+                  <button>
+                      <img src="assets/img/back-arrow.png" alt="" (click)="backToProfile()"/>
+                  </button>
+              </div>
+
+              <div class="content-box create-avatar">
+
+      <form [formGroup]="createProfileForm" (ngSubmit)="saveAvatar()">
+        <div class="heading-container">
+          <img src="assets/img/create avater.png" alt="" />
+          <p>Create your <span>Avatar</span></p>
+        </div>
+        <div class="main-container">
+          <div class="upload-container">
+            <h4>Upload</h4>
+            <div class="img-wrapper">
+              <img [src]="userProfilePic" alt=""  (error)="onImgError($event)" />
+              <input type="hidden" formControlName="avatar_image_file" />
+            </div>
+            <a (click)="openAvatarModal()">Upload Here</a>
+          </div>
+          <div class="divider">
+            <div class="line"></div>
+            <p>Or</p>
+            <div class="line"></div>
+          </div>
+          <div class="select-container">
+            <h4>Select your avatar</h4>
+            <div class="img-container">
+                  <!-- Female Avatar -->
+                  <ng-container *ngIf="!createProfileForm.get('gender').value || createProfileForm.get('gender').value === 'Female'">
+                    <div *ngFor="let avatar of femaleAvatars" (click)="selectAvatar(avatar)" [ngClass]="{'active': selectedAvatar === avatar}">
+                        <img [src]="'assets/img/'+avatar" alt="" />
+                    </div>
+                  </ng-container>
+          
+                  <!-- Male Avatars -->
+                  <ng-container *ngIf="createProfileForm.get('gender').value === 'Male'">
+                    <div *ngFor="let avatar of maleAvatars" (click)="selectAvatar(avatar)" [ngClass]="{'active': selectedAvatar === avatar}">
+                        <img [src]="'assets/img/'+avatar" alt="" />
+                    </div>
+                  </ng-container>
+          
+                  <!-- Others Avatars -->
+                  <ng-container *ngIf="createProfileForm.get('gender').value === 'Other'">
+                    <div *ngFor="let avatar of otherAvatars" (click)="selectAvatar(avatar)" [ngClass]="{'active': selectedAvatar === avatar}">
+                        <img [src]="'assets/img/'+avatar" alt="" />
+                    </div>
+                  </ng-container>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn-next">{{personalInfoDashboard !== 'userAvatar' ? 'NEXT' : 'SAVE'}}</button>
+      </form>
+
+              </div>
+          </div>
+      </section>

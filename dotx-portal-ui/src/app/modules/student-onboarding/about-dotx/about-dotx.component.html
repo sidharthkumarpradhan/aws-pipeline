@@ -1,0 +1,30 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<section class="form-section">
+    <div class="form-window">
+        <div class="title-bar">
+            Create Profile
+            <button>
+<!--                <img src="assets/img/back-arrow.png" alt="" />-->
+            </button>
+          <button (click)="skipTo()">
+            <p>Skip</p>
+          </button>
+        </div>
+        <div class="content-box" *ngIf="quiz">
+            <div class="heading-container">
+                <img src="assets/img/speaker.png" alt="" />
+                <p>{{quiz.quiz_description}}</p>
+            </div>
+
+            <div class="options-container" *ngIf="quiz.options && quiz.options.length">
+                <ng-container *ngFor="let item of quiz.options;">
+                    <button [ngClass]="{'active': item.selected}" (click)="selectOption(item.option)" >{{item.option}}</button>
+
+                  <textarea *ngIf="item.option==='Others' && item.selected" name="" id="" cols="30" rows="10" placeholder="Write here how did you hear about us ?"></textarea>
+                </ng-container>
+            </div>
+
+            <button class="btn-next" (click)="save()">next</button>
+        </div>
+    </div>
+</section>
