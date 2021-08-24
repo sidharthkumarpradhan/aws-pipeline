@@ -47,8 +47,8 @@ phases:
        - ls
   post_build:
     commands:
-       - aws s3 sync ./dist/dotx-portal-ui/ s3://angular-ui-artifact --acl 'public-read' --delete
-       - ls
+       -  echo Build completed on `date`
+       -  ls
 #reports:
   #report-name-or-arn:
     #files:
