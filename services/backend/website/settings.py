@@ -1,2 +1,0 @@
-# Put default settings here
-
